@@ -1,0 +1,54 @@
+Addresses DEFINITIONS IMPLICIT TAGS ::=
+BEGIN
+
+EXPORTS AddressType,
+    ReportedAddresses,
+    ReportedAddress,
+    RequestedAddress;
+
+AddressType ::= ENUMERATED{
+ registered (0),           ---  Адрес  регистрации (обязателен для юридических и физических лиц)
+ postal (1),               ---  Почтовый адрес (дополнительный адрес для юридических лиц)
+ invoice (2),              ---  Адрес  доставки  счета  (дополнительный  адрес  для юридических лиц)
+ device-location (3),      ---  Адрес  установки пользовательского устройства (телефонного аппарата)
+ reserved (4)              ---  Резерв
+}
+
+ReportedAddresses ::= SEQUENCE OF ReportedAddress
+
+ReportedAddress ::= SEQUENCE {
+ title         AddressType,                     --- тип адреса
+ address-info  AddressInfoReport                --- адрес
+}
+
+AddressInfoReport ::= CHOICE{
+ struct-info[1]  AddressStructInfoReport,      --- структурированный адрес
+ unstruct-info[2] UTF8String(SIZE (1 .. 1024)) --- неструктурированный адрес
+}
+
+AddressStructInfoReport ::= SEQUENCE {
+ zip [0]        UTF8String (SIZE (1 .. 32)) OPTIONAL,        --- почтовый индекс, zip-код
+ country [1]    UTF8String (SIZE (1 .. 128)) OPTIONAL,       --- страна
+ region [2]     UTF8String (SIZE (1 .. 128)) OPTIONAL,       --- область
+ zone [3]       UTF8String (SIZE (1 .. 128)) OPTIONAL,       --- район, муниципальный округ
+ city [4]       UTF8String (SIZE (1 .. 128)) OPTIONAL,       --- город, поселок, деревня
+ street [5]     UTF8String (SIZE (1 .. 128)) OPTIONAL,       --- улица
+ building [6]   UTF8String (SIZE (1 .. 128)) OPTIONAL,       --- дом, строение
+ build-sect [7] UTF8String (SIZE (1 .. 128)) OPTIONAL,       --- корпус
+ apartment [8]  UTF8String (SIZE (1 .. 128)) OPTIONAL        --- квартира, офис
+}
+
+-- поля адресных данных
+RequestedAddress ::= SEQUENCE {
+ zip [0]        UTF8String (SIZE (1 ..  32))  OPTIONAL, 	 --- почтовый индекс, zip-код
+ country [1]    UTF8String (SIZE (1 .. 128)) OPTIONAL,       --- страна
+ region [2]     UTF8String (SIZE (1 .. 128)) OPTIONAL,       --- область
+ zone [3]       UTF8String (SIZE (1 .. 128)) OPTIONAL,       --- район, муниципальный округ
+ city [4]       UTF8String (SIZE (1 .. 128)) OPTIONAL,       --- город, поселок, деревня, населенный пункт
+ street [5]     UTF8String (SIZE (1 .. 128)) OPTIONAL,       --- улица
+ building [6]   UTF8String (SIZE (1 .. 128)) OPTIONAL,       --- дом, строение
+ build-sect [7] UTF8String (SIZE (1 .. 128)) OPTIONAL,       --- корпус
+ apartment [8]  UTF8String (SIZE (1 .. 128)) OPTIONAL        --- квартира, офис
+}
+
+END

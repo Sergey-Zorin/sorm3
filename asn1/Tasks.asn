@@ -1,0 +1,156 @@
+Tasks DEFINITIONS IMPLICIT TAGS ::=
+BEGIN
+
+EXPORTS taskMessage,
+        TaskID,
+    LogicalOperation,
+        CreateTaskResponse,
+    DataContentID;
+
+IMPORTS TAGGED,
+        sorm-message-task
+  FROM Classification
+
+        FindRange,
+        MessageID
+  FROM Sorm
+
+        TelcoList,
+        DictionaryTask
+  FROM Dictionaries
+
+        AbonentsTask
+  FROM TasksAbonents
+
+        ConnectionsTask
+  FROM TasksConnections
+
+        LocationTask
+  FROM TasksLocation
+
+        PaymentsTask
+  FROM TasksPayments
+
+        PresenseTask
+  FROM TasksPresense
+
+        DataContentTask
+  FROM TasksContentTask
+
+        NonFormalizedTaskRequest,
+        NonFormalizedTaskResponse
+  FROM
+        TasksNonFormalized;
+
+taskMessage TAGGED ::= {
+ OID { sorm-message-task }
+ DATA CHOICE {
+  data-ready-request [0]   DataReadyRequest,                 --- запрос готовности данных
+  data-ready-response [1]  DataReadyResponse,                --- ответ на запрос готовности данных
+  data-load-request [2]    DataLoadRequest,                  --- запрос загрузки данных
+  data-load-response [3]   DataLoadResponse,                 --- ответ на запрос загрузки данных
+  data-drop-request [4]    DataDropRequest,                  --- запрос удаления данных
+  data-drop-response [5]   DataDropResponse,                 --- ответ на запрос удаления данных
+  data-interrupt-request [6] DataInterruptRequest,           --- запрос прерывания загрузки данных
+  data-interrupt-response [7] DataInterruptResponse,         --- ответ на запрос прерывания загрузки данных
+  create-task-request [8]  CreateTaskRequest,                --- запрос на создание задачи по обработке информации
+  create-task-response [9] CreateTaskResponse,               --- ответ на запрос создания задачи
+  non-formalized-task-request [10] NonFormalizedTaskRequest, --- запрос на создание задачи по обработке неформализованных данных
+  non-formalized-task-response [11] NonFormalizedTaskResponse --- ответ на запрос создания задачи по обработке неформализованных данных
+ }
+}
+
+--- в этом запросе не параметров
+DataReadyRequest ::= NULL
+
+--- запрос загрузки данных конкретной задачи
+DataLoadRequest ::= TaskID
+
+--- запрос удаления данных конкретной задачи
+DataDropRequest ::= TaskID
+
+--- запрос прерывания загрузки данных
+DataInterruptRequest ::= TaskID
+
+--- запрос на создание задачи поиска
+CreateTaskRequest ::= SEQUENCE {
+  telcos [0]         TelcoList OPTIONAL,                     --- список операторов связи
+  range [1]          FindRange OPTIONAL,                     --- временной диапазон поиска
+  report-limit [2]   INTEGER (1 .. 10000000) OPTIONAL,       --- ограничение на максимальное количество возвращаемых записей
+  task [3] CHOICE {
+        dictionary [0]  DictionaryTask,                      --- задачи пополнения справочников (нормативно-справочная информация)
+        abonents [1]    AbonentsTask,                        --- задачи поисков по принадлежности абонентов
+        connections [2] ConnectionsTask,                     --- задачи поисков по соединениям абонентов
+        location [3]    LocationTask,                        --- задача получения данных местоположения абонентов
+        payments [4]    PaymentsTask,                        --- задачи поисков по совершенным платежам
+        presense [6]    PresenseTask,                        --- задачи предоставления сведений о наличии данных
+        data-content [9] DataContentTask                     --- задачи получения содержимого потоков
+  }
+}
+
+--------------------------------------------------------------------------
+
+-- последовательность записей о готовности данных задач
+DataReadyResponse ::= SEQUENCE OF DataReadyTaskRecord
+
+DataReadyTaskRecord ::= SEQUENCE {
+  task-id TaskID,                                    --- идентификатор задачи
+  result TaskResult                                  --- результат выполнения задачи
+}
+
+TaskResult ::= SEQUENCE {
+  result ENUMERATED {
+        data-not-ready (0),                                  --- данные не готовы, задача еще выполняется
+        data-ready (1),                                      --- данные есть, задача выполнена
+        data-not-found (2),                                  --- данных нет, задача выполнена
+        error (3)                                            --- в процессе выполнения задачи произошла ошибка
+  },
+  report-records-number [0] INTEGER (0 .. 999999999999) OPTIONAL, --- для выполненной задачи - количество записей в отчете
+  report-limit-exeeded [1]  BOOLEAN OPTIONAL,                     --- количество записей превысило лимит, заданный при создании задачи
+  error-description [2]     UTF8String (SIZE (1 .. 256)) OPTIONAL --- краткое описание произошедшей ошибки,
+                                                                  --- если обнаружена
+}
+
+DataLoadResponse ::= SEQUENCE {
+  task-id                  TaskID,                           --- идентификатор задачи, сгенерировавшей данный отчет
+  data-exists              BOOLEAN,                          --- признак существования результатов исполнения задачи
+                                                             --- (есть данные или нет)
+  data-blocks-number       INTEGER (0 .. 999999999999) OPTIONAL, --- количество блоков в отчете
+  error-description        UTF8String (SIZE (1 .. 256)) OPTIONAL --- краткое описание ошибки, если обнаружена
+}
+
+DataDropResponse ::= SEQUENCE {
+  task-id                  TaskID,                           --- идентификатор задачи, данные которой будут удалены
+  successful               BOOLEAN,                          --- признак успешного выполнения запроса
+  error-description        UTF8String (SIZE (1 .. 256)) OPTIONAL --- краткое описание ошибки, если обнаружена
+}
+
+DataInterruptResponse ::= SEQUENCE {
+  request-id               MessageID,                        --- идентификатор прерванного запроса загрузки данных
+  successful               BOOLEAN,                          --- признак успешного выполнения запроса
+  data-blocks-available    INTEGER (0 .. 999999999999) OPTIONAL, --- количество оставшихся непереданными блоков
+  error-description        UTF8String (SIZE (1 .. 256)) OPTIONAL --- краткое описание ошибки, если обнаружена
+}
+
+CreateTaskResponse ::= SEQUENCE {
+  task-id                  TaskID OPTIONAL,                  --- идентификатор задачи
+  successful               BOOLEAN,                          --- признак успешного выполнения запроса
+  error-description        UTF8String (SIZE (1 .. 256)) OPTIONAL --- краткое описание ошибки, если обнаружена
+}
+
+---------------------------------------------------------------------------
+-- идентификатор задачи
+TaskID ::= INTEGER (0 .. 4294967295)
+
+-- идентификатор потока
+DataContentID ::= UTF8String (SIZE (1 .. 512))
+
+LogicalOperation ::= ENUMERATED {
+  operation-open-bracket (0),                        -- открывающая скобка - "("
+  operation-close-bracket (1),                       -- закрывающая скобка - ")"
+  operation-or (2),                                  -- логическое "или"
+  operation-and (3),                                 -- логическое "и"
+  operation-not (4)                                  -- логическое "не"
+}
+
+END

@@ -1,0 +1,168 @@
+TasksPayments DEFINITIONS IMPLICIT TAGS ::=
+BEGIN
+
+EXPORTS PaymentsTask;
+
+IMPORTS LogicalOperation
+  FROM Tasks
+
+      RequestedConnection
+  FROM RequestedConnections
+
+      RequestedIdentifier
+  FROM RequestedIdentifiers
+
+      RequestedAddress
+  FROM Addresses
+
+      TAGGED,
+      sorm-request-payment-bank-transaction,
+      sorm-request-payment-express-pays,
+      sorm-request-payment-terminal-pays,
+      sorm-request-payment-service-center,
+      sorm-request-payment-cross-account,
+      sorm-request-payment-telephone-card,
+      sorm-request-payment-balance-fillups,
+      sorm-request-payment-bank-division-transfer,
+      sorm-request-payment-bank-card-transfer,
+      sorm-request-payment-bank-account-transfer
+  FROM Classification;
+
+PaymentsTask ::= SEQUENCE {
+ id   TAGGED.&id ({RequestedPaymentsVariants}),
+ data TAGGED.&Data ({RequestedPaymentsVariants}{@id})
+}
+
+--- варианты запрашиваемых параметров связей
+RequestedPaymentsVariants TAGGED ::= {
+   bankTransactionTask
+ | expressCardTask
+ | publicTerminalTask
+ | serviceCenterTask
+ | crossAccountTask
+ | telephoneCardTask
+ | balanceFillupTask
+ | bankDivisionTransferTask
+ | bankCardTransferTask
+ | bankAccountTransferTask
+}
+
+--- задача на поиск пополнения баланса через банковский перевод
+bankTransactionTask TAGGED ::= {
+ OID { sorm-request-payment-bank-transaction }
+ DATA RequestedBankTransactionPays
+}
+
+RequestedBankTransactionPays ::= SEQUENCE OF RequestedBankTransactionPaysParameters
+--- последовательность логических операций и параметров
+RequestedBankTransactionPaysParameters ::= CHOICE {
+ separator [0] LogicalOperation,                         --- логический оператор связки
+ bank-account [1] UTF8String (SIZE (1 .. 64)),           --- номер банковского счета, с которого совершен платеж
+ bank-name [2] UTF8String (SIZE (1 .. 512))              --- наименование банка, со счета которого совершен перевод
+}
+
+--- задача на поиск пополнения баланса через карты экспресс-оплаты
+expressCardTask TAGGED ::= {
+  OID { sorm-request-payment-express-pays }
+  DATA RequestedExpressPays
+}
+
+RequestedExpressPays ::= SEQUENCE OF RequestedExpressPaysParameters    --- последовательность логических операций и параметров
+RequestedExpressPaysParameters ::= CHOICE {
+ separator [0]  LogicalOperation,                        --- логический оператор связки
+ express-card [1] NumericString (SIZE (2 .. 20))         --- номер карты экспресс-оплаты
+}
+
+--- задача на поиск пополнения баланса через терминалы моментальных платежей
+publicTerminalTask TAGGED ::= {
+ OID { sorm-request-payment-terminal-pays }
+ DATA RequestedTerminalPays
+}
+
+RequestedTerminalPays ::= SEQUENCE OF RequestedTerminalPaysParameters --- последовательность логических операций и параметров
+RequestedTerminalPaysParameters ::= CHOICE {
+ separator [0]             LogicalOperation,             --- логический оператор связки
+ terminal-id [1]           UTF8String (SIZE (1..64)),    --- идентификатор терминала
+ terminal-number [2]       NumericString (SIZE (2..20)), --- номер терминала
+ terminal-address [3]      RequestedAddress              --- адрес терминала
+}
+
+--- задача на поиск пополнения баланса через центры обслуживания клиентов (ЦОК)
+serviceCenterTask TAGGED ::=  {
+ OID { sorm-request-payment-service-center }
+ DATA RequestedServiceCenterPays
+}
+
+RequestedServiceCenterPays ::= SEQUENCE OF RequestedServiceCenterPaysParameters --- последовательность логических операций и параметров
+RequestedServiceCenterPaysParameters ::= CHOICE {
+ separator [0]  LogicalOperation,                        --- логический оператор связки
+ center-id [1]  UTF8String (SIZE (1 .. 64)),             --- идентификатор центра обслуживания клиентов
+ center-address [2] RequestedAddress                     --- адрес центра обслуживания клиентов
+}
+
+--- задача на поиск пополнения баланса посредством снятия денег со счета другого абонента
+crossAccountTask TAGGED ::= {
+ OID { sorm-request-payment-cross-account }
+ DATA RequestedCrossAccountPays
+}
+
+RequestedCrossAccountPays ::= SEQUENCE OF RequestedCrossAccountPaysParameters   --- последовательность логических операций и параметров
+RequestedCrossAccountPaysParameters ::= CHOICE {
+ separator [0]           LogicalOperation,    --- логический оператор связки
+ source-identifier [1]   RequestedIdentifier, --- идентификатор абонента, со счета которого переводятся средства
+ dest-identifier [2]     RequestedIdentifier  --- идентификатор абонента, на счет которого переводятся средства
+}
+
+--- задача на поиск пополнения баланса через телефонные карты
+telephoneCardTask TAGGED ::= {
+ OID { sorm-request-payment-telephone-card }
+ DATA RequestedTelephoneCardPays
+}
+
+RequestedTelephoneCardPays ::= SEQUENCE OF RequestedTelephoneCardPaysParameters --- последовательность логических операций и параметров
+RequestedTelephoneCardPaysParameters ::= CHOICE {
+ separator [0]   LogicalOperation,                       --- логический оператор связки
+ card-number [1] NumericString (SIZE (2..20))            --- номер телефонной карты
+}
+
+--- общая задача на поиск пополнения баланса личного счета абонента
+balanceFillupTask TAGGED ::= {
+ OID { sorm-request-payment-balance-fillups }
+ DATA RequestedBalanceFillups                            --- параметры запроса
+}
+
+RequestedBalanceFillups ::= SEQUENCE OF RequestedBalanceFillupsParameters --- последовательность логических операций и параметров
+RequestedBalanceFillupsParameters ::= CHOICE {
+ separator [0]   LogicalOperation,                       --- логический оператор связки
+ identifier [1]  RequestedIdentifier                     --- идентификатор абонента
+}
+
+--- задача на поиск перевода средств со счета абонента для их снятия в отделении банка
+bankDivisionTransferTask TAGGED ::= {
+ OID { sorm-request-payment-bank-division-transfer }
+ DATA RequestedBankDivisionTranferPays                   --- параметры запроса
+}
+
+RequestedBankDivisionTranferPays ::= SEQUENCE OF RequestedTranferParameters --- последовательность логических операций и параметров
+
+--- задача на поиск перевода средств со счета абонента на банковскую карту
+bankCardTransferTask TAGGED ::= {
+ OID { sorm-request-payment-bank-card-transfer }
+ DATA RequestedBankCardTranferPays                       --- параметры запроса
+}
+
+RequestedBankCardTranferPays ::= SEQUENCE OF RequestedTranferParameters --- последовательность логических операций и параметров
+
+--- задача на поиск перевода средств со счета абонента на счет в банке
+bankAccountTransferTask  TAGGED ::= {
+ OID { sorm-request-payment-bank-account-transfer }
+ DATA RequestedBankAccountTranferPays                    --- параметры запроса
+}
+
+RequestedBankAccountTranferPays ::= SEQUENCE OF RequestedTranferParameters --- последовательность логических операций и параметров
+RequestedTranferParameters ::= CHOICE {
+ separator [0]   LogicalOperation,                       --- логический оператор связки
+ source-identifier [1]  RequestedIdentifier              --- идентификатор абонента инициатора перевода средств
+}
+
+END

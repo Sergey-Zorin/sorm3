@@ -1,0 +1,178 @@
+ReportsAbonents DEFINITIONS IMPLICIT TAGS ::=
+
+BEGIN
+
+EXPORTS AbonentsReport;
+
+IMPORTS TAGGED,
+      sorm-report-abonent-abonent,
+      sorm-report-abonent-service,
+      sorm-report-abonent-person,
+      sorm-report-abonent-organization
+    FROM Classification
+
+      DateAndTime
+    FROM Sorm
+
+      TelcoID
+    FROM Dictionaries
+
+      ReportedIdentifier
+    FROM ReportedIdentifiers
+
+      NetworkType
+    FROM NetworkIdentifiers
+
+      AddressType,
+      ReportedAddresses,
+      ReportedAddress
+    FROM Addresses
+
+      Location
+    FROM Locations;
+
+AbonentsReport ::= SEQUENCE {
+ id   TAGGED.&id ({AbonentsReportVariants}),
+ data TAGGED.&Data ({AbonentsReportVariants}{@id})
+}
+
+AbonentsReportVariants TAGGED ::= {
+ reportAbonent |                                     --- информация об абоненте
+ reportService                                       --- информация о сервисах
+}
+
+reportAbonent TAGGED ::= {
+ OID sorm-report-abonent-abonent
+ DATA SEQUENCE OF AbonentsRecord
+}
+
+AbonentsRecord ::= SEQUENCE {
+ telco-id          TelcoID,                          --- идентификатор оператора связи или структурного подразделения
+ idents            ReportedIdentifier,               --- идентификаторы абонента
+ contract-date     DateAndTime,                      --- дата и время заключения договора
+ contract               UTF8String (SIZE (1 .. 64)), --- номер договора 
+ actual-from       DateAndTime,                      --- дата и время начала интервала времени, на котором актуальная информация
+ actual-to         DateAndTime,                      --- дата и время окончания интервала времени, на котором актуальна информация
+ abonent                AbonentInfo,                 --- информация об абоненте (клиенте оператора связи)
+ status            ActiveStatus,                     --- текущий статус абонента (подключен/отключен)
+ attach [0]        DateAndTime OPTIONAL,             --- дата и время подключения основной услуги (если подключение производилось на интервале актуальности)
+ detach [1]        DateAndTime OPTIONAL,             --- дата и время отключения основной услуги (если отключение производилось на интервале актуальности)
+ last-location [2] Location OPTIONAL,                --- последнее зафиксированное местоположение для мобильных абонентов
+ services [3]      ActiveServices OPTIONAL,          --- активированные услуги
+ line-data [4]     LineData OPTIONAL,                --- линейные данные (кросс, рамка, пара и т.д.)
+ standard [5]      Standard OPTIONAL,                --- стандарт связи
+ addresses [6]     ReportedAddresses OPTIONAL        --- адреса абонента
+}
+
+ActiveServices ::= SEQUENCE OF AbonentService        --- набор подключенных ДВО
+
+ActiveStatus ::= ENUMERATED {
+ active (0),                                         --- активный
+ not-active (1)                                      --- не активный
+}
+
+LineData ::= SEQUENCE {
+ object [0]        UTF8String (SIZE (1 .. 128)) OPTIONAL,    --- описание объекта связи
+ cross [1]         UTF8String (SIZE (1 .. 128)) OPTIONAL,    --- описание кросса
+ block [2]         UTF8String (SIZE (1 .. 128)) OPTIONAL,    --- описние блока
+ pair [3]          UTF8String (SIZE (1 .. 128)) OPTIONAL,    --- описание пары
+ reserved [4]      UTF8String (SIZE (1 .. 128)) OPTIONAL     --- резерв
+}
+
+AbonentInfo ::= SEQUENCE {
+ id   TAGGED.&id ({AbonentsInfoVariants}),
+ data TAGGED.&Data({AbonentsInfoVariants}{@id})
+}
+
+AbonentsInfoVariants TAGGED ::= {
+ abonentPerson|                                      --- информация об абоненте - физическом лице
+ abonentOrganization                                 --- информация об абоненте - юридическом лице
+}
+
+--- Физическое лицо
+abonentPerson TAGGED ::= {
+ OID { sorm-report-abonent-person }
+ DATA AbonentPerson
+}
+
+AbonentPerson ::= SEQUENCE {
+ name-info         PersonNameInfoReport,                     --- ФИО
+ birth-date        GeneralizedTime OPTIONAL,                 --- дата рождения
+ passport-info     PassportInfoReport,                       --- паспортные данные
+ bank [1]          UTF8String (SIZE(1 .. 256)) OPTIONAL,     --- банк абонента (используемый при расчетах с оператором связи)
+ bank-account [2]  UTF8String (SIZE(1 .. 30)) OPTIONAL       --- счет абонента в банке (используемый при расчетах с оператором связи)
+}
+
+PersonNameInfoReport ::= CHOICE {
+ struct-name[0]    PersonStructNameInfoReport,       --- структурированное ФИО
+ unstruct-name[1]  UTF8String(SIZE(1 .. 1024))       --- неструктурированное ФИО
+}
+
+PersonStructNameInfoReport ::= SEQUENCE {
+ given-name        UTF8String (SIZE (1 .. 256)),     --- имя
+ initial           UTF8String (SIZE (1 .. 256)),     --- отчество
+ family-name       UTF8String (SIZE (1 .. 256))      --- фамилия
+}
+
+PassportInfoReport::= SEQUENCE {
+ ident-card-info   IdentCardInfoReport,              --- описание удостоверения личности
+ doc-type-id       INTEGER (0 .. 65535)              --- идентификатор типа документа, удостоверяющего личность
+}
+
+IdentCardInfoReport ::= CHOICE {
+ struct-info [0]   IdentCardStructInfoReport,        --- структурированная информация
+ unstruct-info [1] UTF8String (SIZE (1 .. 1024))     --- неструктурированная информация
+}
+
+IdentCardStructInfoReport ::= SEQUENCE {
+ ident-card-serial      UTF8String (SIZE (1..16)),    --- серия удостоверения личности
+ ident-card-number      NumericString (SIZE (1..16)), --- номер удостоверения личности
+ ident-card-description UTF8String (SIZE (1 .. 512))  --- когда и кем выдано
+}
+
+abonentOrganization TAGGED ::= {
+ OID { sorm-report-abonent-organization }
+ DATA AbonentOrganization
+}
+
+AbonentOrganization ::= SEQUENCE {
+ full-name         UTF8String (SIZE (1 .. 256)),             --- полное наименование
+ inn               UTF8String (SIZE(1 .. 64)),               --- ИНН
+ contact [0]       UTF8String (SIZE (1 .. 128)) OPTIONAL,    --- контактное лицо
+ phone-fax [1]     UTF8String (SIZE (1 .. 128)) OPTIONAL,    --- контактные телефоны, факс
+ internal-users [2]     InternalUsers OPTIONAL,       --- список внутренних пользователей, выдается только при
+                                                      --- заполнении аналогичного поля в запросе формирования
+                                                      --- задачи на поиск идентификаторов абонентов или при заполнении
+                                                      --- поля internal-number в запросе на принадлежность идентификаторов
+                                                      --- операторам связи
+ bank [3]          UTF8String (SIZE(1 .. 256)) OPTIONAL,     --- банк абонента (используемый при расчетах с оператором связи)
+ bank-account [4]  UTF8String (SIZE(1 .. 30)) OPTIONAL       --- счет абонента в банке (используемый при расчетах с оператором связи)
+}
+
+InternalUsers ::= SEQUENCE OF InternalUsersRecord     --- набор записей, описывающих внутренних пользователей абонента -
+                                                      --- юридического лица
+
+InternalUsersRecord ::= SEQUENCE {
+ user-name         UTF8String (SIZE (1 .. 64)),       --- строка - описатель внутреннего пользователя
+ internal-number  NumericString (SIZE (1 .. 64))      --- внутренний номер
+}
+
+Standard ::= NetworkType --- перечень стандартов связи
+
+reportService TAGGED ::= {
+ OID sorm-report-abonent-service
+ DATA SEQUENCE OF AbonentService
+}
+
+AbonentService ::= SEQUENCE {
+ telco-id          TelcoID,                           --- идентификатор оператора связи или структурного подразделения
+ service-id        INTEGER (0 .. 4294967295),         --- идентификатор услуги
+ idents            ReportedIdentifier OPTIONAL,       --- идентификаторы абонента
+ contract          UTF8String (SIZE (1 .. 64)),       --- номер договора
+ begin-time        DateAndTime,                       --- дата и время начала оказания услуги
+ end-time          DateAndTime,                       --- дата и время окончания оказания услуги
+ parameter         UTF8String (SIZE(1..256)) OPTIONAL --- индивидуальные параметры настройки услуги абонента
+                                                      --- номер на который осуществляется преадресация
+}
+
+END

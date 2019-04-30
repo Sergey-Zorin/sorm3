@@ -1,0 +1,130 @@
+TasksNonFormalized DEFINITIONS IMPLICIT TAGS ::=
+BEGIN
+
+EXPORTS
+       EntityId,
+       NonFormalizedTaskRequest,
+       NonFormalizedTaskResponse,
+       NonFormalizedEntityAttributeData;
+
+IMPORTS    TelcoList
+       FROM Dictionaries
+
+       FindRange,
+       MessageID,
+       DateAndTime
+       FROM Sorm
+
+       Location
+       FROM Locations
+
+       LogicalOperation,
+       CreateTaskResponse
+       FROM Tasks
+  ;
+
+-- TaskID,
+    -- LogicalOperation;
+
+NonFormalizedTaskRequest ::= CHOICE {
+  get-entities [0]         GetEntities,                      --- тип сообщения "запрос получения списка типов сущностей"
+  get-attributes [1]       GetEntityAtttibutes,              --- тип сообщения "запрос получения списка атрибутов сущности"
+  validate-task [2]        ValidateNonFormalizedTask,        --- тип сообщения "задача поиска неформализованных данных"
+  validate-presense [3]    NonFormalizedPresenseTask         --- тип сообщения "задача предоставления сведений о наличии неформализованных данных"
+}
+
+NonFormalizedTaskResponse ::= CHOICE {
+  entities [0]             GetEntitiesResponse,               --- ответ на запрос получения списка типов сущностей
+  entity-attributes [1]    GetEntityAtttibutesResponse,       --- ответ на запрос получения списка атрибутов сущности
+  validate-task [2]        ValidateNonFormalizedTaskResponse, ---  ответ  на запрос задачи поиска неформализованных данных
+  validate-presense [3]    NonFormalizedPresenseTaskResponse  --- ответ на запрос задач предоставления сведений о наличии неформализованных данных
+}
+
+--- тип сообщения "запрос получения списка типов сущностей"
+GetEntities ::= NULL
+
+--- тип сообщения "запрос получения списка атрибутов сущности"
+GetEntityAtttibutes ::= EntityId
+
+--- тип сообщения "задача поиск неформализованных данных"
+ValidateNonFormalizedTask ::= SEQUENCE {
+  entity-id         EntityId,                                --- сущность для поиска по неформализованным данным
+  parameters        NonFormalizedParameters,                 --- критерии поиска по неформализованным данным
+  range             FindRange OPTIONAL,                      --- временной диапазон поиска
+  report-limit      INTEGER (1 .. 10000000) OPTIONAL         --- ограничение на максимальное количество возвращаемых записей
+}
+
+--- тип сообщения "задача предоставления сведений о наличии неформализованных данных"
+NonFormalizedPresenseTask ::= EntityId
+
+NonFormalizedParameters ::= SEQUENCE OF NonFormalizedParameter
+
+NonFormalizedParameter ::= CHOICE {
+  separator [0]     LogicalOperation,                        --- логическая операция
+  find-mask [1]     NonFormalizedEntityCondition             --- условие
+}
+
+NonFormalizedEntityCondition ::= SEQUENCE {
+  attribute         NonFormalizedEntityAttribute,            --- атрибут сущности
+  operation         MathOperation,                           --- операция
+  attribute-value   NonFormalizedEntityAttributeData         --- значение атрибута
+}
+NonFormalizedEntityAttribute ::= SEQUENCE {
+ attribute-name   UTF8String (SIZE (1 .. 256)),    --- текстовое наименование атрибута сущности
+ attribute-type   AttributeType                    --- тип данных атрибута
+}
+
+NonFormalizedEntityAttributeData ::= CHOICE {
+ datetime [0]      DateAndTime,                      --- дата и время с точностью до секунд
+ integer [1]       INTEGER,                          --- целочисленный
+ string [2]        UTF8String,                       --- строковый
+ boolean [3]       BOOLEAN,                          --- булевый
+ float [4]         REAL,                             --- с плавающей запятой
+ location [5]      Location,                         --- местоположение
+ empty [6]         NULL                              --- пустое значение (null)
+}
+
+--- математические операции сравнения
+MathOperation ::=  ENUMERATED {
+ equal (0),            --- равно
+ less (1),             --- меньше
+ greater (2),          --- больше
+ not-equal (3),        --- не равно
+ less-or-equal (4),    --- меньше или равно
+ greater-or-equal (5)  --- больше или равно
+}
+
+-----------------------------------------------------------
+GetEntitiesResponse ::= SEQUENCE OF NonFormalizedEntity
+
+NonFormalizedEntity ::= SEQUENCE {
+ entity-id         EntityId,                         --- уникальный идентификатор сущности
+ entity-name       UTF8String (SIZE (1 .. 256))      --- текстовое наименование сущности
+}
+
+GetEntityAttributesResponse ::=    SEQUENCE {
+ entity-id         EntityId,                                 --- уникальный идентификатор сущности
+ entity-attributes SEQUENCE OF NonFormalizedEntityAttribute  --- атрибуты сущности
+}
+
+ValidateNonFormalizedTaskResponse ::= CreateTaskResponse
+
+NonFormalizedPresenseTaskResponse ::= CreateTaskResponse
+
+-----------------------------------------------------------
+
+--- типы данных атрибутов
+AttributeType ::= ENUMERATED {
+ date-time (0),                   --- дата и время с точностью до секунд
+ integer (1),                     --- целочисленный
+ string (2),                      --- строковый
+ boolean (3),                     --- булевый
+ float (4),                       --- с плавающей запятой
+ location (5),                    --- местоположение
+ empty (6)                        --- пустое значение
+}
+
+--- Идентификатор сущности
+EntityId ::= INTEGER (0 .. 4294967296)
+
+END

@@ -1,0 +1,109 @@
+ReportedIdentifiers DEFINITIONS IMPLICIT TAGS ::=
+BEGIN
+
+EXPORTS
+ ReportedIdentifier
+ ;
+
+IMPORTS TAGGED,
+     sorm-report-identifier-pager,
+     sorm-report-identifier-pstn,
+     sorm-report-identifier-gsm,
+     sorm-report-identifier-cdma,
+     sorm-report-identifier-data-network,
+     sorm-report-identifier-voip
+  FROM Classification
+
+     IPAddress, DataNetworkEquipment, IPMask
+  FROM NetworkIdentifiers;
+
+ReportedIdentifier ::= SEQUENCE {
+ id     TAGGED.&id ({ReportedIdentifierVariants}),
+ data   TAGGED.&Data ({ReportedIdentifierVariants}{@id})
+}
+
+--- варианты идентификаторов отчета
+ReportedIdentifierVariants TAGGED ::= {
+ reportedPagerIdentifier                             --- идентификатор сети персонального радиовызова
+ | reportedPstnIdentifier                            --- идентификатор ТФОП
+ | reportedGsmIdentifier                             --- идентификатор GSM
+ | reportedCdmaIdentifier                            --- идентификатор CDMA
+ | reportedDataNetworkIdentifier                     --- идентификатор сети передачи данных
+ | reportedVoipIdentifier
+}
+
+--- идентификатор сети персонального радиовызова
+reportedPagerIdentifier TAGGED ::= {
+ OID { sorm-report-identifier-pager }
+ DATA ReportedPagerIdentifier
+}
+
+ReportedPagerIdentifier ::= NumericString (SIZE (2 .. 18))
+
+--- идентификатор телефонной сети общего пользования
+reportedPstnIdentifier TAGGED ::= {
+ OID { sorm-report-identifier-pstn }
+ DATA ReportedPstnIdentifier
+}
+
+ReportedPstnIdentifier ::= SEQUENCE {
+ directory-number UTF8String (SIZE (2 .. 32)),               --- телефонный номер в международном формате
+ internal-number  NumericString (SIZE (1 .. 32)) OPTIONAL    --- дополнительный внутренний номер, если есть
+}
+
+-- идентификатор абонента GSM
+reportedGsmIdentifier TAGGED ::= {
+ OID { sorm-report-identifier-gsm }
+ DATA ReportedGsmIdentifier
+}
+
+ReportedGsmIdentifier ::= SEQUENCE {
+ directory-number  UTF8String (SIZE (2 .. 32)),              --- телефонный номер в международном формате
+ imsi              NumericString (SIZE (2 .. 18)),           --- идентификатор мобильного абонента
+ imei [0]          NumericString (SIZE (2 .. 18)) OPTIONAL,  --- идентификатор мобильной станции
+ icc [1]           NumericString (SIZE (10 .. 20)) OPTIONAL  --- идентификатор SIM-карты абонента
+}
+
+-- идентификатор абонента CDMA
+reportedCdmaIdentifier TAGGED ::= {
+ OID { sorm-report-identifier-cdma }
+ DATA ReportedCdmaIdentifier
+}
+
+ReportedCdmaIdentifier ::= SEQUENCE {
+ directory-number UTF8String (SIZE (2 .. 32)),               --- телефонный номер в международном формате
+ imsi           NumericString (SIZE (2 .. 18)),              --- идентификатор мобильного абонента
+ esn [0]        NumericString (SIZE (2 .. 18)) OPTIONAL,     --- идентификатор мобильной станции
+ min [1]        NumericString (SIZE (2 .. 18)) OPTIONAL,     --- идентификатор мобильного абонента (CDMA)
+ icc [2]        NumericString (SIZE (10 .. 20)) OPTIONAL     --- идентификатор SIM-карты абонента
+}
+
+reportedDataNetworkIdentifier TAGGED ::= {
+ OID { sorm-report-identifier-data-network }
+ DATA ReportedDataNetworkIdentifier
+}
+
+ReportedDataNetworkIdentifier ::= SEQUENCE {
+ user-equipment [0]     DataNetworkEquipment OPTIONAL,              --- идентификатор пользовательского оборудования
+ login [1]              UTF8String (SIZE (1 .. 128)) OPTIONAL,      --- имя пользователя - login
+ ip-address [2]         IPAddress OPTIONAL,                         --- IP адрес
+ e-mail [3]             UTF8String (SIZE (1 .. 256)) OPTIONAL,      --- адрес электронной почты
+ pin [4]                NumericString (SIZE (2 .. 20)) OPTIONAL,    --- PIN
+ phone-number [5]       UTF8String (SIZE (2 .. 32)) OPTIONAL,       --- номер телефона
+ user-domain [6]        UTF8String (SIZE (2 .. 256)) OPTIONAL,      --- пользовательский домен
+ reserved [7]           UTF8String (SIZE (1 .. 256)) OPTIONAL,      --- резерв
+ ip-mask [8]            IPMask OPTIONAL
+}
+
+reportedVoipIdentifier TAGGED ::= {
+ OID { sorm-report-identifier-voip }
+ DATA ReportedVoipIdentifier
+}
+
+ReportedVoipIdentifier ::= SEQUENCE {
+ ip-address [0]            IPAddress OPTIONAL,                      --- IP-адрес абонента
+ originator-name [1]       UTF8String (SIZE (1 .. 512)) OPTIONAL,   --- общедоступное имя инициатора связи
+ calling-number [2]        UTF8String (SIZE (1 .. 32)) OPTIONAL     --- номер вызывающего абонента
+}
+
+END

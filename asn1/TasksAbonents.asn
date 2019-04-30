@@ -1,0 +1,55 @@
+TasksAbonents DEFINITIONS IMPLICIT TAGS ::=
+BEGIN
+
+EXPORTS AbonentsTask;
+
+IMPORTS
+  LogicalOperation FROM Tasks
+  RequestedIdentifier FROM RequestedIdentifiers
+  RequestedAbonent FROM RequestedAbonents;
+
+AbonentsTask ::= CHOICE {
+  validate-abonents-task [0] ValidateAbonentsTask,   --- задача на поиск информации о принадлежности
+                                                     --- идентификаторов абонентов сети оператора связи
+
+  validate-identifiers [1] ValidateIdentifiersTask,  --- задача на поиск информации об идентификаторах
+                                                     --- абонентов сети оператора связи зарегистрированных
+                                                     --- на физическое или юридическое лицо
+
+  validate-services [2]    ValidateServicesTask      -- задача на поиск информации о доступных абоненту видам услуг связи
+}
+
+--- задача на поиск информации о принадлежности идентификаторов абонентов сети оператора связи
+ValidateAbonentsTask ::= RequestedIdentifiers        --- запрашиваемые идентификаторы
+
+RequestedIdentifiers ::= SEQUENCE OF RequestedIdentifierParameters -- последовательность из идентификаторов и логических операций
+
+RequestedIdentifierParameters ::= CHOICE {
+  separator [0] LogicalOperation,                            --- логическая операция или скобка
+  find-mask [1] RequestedIdentifier                          --- параметр - идентификатор
+}
+
+--- задача на поиск информации об идентификаторах абонентов сети оператора связи зарегистрированных на физическое или юридическое лицо
+ValidateIdentifiersTask ::= RequestedAbonents                --- запрашиваемые абоненты
+
+RequestedAbonents ::= SEQUENCE OF RequestedAbonentsParameters      --- последовательность логических операций и параметров
+
+RequestedAbonentsParameters ::= CHOICE {
+  separator [0] LogicalOperation,                            --- логический оператор связки
+  find-mask [1] RequestedAbonent                             --- информация запроса об абоненте
+}
+
+--- задача на поиск истории услуг связи абонента
+--- запрос по маске запрещен, идентификатор должен быть указан полностью
+ValidateServicesTask ::= SEQUENCE OF ValidateServicesParameters
+ValidateServicesParameters ::= CHOICE {
+  separator [0] LogicalOperation,                            --- логическая операция или скобка
+  find-mask [1] ValidateServicesParameter                    --- параметр - идентификатор
+}
+
+ValidateServicesParameter ::= CHOICE {
+  contract [0] UTF8String (SIZE (1 .. 64)),                  --- номер договора
+  identifier [1] RequestedIdentifier
+}
+
+END

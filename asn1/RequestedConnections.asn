@@ -1,0 +1,322 @@
+RequestedConnections DEFINITIONS IMPLICIT TAGS ::=
+BEGIN
+
+EXPORTS RequestedConnection;
+
+IMPORTS TAGGED,
+      sorm-request-connection-pstn,
+      sorm-request-connection-mobile,
+      sorm-request-connection-entrance,
+      sorm-request-connection-aaa-login,
+      sorm-request-connection-resource,
+      sorm-request-connection-email,
+      sorm-request-connection-im,
+      sorm-request-connection-voip,
+      sorm-request-connection-file-transfer,
+      sorm-request-connection-term-access,
+      sorm-request-connection-raw-flows,
+      sorm-request-connection-address-translations
+      FROM Classification
+
+      requestedPagerIdentifier,
+      requestedPstnIdentifier,
+      requestedGsmIdentifier,
+      requestedCdmaIdentifier
+      FROM RequestedIdentifiers
+
+      PhoneAbonentType
+      FROM Dictionaries
+
+      Bunch,
+      DataNetworkEquipment,
+      IPAddress,
+      NetworkPeerInfo,
+      DataVoipNumber,
+      VoipProtocol,
+      IMProtocol,
+      HttpMethod
+      FROM NetworkIdentifiers
+
+      Location
+      FROM Locations;
+
+RequestedConnection ::= SEQUENCE {
+ id     TAGGED.&id ({RequestedConnectionVariants}),
+ data   TAGGED.&Data ({RequestedConnectionVariants}{@id})
+}
+
+--- варианты запрашиваемых параметров связей
+RequestedConnectionVariants TAGGED ::= {
+  requestedPagerIdentifier
+ |requestedConnectionPstn                            --- параметры соединений абонента ТФОП
+ |requestedConnectionMobile                          --- параметры соединений абонента сети мобильной связи
+ |requestedConnectionEntrance                        --- параметры соединений подключения к сети связи
+ |requestedAAALogin
+ |requestedResource
+ |requestedEmail
+ |requestedIm
+ |requestedVoip
+ |requestedFileTransfer
+ |requestedTermAccess
+ |requestedRawFlows
+ |requestedAddressTranslations
+}
+
+requestedConnectionEntrance TAGGED ::= {
+ OID { sorm-request-connection-entrance }
+ DATA CHOICE {
+  directory-number [0]  UTF8String (SIZE (2 .. 32)),         --- телефонный номер в международном формате
+  imsi [1]              NumericString (SIZE (2 .. 18)),      --- идентификатор мобильного абонента
+  ip-address [2]        IPAddress,                           --- IP-адрес абонента
+  mac [3]               OCTET STRING (SIZE (6))              --- MAC-адрес устройства абонента
+ }
+}
+
+--- параметры соединений абонента ТФОП
+requestedConnectionPstn TAGGED ::= {
+ OID { sorm-request-connection-pstn }
+ DATA CHOICE {
+  duration [0]               INTEGER (0 .. 86399),                 --- время соединения
+  call-type-id [1]           INTEGER  (0 .. 4294967295),           --- тип соединения
+  in-abonent-type [2]        PhoneAbonentType,                     --- тип вызывающего абонента
+  out-abonent-type [3]       PhoneAbonentType,                     --- тип вызываемого абонента
+  switch-id [4]              UTF8String (SIZE (1 .. 128)),         --- код коммутатора обслужившего вызов
+  inbound-bunch [5]          INTEGER (0 .. 4294967295),            --- входящий пучок
+  outbound-bunch [6]         INTEGER  (0 .. 4294967295),           --- исходящий пучок
+  border-switch-id [7]       UTF8String (SIZE (1 .. 128)),         --- код пограничного коммутатора
+  term-cause [8]             INTEGER (0 .. 16384),                 --- причина завершения соединения
+  supplement-service-id [9]  INTEGER (0 .. 4294967295),            --- ДВО при соединении
+  phone-card-number [10]     NumericString (SIZE (1.. 20)),        --- номер телефонной карты
+  in-info [11]               RequestedConnectionPstnIdentifier,    --- идентификаторы вызывающего абонента
+  out-info [12]              RequestedConnectionPstnIdentifier,    --- идентификаторы вызываемого абонента
+  forwarding-identifier [13] UTF8String (SIZE (2 .. 32)),          --- телефонный номер при переадресации
+  message [20]               UTF8String                            --- текстовое содержание сообщения абонента
+ }
+}
+
+-- Идентификаторы PSTN
+RequestedConnectionPstnIdentifier ::= SEQUENCE {
+ id     TAGGED.&id ({RequestedConnectionPstnIdentifierVariants}),
+ data   TAGGED.&Data ({RequestedConnectionPstnIdentifierVariants}{@id})
+}
+
+RequestedConnectionPstnIdentifierVariants TAGGED ::= {
+ requestedPstnIdentifier
+}
+
+requestedConnectionMobile TAGGED ::= {
+ OID { sorm-request-connection-mobile }
+ DATA CHOICE {
+  duration [0]               INTEGER (0 .. 86399),                 --- время соединения
+  call-type-id [1]           INTEGER (0 .. 4294967295),            --- тип соединения
+  supplement-service-id [2]  INTEGER (0 .. 4294967295),            --- ДВО при соединении
+  in-abonent-type [3]        PhoneAbonentType,                     --- тип вызывающего абонента
+  out-abonent-type [4]       PhoneAbonentType,                     --- тип вызываемого абонента
+  switch-id [5]              UTF8String (SIZE (1 .. 128)),         --- код коммутатора обслужившего соединения
+                                                                   --- или номер SMS центра если SMS
+  inbound-bunch [6]          Bunch,                                --- входящий пучок
+  outbound-bunch [7]         Bunch,                                --- исходящий пучок
+  border-switch-id [8]       UTF8String (SIZE (1 .. 128)),         --- код пограничного коммутатора
+  roaming-partner-id [9]     INTEGER (0 .. 4294967295),            --- код роумингового партнера
+  term-cause [10]            INTEGER (0 .. 16384),                 --- причина завершения соединения
+  in-info [11]               RequestedConnectionMobileIdentifier,  --- идентификаторы вызывающего абонента
+  in-end-location [12]       Location,                             --- местоположение вызывающего абонента на конец вызова
+  in-begin-location [13]     Location,                             --- местоположение вызывающего абонента на начало вызова
+  dialed-digits [14]         UTF8String (SIZE (1 .. 128)),         --- набранный номер вызываемого абонента
+  out-info [15]              RequestedConnectionMobileIdentifier,  --- идентификаторы вызываемого абонента
+  out-begin-location [16]    Location,                             --- местоположение вызываемого абонента на начало вызова
+  out-end-location [17]      Location,                             --- местоположение вызываемого абонента на конец вызова
+  forwarding-identifier [18] UTF8String (SIZE (2 .. 32)),          --- телефонный номер при переадресации
+  message [40]               UTF8String                            --- текстовое содержание сообщения абонента
+ }
+}
+
+-- Идентификаторы мобильных абонентов
+RequestedConnectionMobileIdentifier ::= SEQUENCE {
+ id     TAGGED.&id ({RequestedConnectionMobileIdentifierVariants}),
+ data   TAGGED.&Data ({RequestedConnectionMobileIdentifierVariants}{@id})
+}
+
+RequestedConnectionMobileIdentifierVariants TAGGED ::= {
+ requestedGsmIdentifier |
+ requestedCdmaIdentifier
+}
+
+requestedAAALogin TAGGED ::= {
+ OID { sorm-request-connection-aaa-login }
+ DATA CHOICE {
+  point-id [0]   INTEGER (0 .. 1000),                        --- идентификатор точки подключения к сети передачи данных, с которой получены записи
+  login-type [1] ENUMERATED {                                --- тип соединения
+   connect (0),                                              --- подключение к сети передачи данных
+   disconnect (1),                                           --- отключение от сети передачи данных
+   update (2)
+  },
+  user-equipment [2]     DataNetworkEquipment,               --- идентификатор пользовательского оборудования
+  allocated-ip [3]       IPAddress,                          --- выделенный динамический IP-адрес
+  user-name [4]          UTF8String (SIZE (1 .. 128)),       --- имя пользователя (login)
+  user-password [5]      UTF8String (SIZE (1 .. 128)),       --- пользовательский пароль
+  connect-type [6]       INTEGER (1 .. 65535),               --- код протокола в соответствии с RFC1700 либо номер порта для TCP/UDP
+  calling-number [7]     UTF8String (SIZE (2 .. 32)),        --- вызывающий номер
+  called-number [8]      UTF8String (SIZE (2 .. 32)),        --- вызываемый номер
+  nas [9]                NetworkPeerInfo,                    --- IP-адрес/порт NAS-сервера
+  apn [10]               UTF8String (SIZE (1 .. 128)),       --- наименование точки доступа (Access Point Name)
+  sgsn-ip [11]           IPAddress,                          --- IP-адрес GPRS/EDGE SGSN
+  ggsn-ip [12]           IPAddress,                          --- IP-адрес GPRS/EDGE GGSN
+  service-area-code [13] INTEGER (0 .. 65535),               --- код зоны обслуживания (SAC) GPRS/EDGE
+  location-start [14]    Location,                           --- базовая станция, через которую установлено соединение (передача данных посредством подвижной сети связи)
+  location-end [15]      Location,                           --- базовая станция, через которую завершено соединение (передача данных посредством подвижной сети связи)
+  phone-card-number [16] NumericString (SIZE (20)),          --- номер телефонной карты
+  imsi [17]              NumericString (SIZE (2 .. 18)),     --- IMSI мобильного абонента
+  imei [18]              NumericString (SIZE (2 .. 18)),     --- идентификатор мобильной станции абонента
+  esn [19]               NumericString (SIZE (2 .. 18)),     --- идентификатор мобильной станции абонента
+  pool-number [20]       UTF8String(SIZE (1 .. 64)),         --- номер модемного пула
+  mcc [21]               UTF8String,
+  mnc [22]               UTF8String
+ }
+}
+
+requestedResource TAGGED ::= {
+ OID { sorm-request-connection-resource }
+ DATA CHOICE {
+  point-id [0]    INTEGER (0 .. 1000),               --- идентификатор точки подключения к сети передачи данных, с которой получены записи
+  client-info [1] NetworkPeerInfo,                   --- идентификатор абонента сети передачи данных
+  server-info [2] NetworkPeerInfo,                   ---  идентификатор сервера сети передачи данных
+  url [3]         UTF8String (SIZE (1 .. 8192)),     --- Наименование информационного ресурса
+  term-cause [4]  INTEGER (0 .. 16384),              --- причина завершения соединения
+  http-method [5] HttpMethod,
+  abonent-id [6]  UTF8String (SIZE (0 .. 64)),
+  nat-info [10]   NetworkPeerInfo,                   --- транслированные NAT IP/порт
+  location [11]   Location                           --- местоположение абонента
+ }
+}
+
+requestedEmail TAGGED ::= {
+ OID { sorm-request-connection-email }
+ DATA CHOICE {
+  point-id [0]    INTEGER (0 .. 1000),               --- идентификатор точки подключения к сети передачи данных, с которой получены записи
+  client-info [1] NetworkPeerInfo,                   --- идентификатор абонента сети передачи данных
+  server-info [2] NetworkPeerInfo,                   --- идентификатор сервера сети передачи данных
+  sender [3]      UTF8String (SIZE (1 .. 512)),      --- отправитель почтового сообщения
+  receiver [4]    UTF8String (SIZE (1 .. 512)),      --- получатель почтового сообщения
+  cc  [5]         UTF8String (SIZE (1 .. 512)),      --- получатель-копия почтового сообщения
+  subject [6]     UTF8String (SIZE (1 .. 2048)),     --- тема почтового сообщения
+  attachements [7] BOOLEAN,                          ---  наличие прикрепленных файлов в письме (да/нет)
+  mail-server [8] UTF8String (SIZE (1 .. 512)),      ---  текстовое наименование сервера, через который отправлено письмо (в т.ч. сервер веб-почты)
+  term-cause [9]  INTEGER (0 .. 16384),              --- причина завершения соединения
+  abonent-id [10] UTF8String (SIZE (0 .. 64)),
+  message [20]    UTF8String,                        --- текстовое содержание сообщения абонента
+  nat-info [21]   NetworkPeerInfo,                   --- транслированные NAT IP/порт
+  location [22]   Location                           --- местоположение абонента
+ }
+}
+
+requestedIm TAGGED ::= {
+ OID { sorm-request-connection-im }
+ DATA CHOICE {
+  point-id [0]             INTEGER (0 .. 1000),      --- идентификатор точки подключения к сети передачи данных, с которой получены записи
+  client-info [1]          NetworkPeerInfo,          --- идентификатор абонента сети передачи данных
+  server-info [2]          NetworkPeerInfo,          --- идентификатор сервера сети передачи данных
+  user-login [3]           UTF8String (SIZE (1 .. 128)), --- учетная запись пользователя при подключении
+  user-password [4]        UTF8String (SIZE (1 .. 128)), --- пользовательский пароль при подключении
+  sender-screen-name [5]   UTF8String (SIZE (1 .. 256)), --- общедоступное имя отправителя
+  sender-uin  [6]          UTF8String (SIZE (1 .. 256)), --- пользовательский идентификатор отправителя (в т.ч. для сервера, предназначенного для отправки мнгновенных сообщений)
+  receiver-screen-name [7] UTF8String (SIZE (1 .. 256)), --- общедоступное имя получателя
+  receiver-uin [8]         UTF8String (SIZE (1 .. 256)), --- пользовательский идентификатор получателя (в т.ч. для сервера, предназначенного для отправки мнгновенных сообщений)
+  protocol [9]             IMProtocol,
+  term-cause [10]          INTEGER (0 .. 16384),         --- причина завершения соединения
+  abonent-id [11]          UTF8String (SIZE (0 .. 64)),
+  message [20]             UTF8String,                   --- текстовое содержание сообщения абонента
+  nat-info [21]            NetworkPeerInfo,              --- транслированные NAT IP/порт
+  location [22]            Location                      --- местоположение абонента
+ }
+}
+
+requestedVoip TAGGED ::= {
+ OID { sorm-request-connection-voip }
+ DATA CHOICE {
+  point-id [0]             INTEGER (0 .. 1000),      --- идентификатор точки подключения к сети передачи данных, с которой получены записи
+  client-info [1]          NetworkPeerInfo,          --- идентификатор абонента сети передачи данных
+  server-info [2]          NetworkPeerInfo,          --- идентификатор сервера сети передачи данных
+  duration [3]             INTEGER (0 .. 864000),    --- длительность разговора, сек.
+  originator-name [4]      UTF8String (SIZE (1 .. 512)), --- общедоступное имя инициатора связи
+  call-type-id [5]         INTEGER (0 .. 4294967295), --- способ подключения
+  voip-calling-number [6]  DataVoipNumber,           --- номер вызывающего абонента
+  voip-called-number [7]   DataVoipNumber,           --- номер вызываемого абонента
+  inbound-bunch [8]        Bunch,                    --- входящий пучок
+  outbound-bunch [9]       Bunch,                    --- исходящий пучок
+  conference-id [10]       UTF8String (SIZE (1 .. 64)), ---  идентификатор конференции
+  protocol [11]            VoipProtocol,
+  term-cause [12]          INTEGER (0 .. 16384),     --- причина завершения соединения
+  abonent-id [13]          UTF8String (SIZE (0 .. 64)),
+  nat-info [20]            NetworkPeerInfo,          --- транслированные NAT IP/порт
+  location [21]            Location                  --- местоположение абонента
+ }
+}
+
+requestedFileTransfer TAGGED ::= {
+ OID { sorm-request-connection-file-transfer }
+ DATA CHOICE {
+  point-id [0]             INTEGER (0 .. 1000),      --- идентификатор точки подключения к сети передачи данных, с которой получены записи
+  client-info [1]          NetworkPeerInfo,          --- идентификатор абонента сети передачи данных
+  server-info [2]          NetworkPeerInfo,          --- идентификатор сервера сети передачи данных
+  server-name [3]          UTF8String (SIZE (1 .. 256)), --- название сервера
+  user-name [4]            UTF8String (SIZE (1 .. 128)), --- имя пользователя, наименование учетной записи
+  user-password [5]        UTF8String (SIZE (1 .. 256)), --- пользовательский пароль
+  term-cause [6]           INTEGER (1 .. 16384),     --- причина завершения соединения
+  abonent-id [7]           UTF8String (SIZE (0 .. 64)),
+  nat-info [20]            NetworkPeerInfo,           --- транслированные NAT IP/порт
+  location [21]            Location                   --- местоположение абонента
+ }
+}
+
+requestedTermAccess TAGGED ::= {
+ OID { sorm-request-connection-term-access }
+ DATA CHOICE {
+  point-id [0]    INTEGER (0 .. 1000),               --- идентификатор точки подключения к сети передачи данных, с которой получены записи
+  client-info [1] NetworkPeerInfo,                   --- идентификатор абонента сети передачи данных
+  server-info [2] NetworkPeerInfo,                   --- идентификатор сервера сети передачи данных
+  abonent-id [3]  UTF8String (SIZE (0 .. 64)),
+  nat-info [10]   NetworkPeerInfo,                   --- транслированные NAT IP/порт
+  location [11]   Location                           --- местоположение абонента
+  sni [13]        UTF8String (SIZE (0 .. 128)), --- Поле Server Name Indication/Common Name
+ }
+}
+
+--- идентификаторы для соединений передачи данных (закрытые протоколы обмена)
+requestedRawFlows TAGGED::= {
+ OID { sorm-request-connection-raw-flows }
+ DATA CHOICE {
+  point-id [0]             INTEGER (0 .. 1000),      --- идентификатор точки подключения к сети передачи данных, с которой получены записи
+  protocol-code [1]        INTEGER (0  ..  65535),   --- код протокола в соответствии с RFC1700
+  client-info [2]          NetworkPeerInfo,          --- идентификатор абонента сети передачи данных
+  server-info [3]          NetworkPeerInfo,          --- идентификатор сервера сети передачи данных
+  abonent-id [4]           UTF8String (SIZE (0 .. 64)),
+  nat-info [10]            NetworkPeerInfo,          --- транслированные NAT IP/порт
+  location [11]            Location                  --- местоположение абонента
+  sni [13]                 UTF8String (SIZE (0 .. 128)), --- SNI/CN
+ }
+}
+
+--- идентификаторы для соединений передачи данных (закрытые протоколы обмена)
+requestedAddressTranslations TAGGED::= {
+ OID { sorm-request-connection-address-translations }
+ DATA CHOICE {
+  point-id [0]             INTEGER (0 .. 1000),      --- идентификатор точки подключения к сети передачи данных, с которой получена запись о соединении
+  record-type [2]          ENUMERATED {              ---  тип  записи о трансляции сетевого адреса
+   session-start (0),                                --- начало сессии трансляции
+   session-end (1)                                   --- окончание сессии трансляции
+  },
+  private-ip [3]           NetworkPeerInfo,          --- внутренний адрес
+  public-ip [4]            NetworkPeerInfo,          --- внешний адрес
+  destination-ip [5]       NetworkPeerInfo,          --- адрес назначения
+  translation-type [6]     ENUMERATED {              --- тип трансляции сетевых адресов
+    static-nat (0),                                  --- статическая
+    dynamic-nat (1),                                 --- динамическая
+    source-nat (2),                                  --- источника
+    destination-nat (3),                             --- получателя
+    pat (4)                                          --- адрес-порт
+  }
+ }
+}
+
+END

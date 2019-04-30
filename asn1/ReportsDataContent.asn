@@ -1,0 +1,38 @@
+ReportsDataContent DEFINITIONS IMPLICIT TAGS ::=
+BEGIN
+
+EXPORTS DataContentReport;
+
+IMPORTS TAGGED,
+   sorm-report-data-content-raw
+   FROM Classification;
+
+DataContentReport ::= SEQUENCE {
+ id     TAGGED.&id ({ReportedDataContentVariants}),
+ data   TAGGED.&Data ({ReportedDataContentVariants}{@id})
+}
+
+ReportedDataContentVariants TAGGED ::= {
+ reportDataContentRaw
+}
+
+reportDataContentRaw TAGGED ::= {
+ OID { sorm-report-data-content-raw }
+ DATA SEQUENCE OF RawRecordContent
+}
+
+RawRecordContent ::= SEQUENCE {
+ successful     BOOLEAN,                                   --- признак успешного формирования блока данных
+ data [0]       OCTET STRING (SIZE (1..1048576)) OPTIONAL, --- содержимое блока (в случае если блок успешно сформирован)
+ error [1]      UTF8String (SIZE (1..4096)) OPTIONAL,      --- описание ошибки (в случае если не удалось сформировать блок)
+ codec-info [2] UTF8String (SIZE (1..4096)) OPTIONAL,      --- описание способа кодирования в формате SDP в соответствии RFC 2327
+ direction [3]  DataContentRawDirection OPTIONAL,          --- направление передачи
+ channel [4]    INTEGER OPTIONAL                           --- канал
+}
+
+DataContentRawDirection ::= ENUMERATED {
+ client-server (0),
+ server-client (1)
+}
+
+END

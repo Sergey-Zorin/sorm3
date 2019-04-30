@@ -1,0 +1,71 @@
+Sessions DEFINITIONS IMPLICIT TAGS ::=
+BEGIN
+
+EXPORTS sessionMessage;
+
+IMPORTS TAGGED
+    ,sorm-message-session
+  FROM Classification;
+
+sessionMessage TAGGED ::= {
+ OID { sorm-message-session }
+ DATA CHOICE {
+  connect [0]             ConnectRequest,                    --- запрос на открытие сессии
+  connect-response [1]    ConnectResponse,                   --- ответ на запрос открытия сессии
+
+  adjustment [2]          AdjustmentRequest,                 --- согласование поддерживаемых типов со стороны ПУ
+  adjustment-response [3] AdjustmentResponse,                --- ответ на запрос согласования данных
+
+  disconnect [4]          DisconnectRequest,                 --- запрос на закрытие сессии
+  disconnect-response [5] DisconnectResponse                 --- ответ на запрос закрытия сессии
+ }
+}
+
+--- запрос создания сессии
+ConnectRequest ::= SEQUENCE {
+  session-timeout                   INTEGER (60 .. 2592000), --- максимальное время неактивности
+  max-data-length                   INTEGER (10 .. 100000),  --- максимальная длина блока отчета (в строках)
+  data-packet-window-size           INTEGER (4 .. 256),      --- окно канала передачи данных
+                                                             --- максимальное число блоков данных, которое может быть
+                                                             --- отправлено без подтверждения приема
+  data-load-timeout                 INTEGER (1 .. 60),       --- таймаут начала передачи блоков отчетов
+  request-response-timeout          INTEGER (1 .. 60),       --- таймаут ответа на запрос
+  data-packet-response-timeout      INTEGER (1 .. 60)        --- таймаут подтверждения приема блока данных отчета
+}
+
+-- ответ на запрос создания сессии
+ConnectResponse ::= SEQUENCE {
+  confirmed-data-packet-window-size INTEGER (4 .. 256),      --- подтвержденное окно передачи данных
+                                                             --- то окно, которое может обеспечить ИС СОРМ
+                                                             --- должно быть меньше или равно окну, переданному
+                                                             --- в ConnectRequest
+  confirmed-session-timeout         INTEGER (60 .. 2592000), --- подтвержденное максимальное время неактивности
+                                                             --- должно быть больше или равно значению, переданному
+                                                             --- в ConnectRequest
+  confirmed-data-load-timeout       INTEGER  (1 .. 60),      --- подтвержденный таймаут начала передачи блоков отчетов
+                                                             --- должен быть больше или равен значению, переданному
+                                                             --- в ConnectRequest
+  confirmed-request-response-timeout INTEGER (1 .. 60),      --- подтвержденный таймаут ответа на запрос
+                                                             --- должен быть больше или равен значению, переданному
+                                                             --- в ConnectRequest
+  supports SEQUENCE OF ObjectDescriptor                      --- весь список поддерживаемых СОРМ типов запросов, типов отчетов
+}
+
+--- согласование поддерживаемых типов со стороны ПУ
+AdjustmentRequest ::= SEQUENCE {
+  supports SEQUENCE OF ObjectDescriptor                      --- список поддерживаемых ПУ типов запросов, типов отчетов
+                                                             --- данный список должен быть меньшим либо равным списку в 
+															 --- сообщении ConnectRequest
+}
+
+-- ответ на согласование списка поддерживаемых типов
+AdjustmentResponse ::= NULL                                  --- ответ на запрос согласования данных
+
+--- запрос завершения сессии
+DisconnectRequest ::= NULL
+
+--- ответ на запрос завершения сессии
+DisconnectResponse ::= NULL
+
+END
+

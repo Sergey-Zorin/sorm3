@@ -1,0 +1,532 @@
+Dictionaries DEFINITIONS IMPLICIT TAGS ::=
+BEGIN
+
+EXPORTS
+   TelcoID,
+   TelcoList,
+
+   DictionaryTask,
+   DictionaryReport,
+
+   PhoneAbonentType;
+
+IMPORTS DateAndTime
+  FROM Sorm
+     TAGGED,
+     sorm-request-dictionaries,
+     sorm-report-dictionary-telcos,
+     sorm-report-dictionary-bunches,
+     sorm-report-dictionary-basic-stations,
+     sorm-report-dictionary-roaming-partners,
+     sorm-report-dictionary-switches,
+     sorm-report-dictionary-gates,
+     sorm-report-dictionary-call-types,
+     sorm-report-dictionary-supplement-services,
+     sorm-report-dictionary-pay-types,
+     sorm-report-dictionary-termination-causes,
+     sorm-report-dictionary-ip-numbering-plan,
+     sorm-report-dictionary-phone-numbering-plan,
+     sorm-report-dictionary-doc-types,
+     sorm-report-dictionary-ip-data-points,
+     sorm-report-dictionary-special-numbers,
+     sorm-report-dictionary-bunches-map,
+     sorm-report-dictionary-mobile-subscriber-identity-plan,
+     sorm-report-dictionary-signal-point-codes
+  FROM Classification
+
+     ReportedAddress
+  FROM Addresses
+
+     Bunch,
+     DataNetworkEquipment,
+     IPAddress,
+     IPPort,
+     IPMask,
+     NetworkPeerInfo,
+     NetworkType
+  FROM NetworkIdentifiers
+
+     GeoLocation FROM Locations;
+
+-- Идентификатор оператора связи или структурного подразделения
+TelcoID ::= INTEGER (0.. 65535)
+
+--- список идентификаторов операторов связи или структурного подразделения
+TelcoList ::= SEQUENCE OF TelcoID
+
+-- Запрос
+DictionaryTask ::= SEQUENCE {
+ id TAGGED.&id ({DictionaryTaskVariants}),
+ data TAGGED.&Data ({DictionaryTaskVariants}{@id})
+}
+
+DictionaryTaskVariants TAGGED ::= { dictionaryTask }
+
+dictionaryTask TAGGED ::= {
+ OID { sorm-request-dictionaries }
+ DATA  ObjectDescriptor                        -- тип запрашиваемого справочника (идентификатор отчета)
+}
+
+-- ObjectDescriptor принимает значение одно из:
+-- sorm-report-dictionary-telcos
+-- sorm-report-dictionary-bunches
+-- sorm-report-dictionary-basic-stations
+-- sorm-report-dictionary-roaming-partners
+-- sorm-report-dictionary-switches
+-- sorm-report-dictionary-gates
+-- sorm-report-dictionary-call-types
+-- sorm-report-dictionary-supplement-services
+-- sorm-report-dictionary-pay-types
+-- sorm-report-dictionary-termination-causes
+-- sorm-report-dictionary-ip-numbering-plan
+-- sorm-report-dictionary-phone-numbering-plan
+-- sorm-report-dictionary-doc-types
+-- sorm-report-dictionary-ip-data-points
+-- sorm-report-dictionary-special-numbers
+-- sorm-report-dictionary-bunches-map,
+-- sorm-report-dictionary-mobile-subscriber-identity-plan
+-- sorm-report-dictionary-signal-point-codes
+
+-- Отчет
+DictionaryReport ::= SEQUENCE {
+ id       TAGGED.&id ({DictionaryRecordsVariants}),        --- идентификтор записи справочника
+ data     TAGGED.&Data ({DictionaryRecordsVariants}{@id})  --- данные записи справочника
+}
+
+DictionaryRecordsVariants TAGGED ::= {
+  telcosRecords                            --- операторы связи, обслуживаемые ИС СОРМ
+  |bunchesRecords                          --- пучки соединительных линий
+  |basicStationsSectorRecords              --- базовые станции
+  |roamingPartnersRecords                  --- роуминговые партнеры
+  |switchesRecords                         --- коммутаторы
+  |gatesRecords                            --- IP шлюзы
+  |callTypesRecords                        --- типы вызовов
+  |supplementServicesRecords               --- список дополнительных видов обслуживания (далее - ДВО)
+  |payTypesRecords                         --- способы оплаты (пополнения баланса)
+  |terminationCausesRecords                --- причины завершения соединения
+  |ipNumberingPlanRecords                  --- IP-план адресации
+  |telephoneNumberingPlanRecords           --- план телефонной номерной емкости
+  |docTypesRecords                         --- типы документов, удостоверяющих личность
+  |ipDataPointsRecords                     --- идентификаторы  точек  подключения  к сети передачи данных, с которых получены записи о соединениях
+  |specialNumbersRecords                   --- специальные номера оператора (SMS-центры, ТМС, сервисы)
+  |bunchesMapRecords                       --- карта связей пучков соединительных линий
+  |mobileSubscriberIdenityPlanRecords      --- план нумерации идентификаторов мобильных телефонных абонентов
+  |signalPointCodes                        --- коды сигнальных точек OPC/DPC
+}
+
+--- операторы связи, обслуживаемые ИС СОРМ
+telcosRecords TAGGED ::= {
+ OID{ sorm-report-dictionary-telcos }
+ DATA SEQUENCE OF TelcosRecord }
+
+TelcosRecord ::= SEQUENCE {
+ telco-id       TelcoID,                           --- номер структурного подразделения или оператора связи
+ begin-time     DateAndTime,                       --- время начала действия
+ end-time       DateAndTime OPTIONAL,              --- время конца действия 
+ description    UTF8String (SIZE (1 .. 256)),      --- описание (наименование) оператора связи или структурного подразделения
+ mcc[0]         NumericString (SIZE(3)) OPTIONAL,  --- код страны
+ mnc[1]         NumericString (SIZE(3)) OPTIONAL   --- код оператора связи
+}
+
+--- пучки соединительных линий
+bunchesRecords TAGGED ::= {
+ OID { sorm-report-dictionary-bunches }
+ DATA SEQUENCE OF BunchRecord
+}
+
+BunchRecord ::= SEQUENCE {
+ telco-id           TelcoID,                           --- идентификатор оператора связи или структурного подразделения
+ bunch-id      Bunch,                                  --- идентификатор пучка
+ switch-id     UTF8String (SIZE (1 .. 128)),           --- идентификатор коммутатора
+ bunch-type ENUMERATED{                                --- тип - входящий/исходящий
+   inbound(0),
+   outbound(1),
+   bidirectional(3)
+ },
+ begin-time      DateAndTime,                           --- время начала назначения пучка
+ end-time        DateAndTime OPTIONAL,                  --- время конца назначения пучка
+ description     UTF8String (SIZE(1 .. 256))            --- расшифровка пучка
+}
+
+--- базовые станции
+basicStationsSectorRecords TAGGED ::= {
+ OID{ sorm-report-dictionary-basic-stations }
+ DATA SEQUENCE OF BasicStationSectorRecord
+}
+
+BasicStationSectorRecord ::= SEQUENCE {
+ telco-id                TelcoID,                --- идентификатор оператора связи или структурного подразделения
+ begin-time    DateAndTime,                      --- время начала действия базовой станции
+ end-time      DateAndTime,                      --- время конца действия базовой станции
+ address       UTF8String (SIZE (1 ..  256)),    --- произвольное текстовое описание адреса или места расположения
+
+ sector-identifiers    BasicStationIdentifiers,  --- идентификаторы сектора
+ antenna-configuration BasicStationAntenna,      ---  параметры  антенной системы
+ station-type          BasicStationType,         --- тип сети базовой станции
+
+ structured-address[0] ReportedAddress OPTIONAL, --- адрес места установки базовой станции
+ location[1]           GeoLocation OPTIONAL      --- географическое местоположение
+}
+
+--- идентификаторы сектора
+BasicStationIdentifiers ::= CHOICE {
+ telepone[0]     TelephoneIdentifiers,           --- идентификаторы сектора для телефонной сети
+ wireless[1]    SEQUENCE OF WirelessIdentifiers  --- идентификаторы сектора для сети передачи данных
+}
+
+--- идентификаторы сектора для телефонной сети
+TelephoneIdentifiers ::= SEQUENCE {
+ lac             INTEGER (0 .. 65535),                --- код зоны
+ cell            INTEGER (0 .. 4294967295),           --- идентификатор сектора базовой станции (идентификатор базовой станции и сектор)
+ cell-sign       UTF8String(SIZE (1 .. 18)) OPTIONAL  --- телефонный идентификатор соты
+}
+
+--- идентификаторы сектора для сети передачи данных
+WirelessIdentifiers ::= SEQUENCE {
+ cell            UTF8String (SIZE (1 .. 64)),         --- идентификатор сектора
+ ip-list         IPList OPTIONAL,                     --- перечень назначенных сектору IP-адресов/портов
+ mac             OCTET STRING (SIZE (6)) OPTIONAL     ---  MAC-адрес  сетевого оборудования сектора
+}
+
+IPList ::= SEQUENCE OF NetworkPeerInfo
+
+--- параметры антенной системы
+BasicStationAntenna ::= CHOICE {
+  gsm-antenna [0]      GsmAntenna,					--- параметры антенной системы GSM-сектора
+  cdma-antenna [1]     SEQUENCE OF CdmaAntenna,				--- параметры антенной системы CDMA-сектора
+  wireless-antenna [2] SEQUENCE OF WirelessAntenna			--- параметры антенной системы WiFi/WiMAX-сектора
+}
+
+--- параметры антенной системы
+GsmAntenna ::=  SEQUENCE {
+ azimut               INTEGER (-1 .. 359),                   --- азимут относительно направления на север, в градусах, если -1, то нет направленности
+ width                INTEGER (0 .. 359),                    --- ширина растра в градусах
+ horizon-angle        INTEGER (0 .. 359),                    --- угол наклона сектора к горизонту
+ power [0]            INTEGER (0 .. 25000) OPTIONAL,         --- мощность в ваттах (сектор)
+ frequency [1]        INTEGER (0 .. 10000000000) OPTIONAL,   --- частота излучения (сектор)
+ vertical-lift [2]    INTEGER  (0 ..  100) OPTIONAL,         ---  высота подвеса сектора
+ gain-factor [3]      INTEGER (-100 .. 100) OPTIONAL,        --- коэффициент усиления антенны (Дб)
+ polarization [4]     INTEGER (-45 .. 45) OPTIONAL,          --- поляризация антенной системы
+ setting [5]          BsSetting OPTIONAL,                    --- тип расположения БС
+ thickness [6]        INTEGER (0 .. 359) OPTIONAL,           --- ширина диаграммы направленности основного лепестка сектора БС по вертикали (в градусах)
+ generation [7]       BsGeneration OPTIONAL,                 --- поколение
+ controller-num [8]   UTF8String (SIZE (1 .. 128)) OPTIONAL, --- номер контроллера БС
+ bcc-ncc [9]          UTF8String (SIZE (1 .. 128)) OPTIONAL, --- код идентификации базовой станции (BCC + NCC)
+ cell-type [10]       BsCellType OPTIONAL,                   --- тип БС соты (макро-, микро-, пико-, фемто-)
+ radiation-class [11] UTF8String (SIZE (1 ..  32)) OPTIONAL, --- класс излучения (например: 200KG7D)
+ name [12]            UTF8String (SIZE (1 .. 32)) OPTIONAL,  --- наименование базовой станции (номер БС в базах оператора)
+ channel [13]         UTF8String (SIZE  (1 .. 32)) OPTIONAL  --- десятичный номер канала (в соответствии со стандартом)
+}
+
+-- тип БС соты (макро-, микро-, пико-, фемто-)
+BsCellType ::= ENUMERATED{
+ macro (0),
+ micro (1),
+ pico (2),
+ femto (3)
+}
+
+-- поколение БС
+BsGeneration ::= ENUMERATED{
+ g2 (0),
+ g3 (1),
+ g4 (2),
+ g5 (3)
+}
+
+-- тип расположения БС
+BsSetting ::= ENUMERATED{
+ indoor (0),
+ outdoor (1),
+ underground (2)
+}
+
+CdmaAntenna ::= BroadbandWirelessParameters            ---  параметры антенной системы CDMA-сектора
+WirelessAntenna ::= BroadbandWirelessParameters        --- параметры антенной системы WiFi/WiMAX-сектора
+
+BroadbandWirelessParameters ::= SEQUENCE {
+ azimuth              INTEGER  (-1 ..  359),            ---  азимут относительно направления на север  в градусах, если -1, то нет направленности
+ width                INTEGER (0 .. 359),               --- ширина растра в градусах
+ horizon-angle        INTEGER (0 .. 359),               --- угол наклона сектора к горизонту
+ power[0]             INTEGER (0 .. 25000) OPTIONAL,             --- мощность в ваттах (сектор)
+ frequency-start[1]   INTEGER  (0 .. 10000000000) OPTIONAL,      --- нижняя частота излучения диапазона (сектор)
+ frequency-stop[2]    INTEGER  (0 .. 10000000000) OPTIONAL,      --- верхняя частота излучения диапазона (сектор)
+ leaf-level [3]       INTEGER  (-45 ..  45)  OPTIONAL,           ---  уровень  боковых лепестков
+ vertical-lift [4]    INTEGER  (0 ..  100)  OPTIONAL,            ---  высота подвеса сектора
+ gain-factor [5]      INTEGER (-100 .. 100) OPTIONAL,            --- коэффициент усиления антенны (Дб)
+ polarization [6]     INTEGER (-45 .. 45) OPTIONAL               --- поляризация антенной системы
+}
+
+--- виды базовых станций
+ BasicStationType ::= ENUMERATED {
+ gsm (0),
+ cdma (1),
+ umts (2),
+ wifi (3),
+ wimax (4)
+}
+
+roamingPartnersRecords TAGGED ::= {
+ OID { sorm-report-dictionary-roaming-partners }
+ DATA SEQUENCE OF RoamingPartnerRecord
+}
+
+RoamingPartnerRecord ::= SEQUENCE {
+ telco-id             TelcoID,                            --- идентификатор оператора связи или структурного подразделения
+ roaming-id    INTEGER  (0 ..  4294967295),               --- идентификатор роумингового партнера
+ begin-time    DateAndTime,                               --- время начала действия роуминга
+ end-time      DateAndTime OPTIONAL,                      --- время конца действия роуминга
+ description   UTF8String (SIZE (1 .. 256))               --- описание
+}
+
+switchesRecords TAGGED ::= {
+ OID { sorm-report-dictionary-switches }
+ DATA SEQUENCE OF SwitchesRecord
+}
+
+SwitchesRecord ::= SEQUENCE {
+ telco-id       TelcoID,                                  --- идентификатор оператора связи или структурного подразделения
+ switch-id      UTF8String (SIZE (1 .. 128)),             --- идентификатор коммутатора
+ begin-time     DateAndTime,                              --- время начала действия коммутатора
+ end-time       DateAndTime OPTIONAL,                     --- время конца действия коммутатора
+ description    UTF8String (SIZE (1 .. 256)),             --- описание
+ network-type   NetworkType,                              --- тип сети связи
+ address        ReportedAddress,                          --- адрес места установки коммутатора
+ switch-sign    NumericString (SIZE (1 ..  18)) OPTIONAL, --- телефонный идентификатор коммутатора
+ switch-type    ENUMERATED{
+   internal(0),     --- внутренний
+   border(1)        --- пограничный
+ }
+}
+
+gatesRecords TAGGED ::= {
+ OID { sorm-report-dictionary-gates }
+ DATA SEQUENCE OF GatesRecord
+}
+
+GatesRecord ::= SEQUENCE {
+ telco-id TelcoID,                                        --- идентификатор оператора связи или структурного подразделения
+ gate-id        INTEGER (0 .. 4294967295),                --- идентификатор шлюза
+ ip-list        IPList,                                   --- IP адрес шлюза
+ begin-time     DateAndTime,                              --- время начала действия шлюза
+ end-time       DateAndTime OPTIONAL,                     --- время конца действия шлюза
+ description    UTF8String (SIZE (1 .. 256)),             --- описание
+ address        ReportedAddress,                          --- адрес места установки шлюза
+ gate-type ENUMERATED{                                    --- тип IP-шлюза
+   sgsn(0),
+   ggsn(1),
+   smsc(2),
+   gmsc(3),
+   hss(4),
+   pstn(5),
+   voip-gw(6),
+   aaa(7),
+   nat(8)
+ }
+}
+
+callTypesRecords TAGGED ::= {
+ OID{ sorm-report-dictionary-call-types }
+ DATA SEQUENCE OF CallsTypesRecord
+}
+
+CallsTypesRecord ::= SEQUENCE {
+ telco-id              TelcoID,                              --- идентификатор оператора связи илиструктурного подразделения
+ call-type-id  INTEGER (0 .. 4294967295),                    --- идентификатор типа вызова
+ begin-time    DateAndTime,                                  --- время начала действия
+ end-time      DateAndTime OPTIONAL,                         --- время конца действия
+ description   UTF8String (SIZE (1 .. 256))                  --- описание
+}
+
+supplementServicesRecords TAGGED ::= {
+ OID { sorm-report-dictionary-supplement-services }
+ DATA SEQUENCE OF SupplementServicesRecord
+}
+
+SupplementServicesRecord ::= SEQUENCE {
+ telco-id              TelcoID,                              --- идентификатор оператора связи или структурного подразделения
+ service-id    INTEGER (0 .. 4294967295),                    --- идентификатор сервиса
+ mnemonic      UTF8String (SIZE (1..64)),                    --- мнемоническое обозначение
+ begin-time    DateAndTime,                                  --- время начала действия
+ end-time      DateAndTime OPTIONAL,                         --- время конца действия
+ description   UTF8String (SIZE (1 .. 256))                  --- описание
+}
+
+payTypesRecords TAGGED ::= {
+ OID { sorm-report-dictionary-pay-types }
+ DATA SEQUENCE OF PayTypesRecord
+}
+
+PayTypesRecord ::= SEQUENCE {
+ telco-id              TelcoID,                              --- идентификатор оператора связи или структурного подразделения
+ pay-type-id   INTEGER (0 .. 4294967295),                    --- идентификатор типа оплаты
+ begin-time    DateAndTime,                                  --- время начала действия
+ end-time      DateAndTime OPTIONAL,                         --- время конца действия
+ description   UTF8String (SIZE (1 .. 256))                  --- описание
+}
+
+terminationCausesRecords TAGGED ::= {
+ OID { sorm-report-dictionary-termination-causes }
+ DATA SEQUENCE OF TerminationCausesRecord
+}
+
+TerminationCausesRecord ::= SEQUENCE {
+ telco-id                     TelcoID,                       --- идентификатор оператора связи или структурного подразделения
+ termination-cause-id   INTEGER (0 .. 16384),                --- код причины
+ begin-time             DateAndTime,                         --- время начала действия
+ end-time               DateAndTime OPTIONAL,                --- время конца действия
+ description            UTF8String (SIZE (1 .. 256)),        --- описание
+ network-type           NetworkType                          --- тип сети связи
+}
+
+ipNumberingPlanRecords TAGGED ::= {
+ OID { sorm-report-dictionary-ip-numbering-plan }
+ DATA SEQUENCE OF IpNumberingPlanRecord 
+}
+
+IpNumberingPlanRecord ::= SEQUENCE {
+ telco-id             TelcoID,                        --- идентификатор оператора связи или филиала
+ description          UTF8String (SIZE (1 .. 256)),   --- описание назначения диапазона
+ network-address      IPAddress,                      --- подсеть
+ network-mask         IPMask,                         --- маска подсети
+ begin-time           DateAndTime,                    --- время начала действия
+ end-time             DateAndTime OPTIONAL            --- время конца действия
+}
+
+telephoneNumberingPlanRecords TAGGED ::= {
+ OID { sorm-report-dictionary-phone-numbering-plan }
+ DATA SEQUENCE OF TelephoneNumberingPlanRecord
+}
+
+TelephoneNumberingPlanRecord ::= SEQUENCE {
+ telco-id                      TelcoID,                      --- идентификатор оператора связи или структурного подразделения
+ iso-3166-alpha-2              UTF8String (SIZE (2)),        --- 2-х символьная аббревиатура страны
+ iso-3166-alpha-3              UTF8String (SIZE (3)),        --- 3-х символьная аббревиатура страны
+ country-code                  UTF8String (SIZE (3)),        --- международный код страны
+ national-significant-number   UTF8String (SIZE (14)),       --- номерной телефонный префикс оператора связи, включая код зоны
+ area-code-length              INTEGER (0 .. 6),             --- длина кода зоны в телефонном префиксе оператора связи
+ min-subscr-nr-length          INTEGER (1 .. 15),            --- минимальная длина абонентского номера, символов (national-significant-number + min-subscr)
+ max-subscr-nr-length          INTEGER (1 .. 15),            --- максимальная длина абонентского номера, символов (national-significant-number + max-subscr)
+ utc-min                       INTEGER (-12 .. 12),          --- минимальный часовой пояс
+ utc-max                       INTEGER (-12 .. 12),          --- максимальный часовой пояс
+ destination                   UTF8String (SIZE (2 .. 256)), --- страна
+ operator-type-id              NetworkType,                  --- тип сети связи оператора
+
+ capacity-from         NumericString (SIZE (1 .. 15)),       --- нижняя граница диапазона выданных номеров (от)
+ capacity-to           NumericString (SIZE (1 .. 15)),       --- верхняя граница диапазона выданных номеров (до)
+ capacity-size         INTEGER (1 .. 1000000),               --- количество выделенных номеров в диапазоне (емкость)
+
+ location              UTF8String (SIZE (0 .. 256)),         --- текстовое описание местоположения оператора связи
+ registrar             UTF8String (SIZE (0 .. 256)),         --- наименование оператора связи
+ range-activation      DateAndTime,                          --- дата и время начала действия номерной емкости
+ mobile-country-code   NumericString (SIZE(3)),              --- MCC
+ mobile-network-code   NumericString (SIZE(3)),              --- MNC
+
+ range-deactivation [0] DateAndTime OPTIONAL,                --- дата и время завершения действия номерной емкости
+ range-status [1]      UTF8String (SIZE (2 .. 128)) OPTIONAL,          --- текущее состояние номерной емкости
+ description [2]       UTF8String (SIZE (2 .. 256)) OPTIONAL,          --- расшифровка оказываемых услуг связи по номерной емкости
+ operating-company-number [3] UTF8String (SIZE (0 .. 4)) OPTIONAL      --- международный идентификатор оператора связи
+}
+
+docTypesRecords TAGGED ::= {
+ OID {sorm-report-dictionary-doc-types}
+ DATA SEQUENCE OF DocTypesRecord
+}
+
+DocTypesRecord ::= SEQUENCE {
+ telco-id              TelcoID,                              --- идентификатор оператора связи или структурного подразделения
+ doc-type-id   INTEGER (0 .. 65535),                         --- идентификатор типа документа
+ begin-time    DateAndTime,                                  --- время начала действия
+ end-time      DateAndTime OPTIONAL,                         --- время конца действия
+ description   UTF8String (SIZE (1 .. 256))                  --- описание (наименование)
+}
+
+ipDataPointsRecords TAGGED ::= {
+ OID { sorm-report-dictionary-ip-data-points }
+ DATA SEQUENCE OF IpDataPointRecord
+}
+
+IpDataPointRecord ::= SEQUENCE {
+telco-id               TelcoID,                              --- идентификатор оператора связи или структурного подразделения
+ point-id              INTEGER (0 .. 1000),                            --- идентификатор точки подключения
+ description   UTF8String (SIZE (1 .. 256)),                 --- описание (наименование) точки подключения
+ begin-time    DateAndTime,                                  --- время начала действия
+ end-time      DateAndTime OPTIONAL                          --- время конца действия
+}
+
+specialNumbersRecords TAGGED ::= {
+ OID { sorm-report-dictionary-special-numbers }
+ DATA SEQUENCE OF SpecialNumberRecord
+}
+
+SpecialNumberRecord ::= SEQUENCE {
+ telco-id              TelcoID,                              --- идентификатор оператора связи или структурного подразделения
+ directory-number      UTF8String (SIZE (2 .. 32)),          --- специальный номер
+ description           UTF8String (SIZE (1 .. 256)),         --- описание (наименование, назначение) специального номера
+ begin-time            DateAndTime,                          --- время начала действия
+ end-time              DateAndTime OPTIONAL,                 --- время конца действия
+ network-address       IPAddress OPTIONAL                    --- адрес в сети передачи данных
+}
+
+bunchesMapRecords TAGGED ::= {
+ OID { sorm-report-dictionary-bunches-map }
+ DATA SEQUENCE OF BunchesMapRecord
+}
+
+BunchesMapRecord ::= SEQUENCE {
+ a-bunch       BunchMapPoint,                                --- пара коммутатор/пучок в связи
+ b-bunch       BunchMapPoint,                                --- пара коммутатор/пучок в связи
+ begin-time    DateAndTime,                                  --- время начала действия связи
+ end-time      DateAndTime OPTIONAL                          --- время конца действия связи
+}
+
+BunchMapPoint ::= SEQUENCE {
+ telco-id      TelcoID,                                      --- идентификатор оператора связи или филиала
+ switch-id     UTF8String (SIZE (1 .. 128)),                 --- идентификатор коммутатора
+ bunch-id      Bunch                                         --- идентификатор пучка коммутатора
+}
+
+mobileSubscriberIdenityPlanRecords TAGGED ::= {
+ OID { sorm-report-dictionary-mobile-subscriber-identity-plan }
+ DATA SEQUENCE OF MobileSubscriberIdenityPlanRecord
+}
+
+MobileSubscriberIdenityPlanRecord ::= SEQUENCE {
+ telco-id              TelcoID,                              --- идентификатор оператора связи или структурного подразделения
+ mcc                   NumericString (SIZE(3)),              --- код страны
+ mnc                   NumericString (SIZE(3)),              --- код оператора связи
+ area-code             NumericString (SIZE(3 .. 10)),        --- код зоны/региона
+ capacity-from         NumericString (SIZE (0 .. 7)),        --- нижняя граница диапазона (от)
+ capacity-to           NumericString (SIZE (0 .. 7 )),       --- верхняя граница диапазона (до)
+ capacity-size         INTEGER (1 .. 1000000),               --- количество выделенных в диапазоне (емкость)
+ description           UTF8String (SIZE (2 .. 255)),         --- описание, назначение
+ region                UTF8String (SIZE (1 .. 128)),         --- область
+ city                  UTF8String (SIZE (1 .. 128)),         --- город, поселок, деревня
+ range-activation      DateAndTime,                          --- дата и время начала действия номерной емкости
+ range-deactivation [0] DateAndTime OPTIONAL,                --- дата и время завершения действия номерной емкости
+ range-status [1]      UTF8String (SIZE (2 .. 128)) OPTIONAL --- текущее состояние номерной емкости
+}
+
+-- Тип абонента
+PhoneAbonentType ::= ENUMERATED {
+ local (0),                                          -- абонент данного коммутатора
+ network (1),                                        -- абонент сети связи
+ roamer (2),                                         -- Абонент сети подвижной радиосвязи, получающий услуги связи за пределами региона регистрации (роумер)
+ undefined (3)
+}
+
+--- коды сигнальных точек OPC/DPC
+signalPointCodes TAGGED ::= {
+ OID {sorm-report-dictionary-signal-point-codes}
+ DATA SEQUENCE OF SignalPointCodesRecord
+}
+
+SignalPointCodesRecord ::= SEQUENCE {
+ ss7-point-code UTF8String (SIZE (1 .. 32)),    --- идентификатор сигнальной точки (OPC/DPC)
+ switch-id      UTF8String (SIZE (1 .. 128)),   --- идентификатор коммутатора
+ begin-time     DateAndTime,                    --- время начала назначения пучка
+ end-time       DateAndTime OPTIONAL,           --- время конца назначения пучка
+ description    UTF8String (SIZE (1 .. 256))    --- расшифровка пучка
+}
+
+END
