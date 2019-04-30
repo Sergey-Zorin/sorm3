@@ -15,5 +15,5 @@
 ## Ресурсы
 
 - <https://asn1.io/>
-  - [ASN1 Playground]<https://asn1.io/asn1playground/>
-  - [ASN1Doc]<https://asn1.io/ASN1Doc/>
+  - [ASN1 Playground](https://asn1.io/asn1playground/)
+  - [ASN1Doc](https://asn1.io/ASN1Doc/)
