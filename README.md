@@ -16,7 +16,8 @@
 
 В каталоге html приведена документация по asn-файлам полученная с помощью  [ASN1Doc](https://asn1.io/ASN1Doc/)
 
-См. файл [html/summary.html](html/summary.html)
+В качестве стартовой точки можно изучить файл [html/summary.html](html/summary.html) локально в рабочей копии
+или на http://htmlpreview.github.io/?https://github.com/Sergey-Zorin/sorm3/blob/master/html/summary.html
 
 ## Ресурсы
 
