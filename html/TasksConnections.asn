@@ -1,0 +1,32 @@
+TasksConnections DEFINITIONS IMPLICIT TAGS ::=
+BEGIN
+
+EXPORTS ConnectionsTask;
+
+IMPORTS
+  LogicalOperation FROM Tasks
+  RequestedConnection FROM RequestedConnections
+  ;
+
+ConnectionsTask ::= CHOICE {
+  validate-connections [0] ValidateConnectionsTask,  --- задача на поиск телефонных соединений между абонентами
+  validate-data [1]        ValidateDataTask,         --- задача на поиск соединений между абонентами сети передачи данных
+  validate-entrance [2]    ValidateEntranceTask      --- задача на поиск информации о появлении абонента в сети связь (выхода на связь)
+}
+
+-- Зачем разделение ValidateConnectionsTask ValidateDataTask
+
+--- задача на поиск по соединениям абонентов
+ValidateConnectionsTask ::= RequestedConnectionIdentifiers   --- запрашиваемые идентификаторы, указываются все, кроме
+                                                             --- RequestedDataNetworkIdentifier
+ValidateDataTask ::= RequestedConnectionIdentifiers          --- запрашиваемые идентификаторы, указываются
+                                                             --- RequestedDataNetworkIdentifier
+ValidateEntranceTask ::= RequestedConnectionIdentifiers      --- задача на поиск информации о появлении абонента в сети связь (выхода на связь)
+
+RequestedConnectionIdentifiers ::= SEQUENCE OF RequestedConnectionParameter
+RequestedConnectionParameter ::= CHOICE {
+  separator [0] LogicalOperation,                    --- логический оператор связки
+  find-mask [1] RequestedConnection                  --- параметр запроса
+}
+
+END

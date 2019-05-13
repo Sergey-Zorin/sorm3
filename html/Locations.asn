@@ -1,0 +1,35 @@
+Locations DEFINITIONS IMPLICIT TAGS ::=
+BEGIN
+
+EXPORTS
+ Location,
+ GeoLocation;
+
+Location ::= CHOICE {
+ mobile-location [0]   MobileLocation,               --- местоположение мобильного абонента
+ wireless-location [1] WirelessLocation,             --- местоположение абонента мобильной сети передачи данных
+ geo-location [2]      GeoLocation                   --- географическое местоположение
+}
+
+MobileLocation ::= SEQUENCE {
+ lac     INTEGER (0 .. 65535),                       --- код зоны
+ cell    INTEGER (0 .. 4294967295),                  --- идентификатор базовой станции
+ ta [0]  INTEGER (0 .. 63) OPTIONAL                  --- Timing Advance (временная компенсация)
+}
+
+WirelessLocation ::= SEQUENCE {
+ cell    UTF8String (SIZE (1 .. 64)),                --- идентификатор сектора
+ mac     OCTET STRING (SIZE (6))                     --- MAC-адрес сетевого оборудования сектора
+}
+
+GeoLocation ::= SEQUENCE {
+ latitude-grade  REAL,                               --- широта в формате [целое_число_градусов].[стотысячные_доли_градуса]
+ longitude-grade REAL,                               --- долгота в формате [целое_число_градусов].[стотысячные_доли_градуса]
+ projection-type ENUMERATED {                        --- тип проекции координат
+  wgs84 (0),
+  utm (1),
+  sgs85 (2)
+ }
+}
+
+END

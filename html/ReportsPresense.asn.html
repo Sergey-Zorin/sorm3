@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+<meta charset='utf-8'>
+<title>ReportsPresense.asn</title>
+<link rel=stylesheet href='Asn1doc.css' type='text/css'>
+</head>
+<body onload='Init()'><span id=I1666>Schema File <b class=SF>ReportsPresense.asn</b></span><section class='asn1 notinteractive'><p
+><a class=MN id=I947 href='./summary.html#I1667'><b>ReportsPresense</b></a> <span class=K>DEFINITIONS IMPLICIT TAGS </span><span class=D>::=</span><p
+><span class=K>BEGIN</span><p
+> <p
+><span class=K>EXPORTS</span><p
+>     <a class=EN href=#I946>PresenseReport</a><span class=D>, </span><a class=EN href=#I1519>StandardInterval</a><span class=D>;</span><p
+> <p
+><span class=K>IMPORTS</span><p
+>     <a class=EN id=I1668 href='./Sorm.asn.html#I1669'><b>FindRange</b></a><span class=D>, </span><a class=EN href='./Sorm.asn.html#I264'><b>DateAndTime</b></a><p
+>          <span class=K>FROM </span><a class=MN href='./Sorm.asn.html#I265'>Sorm</a><p
+>     <a class=EN id=I1670 href='./Dictionaries.asn.html#I258'><b>TelcoID</b></a><p
+>          <span class=K>FROM </span><a class=MN href='./Dictionaries.asn.html#I256'>Dictionaries</a><p
+>     <a class=EN id=I1671 href='./Locations.asn.html#I648'><b>Location</b></a><p
+>          <span class=K>FROM </span><a class=MN href='./Locations.asn.html#I279'>Locations</a><p
+>     <a class=EN id=I1672 href='./ReportedIdentifiers.asn.html#I862'><b>ReportedIdentifier</b></a><p
+>          <span class=K>FROM </span><a class=MN href='./ReportedIdentifiers.asn.html#I860'>ReportedIdentifiers</a><p
+>     <a class=EN id=I1673 href='./NetworkIdentifiers.asn.html#I275'><b>NetworkType</b></a><p
+>          <span class=K>FROM </span><a class=MN href='./NetworkIdentifiers.asn.html#I276'>NetworkIdentifiers</a><p
+>     <a class=EN id=I1674 href='./Classification.asn.html#I47'><b>TAGGED</b></a><span class=D>, </span><a class=EN href='./Classification.asn.html#I133'><b>sorm-report-presense-abonents</b></a><span class=D>, </span><a class=EN href='./Classification.asn.html#I134'><b>sorm-report-presense-connections</b></a><span class=D>, </span><a class=EN href='./Classification.asn.html#I135'><b>sorm-report-presense-payments</b></a><span class=D>,</span><p
+>     <a class=EN href='./Classification.asn.html#I136'><b>sorm-report-presense-dictionaries</b></a><span class=D>, </span><a class=EN href='./Classification.asn.html#I137'><b>sorm-report-presense-locations</b></a><p
+>          <span class=K>FROM </span><a class=MN href='./Classification.asn.html#I45'>Classification</a><span class=D>;</span><p
+> <p
+><span class=C>---отчет по запросу наличия информации</span><p
+><span class=E3 title='Error: Invalid type assignment for type &quot;PresenseReport&quot;: Invalid assignment.'><a class=EN id=I946 href='./summary.html#I1675'><b>PresenseReport</b></a></span> <span class=D>::=                      </span><span class=K>SEQUENCE </span><span class=D>{</span><p
+>   <b class=CI id=I1676>id</b>                                      <a class=EN href='./Classification.asn.html#I47'>TAGGED</a><span class=D>.</span><a class=FN href='./Classification.asn.html#I146'>&amp;id</a> <span class=D>({</span><a class=EN href=#I1677>ReportedPresensesVariants</a><span class=D>}),</span><p
+>   <b class=CI id=I1678>data</b>                                    <a class=EN href='./Classification.asn.html#I47'>TAGGED</a><span class=D>.</span><a class=FN href='./Classification.asn.html#I147'>&amp;Data</a> <span class=D>({</span><a class=EN href=#I1677>ReportedPresensesVariants</a><span class=D>} {@</span><a class=CI href=#I1676>id</a><span class=D>})</span><p
+><span class=D>}</span><p
+> <p
+><span class=E3 title='Error: Invalid object set assignment for object set &quot;ReportedPresensesVariants&quot;: Invalid assignment.'><a class=EN id=I1677 href='./summary.html#I1679'><b>ReportedPresensesVariants</b></a></span>               <a class=EN href='./Classification.asn.html#I47'>TAGGED</a> <span class=D>::= {</span><p
+>   <a class=EN href=#I1680>subsPresence</a> <span class=D>|</span><p
+>   <a class=EN href=#I1681>connectionsPresence</a> <span class=D>|</span><p
+>   <a class=EN href=#I1682>paymentsPresense</a> <span class=D>|</span><p
+>   <a class=EN href=#I1683>dictionariesPresence</a> <span class=D>|</span><p
+>   <a class=EN href=#I1684>locationPresence</a><p
+><span class=D>}</span><p
+> <p
+><span class=C>--- отчет по наличию информации по абонентам и их идентификаторам.</span><p
+><span class=C>--- Для каждого стандарта может быть указано более одного, либо ни</span><p
+><span class=C>--- одногоинтервала (фактические периоды наличия информации);</span><p
+><span class=E3 title='Error: Invalid object assignment for object &quot;subsPresence&quot;: Invalid assignment.'><a class=EN id=I1680 href='./summary.html#I1685'><b>subsPresence</b></a></span>                            <a class=EN href='./Classification.asn.html#I47'>TAGGED</a> <span class=D>::= {</span><span class=W>OID </span><span class=E3 title='Error: Invalid value: The type of the value is incompatible with its context.'><span class=D id=I1686>{</span></span><span class=E>sorm-report-presense-abonents</span><span class=D>} </span><span class=W>DATA </span><span class=K>SEQUENCE OF</span><p
+>                                             <a class=EN id=I1687 href=#I1519>StandardInterval</a><span class=D>}</span><p
+> <p
+><span class=C>-- отчет по наличию информации по соединениям. Для каждого стандарта может быть указано более одного,</span><p
+><span class=C>-- либо ни одного, интервала (фактические периоды наличия информации);</span><p
+><span class=E3 title='Error: Invalid object assignment for object &quot;connectionsPresence&quot;: Invalid assignment.'><a class=EN id=I1681 href='./summary.html#I1688'><b>connectionsPresence</b></a></span>                     <a class=EN href='./Classification.asn.html#I47'>TAGGED</a> <span class=D>::= {</span><span class=W>OID </span><span class=E3 title='Error: Invalid value: The type of the value is incompatible with its context.'><span class=D id=I1689>{</span></span><span class=E>sorm-report-presense-connections</span><span class=D>} </span><span class=W>DATA </span><span class=K>SEQUENCE OF</span><p
+>                                             <a class=EN id=I1690 href=#I1691>ConnectionsPresenseRecord</a><span class=D>}</span><p
+> <p
+><a class=EN id=I1691 href='./summary.html#I1692'><b>ConnectionsPresenseRecord</b></a> <span class=D>::=           </span><span class=K>SEQUENCE </span><span class=D>{</span><p
+>   <b class=CI id=I1693>standard-interval</b>                       <a class=EN href=#I1519>StandardInterval</a><span class=D>,</span><p
+>   <b class=CI id=I1694>data-type</b>                               <span class=K>ENUMERATED </span><span class=D>{</span><p
+>                                              <span class=C>--- вид соединений передачи данных, информация по которым есть в ИС СОРМ</span><p
+>                                              <b class=II id=I1695>telephone-pstn</b> <span class=D>(</span><span class=N>0</span><span class=D>), </span><span class=C>--- телефонные ТФоП-соединения</span><p
+>                                              <b class=II id=I1696>telephone-mobile</b> <span class=D>(</span><span class=N>1</span><span class=D>), </span><span class=C>--- телефонные соединения мобильной связи</span><p
+>                                              <b class=II id=I1697>pager</b> <span class=D>(</span><span class=N>2</span><span class=D>), </span><span class=C>--- соединения сети персонального радиовызова</span><p
+>                                              <b class=II id=I1698>data-aaa</b> <span class=D>(</span><span class=N>3</span><span class=D>), </span><span class=C>--- подключения/отключения абонента к сети связи</span><p
+>                                              <b class=II id=I1699>data-resource</b> <span class=D>(</span><span class=N>4</span><span class=D>),</span><p
+>                                              <span class=C>--- HTTP-обращения к информационному ресурсу сети связи (сайт, портал)</span><p
+>                                              <b class=II id=I1700>data-email</b> <span class=D>(</span><span class=N>5</span><span class=D>), </span><span class=C>--- передача почтовых сообщений</span><p
+>                                              <b class=II id=I1701>data-im</b> <span class=D>(</span><span class=N>6</span><span class=D>),</span><p
+>                                              <span class=C>--- передача мгновенных электронных сообщений между пользователями</span><p
+>                                              <b class=II id=I1702>data-voip</b> <span class=D>(</span><span class=N>7</span><span class=D>), </span><span class=C>--- голосовая связь посредством сети передачи данных</span><p
+>                                              <b class=II id=I1703>data-file</b> <span class=D>(</span><span class=N>8</span><span class=D>), </span><span class=C>--- передача файловых данных</span><p
+>                                              <b class=II id=I1704>data-term</b> <span class=D>(</span><span class=N>9</span><span class=D>), </span><span class=C>--- терминальный доступ к оборудованию</span><p
+>                                              <b class=II id=I1705>data-raw</b> <span class=D>(</span><span class=N>10</span><span class=D>),</span><p
+>                            <span class=C>--- иные данные, принимаемые, получаемые пользователем при помощи закрытых протоколов обмена</span><p
+>                                              <b class=II id=I1706>data-address-translations</b> <span class=D>(</span><span class=N>11</span><span class=D>) </span><span class=C>--- трансляции сетевых адресов</span><p
+>                                           <span class=D>}</span><p
+><span class=D>}</span><p
+> <p
+><span class=E3 title='Error: Invalid object assignment for object &quot;paymentsPresense&quot;: Invalid assignment.'><a class=EN id=I1682 href='./summary.html#I1707'><b>paymentsPresense</b></a></span>                        <a class=EN href='./Classification.asn.html#I47'>TAGGED</a> <span class=D>::= {</span><p
+>   <span class=W>OID </span><span class=E3 title='Error: Invalid value: The type of the value is incompatible with its context.'><span class=D id=I1708>{</span></span><span class=E>sorm-report-presense-payments</span><span class=D>} </span><span class=W>DATA </span><span class=K>SEQUENCE OF </span><a class=EN id=I1709 href=#I1519>StandardInterval</a><p
+>        <span class=C>--- описание имеющейся информации по пополнениям балансов абонентов</span><p
+><span class=D>}</span><p
+> <p
+><span class=C>--- отчет о наличии информации справочников в ИС. Если какой-либо из справочников не публикуется ИС СОРМ, запись о нем отсутствует</span><p
+><span class=E3 title='Error: Invalid object assignment for object &quot;dictionariesPresence&quot;: Invalid assignment.'><a class=EN id=I1683 href='./summary.html#I1710'><b>dictionariesPresence</b></a></span>                    <a class=EN href='./Classification.asn.html#I47'>TAGGED</a> <span class=D>::= {</span><span class=W>OID </span><span class=E3 title='Error: Invalid value: The type of the value is incompatible with its context.'><span class=D id=I1711>{</span></span><span class=E>sorm-report-presense-dictionaries</span><span class=D>} </span><span class=W>DATA </span><span class=K>SEQUENCE OF</span><p
+>                                             <a class=EN id=I1712 href=#I1713>DictionaryInfo</a><span class=D>}</span><p
+> <p
+><span class=C>--- запись отчета о наличии информации справочников</span><p
+><a class=EN id=I1713 href='./summary.html#I1714'><b>DictionaryInfo</b></a> <span class=D>::=                      </span><span class=K>SEQUENCE </span><span class=D>{</span><p
+>   <b class=CI id=I1715>telco-id</b>                                <a class=EN href='./Dictionaries.asn.html#I258'>TelcoID</a><span class=D>,     </span><span class=C>--- идентификатор оператора связи или структурного подразделения</span><p
+>   <b class=CI id=I1716>dict</b>                                    <span class=K>ObjectDescriptor</span><span class=D>,            </span><span class=C>--- тип справочника, по которому есть информация</span><p
+>                                                                  <span class=C>--- (идентификатор запроса справочника) (Requested...)</span><p
+>   <b class=CI id=I1717>count</b>                                   <span class=K>INTEGER </span><span class=D>(</span><span class=N>1</span><span class=D>..</span><span class=N>4294967295</span><span class=D>),                 </span><span class=C>--- количество записей в справочнике</span><p
+>   <b class=CI id=I1718>change-dates</b>                            <a class=EN href='./Sorm.asn.html#I1669'>FindRange</a><p
+>                                               <span class=C>--- минимальное и максимальное дата/время изменения записей в справочнике</span><p
+><span class=D>}</span><p
+> <p
+><span class=C>--- отчет по наличию информации по местоположению абонентов</span><p
+><span class=E3 title='Error: Invalid object assignment for object &quot;locationPresence&quot;: Invalid assignment.'><a class=EN id=I1684 href='./summary.html#I1719'><b>locationPresence</b></a></span>                        <a class=EN href='./Classification.asn.html#I47'>TAGGED</a> <span class=D>::= {</span><span class=W>OID </span><span class=E3 title='Error: Invalid value: The type of the value is incompatible with its context.'><span class=D id=I1720>{</span></span><span class=E>sorm-report-presense-locations</span><span class=D>} </span><span class=W>DATA </span><span class=K>SEQUENCE OF</span><p
+>                                             <a class=EN id=I1721 href=#I1519>StandardInterval</a><span class=D>}</span><p
+> <p
+><span class=C>--- интервал времени, на котором имеются данные по абонентам, соединениям и платежам, в рамках стандарта связи</span><p
+><a class=EN id=I1519 href='./summary.html#I1722'><b>StandardInterval</b></a> <span class=D>::=                    </span><span class=K>SEQUENCE </span><span class=D>{</span><p
+>   <b class=CI id=I1723>telco-id</b>                                <a class=EN href='./Dictionaries.asn.html#I258'>TelcoID</a><span class=D>,     </span><span class=C>--- идентификатор оператора связи или структурного подразделения</span><p
+>   <b class=CI id=I1724>standard</b>                                <a class=EN href='./NetworkIdentifiers.asn.html#I275'>NetworkType</a><span class=D>,          </span><span class=C>--- стандарт связи, информация по которому имеется в ИС</span><p
+>   <b class=CI id=I1725>range</b>                                   <a class=EN href='./Sorm.asn.html#I1669'>FindRange</a><span class=D>,               </span><span class=C>--- интервал времени, на который имеются данные в ИС</span><p
+>   <b class=CI id=I1726>count</b>                                   <span class=K>INTEGER                                 OPTIONAL  </span><span class=C>--- количество записей</span><p
+><span class=D>}</span><p
+> <p
+><span class=K>END</span></section><div class=footer>HTML generated by OSS Nokalva's ASN1Doc utility</div>
+</body>
+</html>

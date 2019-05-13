@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+<meta charset='utf-8'>
+<title>Sessions.asn</title>
+<link rel=stylesheet href='Asn1doc.css' type='text/css'>
+</head>
+<body onload='Init()'><span id=I2026>Schema File <b class=SF>Sessions.asn</b></span><section class='asn1 notinteractive'><p
+><a class=MN id=I2027 href='./summary.html#I2028'><b>Sessions</b></a> <span class=K>DEFINITIONS IMPLICIT TAGS </span><span class=D>::=</span><p
+><span class=K>BEGIN</span><p
+> <p
+><span class=K>EXPORTS</span><p
+>     <a class=EN href=#I2029>sessionMessage</a><span class=D>;</span><p
+> <p
+><span class=K>IMPORTS</span><p
+>     <a class=EN id=I2030 href='./Classification.asn.html#I47'><b>TAGGED</b></a><span class=D>, </span><a class=EN href='./Classification.asn.html#I48'><b>sorm-message-session</b></a><p
+>          <span class=K>FROM </span><a class=MN href='./Classification.asn.html#I45'>Classification</a><span class=D>;</span><p
+> <p
+><span class=E3 title='Error: Invalid object assignment for object &quot;sessionMessage&quot;: Invalid assignment.'><a class=EN id=I2029 href='./summary.html#I2031'><b>sessionMessage</b></a></span>                          <a class=EN href='./Classification.asn.html#I47'>TAGGED</a> <span class=D>::= {</span><p
+>   <span class=W>OID </span><span class=E3 title='Error: Invalid value: The type of the value is incompatible with its context.'><span class=D id=I2032>{</span></span><span class=E>sorm-message-session</span><span class=D>} </span><span class=W>DATA </span><span class=K>CHOICE </span><span class=D>{</span><p
+>      <b class=CI id=I2033>connect</b>                                 <span class=D>[</span><span class=N>0</span><span class=D>] </span><a class=EN href=#I2034>ConnectRequest</a><span class=D>,                     </span><span class=C>--- запрос на открытие сессии</span><p
+>      <b class=CI id=I2035>connect-response</b>                        <span class=D>[</span><span class=N>1</span><span class=D>] </span><a class=EN href=#I2036>ConnectResponse</a><span class=D>,                   </span><span class=C>--- ответ на запрос открытия сессии</span><p
+>      <b class=CI id=I2037>adjustment</b>                              <span class=D>[</span><span class=N>2</span><span class=D>] </span><a class=EN href=#I2038>AdjustmentRequest</a><span class=D>, </span><span class=C>--- согласование поддерживаемых типов со стороны ПУ</span><p
+>      <b class=CI id=I2039>adjustment-response</b>                     <span class=D>[</span><span class=N>3</span><span class=D>] </span><a class=EN href=#I2040>AdjustmentResponse</a><span class=D>,            </span><span class=C>--- ответ на запрос согласования данных</span><p
+>      <b class=CI id=I2041>disconnect</b>                              <span class=D>[</span><span class=N>4</span><span class=D>] </span><a class=EN href=#I2042>DisconnectRequest</a><span class=D>,                  </span><span class=C>--- запрос на закрытие сессии</span><p
+>      <b class=CI id=I2043>disconnect-response</b>                     <span class=D>[</span><span class=N>5</span><span class=D>] </span><a class=EN href=#I2044>DisconnectResponse</a>                 <span class=C>--- ответ на запрос закрытия сессии</span><p
+>   <span class=D>}</span><p
+><span class=D>}</span><p
+> <p
+><span class=C>--- запрос создания сессии</span><p
+><a class=EN id=I2034 href='./summary.html#I2045'><b>ConnectRequest</b></a> <span class=D>::=                      </span><span class=K>SEQUENCE </span><span class=D>{</span><p
+>   <b class=CI id=I2046>session-timeout</b>                         <span class=K>INTEGER </span><span class=D>(</span><span class=N>60</span><span class=D>..</span><span class=N>2592000</span><span class=D>),                    </span><span class=C>--- максимальное время неактивности</span><p
+>   <b class=CI id=I2047>max-data-length</b>                         <span class=K>INTEGER </span><span class=D>(</span><span class=N>10</span><span class=D>..</span><span class=N>100000</span><span class=D>),         </span><span class=C>--- максимальная длина блока отчета (в строках)</span><p
+>   <b class=CI id=I2048>data-packet-window-size</b>                 <span class=K>INTEGER </span><span class=D>(</span><span class=N>4</span><span class=D>..</span><span class=N>256</span><span class=D>),                            </span><span class=C>--- окно канала передачи данных</span><p
+>                                                                <span class=C>--- максимальное число блоков данных, которое может быть</span><p
+>                                                                                 <span class=C>--- отправлено без подтверждения приема</span><p
+>   <b class=CI id=I2049>data-load-timeout</b>                       <span class=K>INTEGER </span><span class=D>(</span><span class=N>1</span><span class=D>..</span><span class=N>60</span><span class=D>),                   </span><span class=C>--- таймаут начала передачи блоков отчетов</span><p
+>   <b class=CI id=I2050>request-response-timeout</b>                <span class=K>INTEGER </span><span class=D>(</span><span class=N>1</span><span class=D>..</span><span class=N>60</span><span class=D>),                             </span><span class=C>--- таймаут ответа на запрос</span><p
+>   <b class=CI id=I2051>data-packet-response-timeout</b>            <span class=K>INTEGER </span><span class=D>(</span><span class=N>1</span><span class=D>..</span><span class=N>60</span><span class=D>)          </span><span class=C>--- таймаут подтверждения приема блока данных отчета</span><p
+><span class=D>}</span><p
+> <p
+><span class=C>-- ответ на запрос создания сессии</span><p
+><a class=EN id=I2036 href='./summary.html#I2052'><b>ConnectResponse</b></a> <span class=D>::=                     </span><span class=K>SEQUENCE </span><span class=D>{</span><p
+>   <b class=CI id=I2053>confirmed-data-packet-window-size</b>       <span class=K>INTEGER </span><span class=D>(</span><span class=N>4</span><span class=D>..</span><span class=N>256</span><span class=D>),                     </span><span class=C>--- подтвержденное окно передачи данных</span><p
+>                                                                           <span class=C>--- то окно, которое может обеспечить ИС СОРМ</span><p
+>                                                                      <span class=C>--- должно быть меньше или равно окну, переданному</span><p
+>                                                                                 <span class=C>--- в ConnectRequest</span><p
+>   <b class=CI id=I2054>confirmed-session-timeout</b>               <span class=K>INTEGER </span><span class=D>(</span><span class=N>60</span><span class=D>..</span><span class=N>2592000</span><span class=D>),     </span><span class=C>--- подтвержденное максимальное время неактивности</span><p
+>                                                                  <span class=C>--- должно быть больше или равно значению, переданному</span><p
+>                                                                      <span class=C>--- в ConnectRequest</span><p
+>   <b class=CI id=I2055>confirmed-data-load-timeout</b>             <span class=K>INTEGER </span><span class=D>(</span><span class=N>1</span><span class=D>..</span><span class=N>60</span><span class=D>),    </span><span class=C>--- подтвержденный таймаут начала передачи блоков отчетов</span><p
+>                                                               <span class=C>--- должен быть больше или равен значению, переданному</span><p
+>                                                               <span class=C>--- в ConnectRequest</span><p
+>   <b class=CI id=I2056>confirmed-request-response-timeout</b>      <span class=K>INTEGER </span><span class=D>(</span><span class=N>1</span><span class=D>..</span><span class=N>60</span><span class=D>),                  </span><span class=C>--- подтвержденный таймаут ответа на запрос</span><p
+>                                                                  <span class=C>--- должен быть больше или равен значению, переданному</span><p
+>                                                                             <span class=C>--- в ConnectRequest</span><p
+>   <b class=CI id=I2057>supports</b>                                <span class=K>SEQUENCE OF <span id=I2058>ObjectDescriptor</span></span><p
+>                                                       <span class=C>--- весь список поддерживаемых СОРМ типов запросов, типов отчетов</span><p
+><span class=D>}</span><p
+> <p
+><span class=C>--- согласование поддерживаемых типов со стороны ПУ</span><p
+><a class=EN id=I2038 href='./summary.html#I2059'><b>AdjustmentRequest</b></a> <span class=D>::=                   </span><span class=K>SEQUENCE </span><span class=D>{</span><p
+>   <b class=CI id=I2060>supports</b>                                <span class=K>SEQUENCE OF <span id=I2061>ObjectDescriptor</span></span><p
+>                                                              <span class=C>--- список поддерживаемых ПУ типов запросов, типов отчетов</span><p
+>                                                              <span class=C>--- данный список должен быть меньшим либо равным списку в</span><p
+>                                                              <span class=C>--- сообщении ConnectRequest</span><p
+><span class=D>}</span><p
+> <p
+><span class=C>-- ответ на согласование списка поддерживаемых типов</span><p
+><a class=EN id=I2040 href='./summary.html#I2062'><b>AdjustmentResponse</b></a> <span class=D>::=                  </span><span class=K>NULL                                    </span><span class=C>--- ответ на запрос согласования данных</span><p
+> <p
+><span class=C>--- запрос завершения сессии</span><p
+><a class=EN id=I2042 href='./summary.html#I2063'><b>DisconnectRequest</b></a> <span class=D>::=                   </span><span class=K>NULL</span><p
+> <p
+><span class=C>--- ответ на запрос завершения сессии</span><p
+><a class=EN id=I2044 href='./summary.html#I2064'><b>DisconnectResponse</b></a> <span class=D>::=                  </span><span class=K>NULL</span><p
+> <p
+><span class=K>END</span></section><div class=footer>HTML generated by OSS Nokalva's ASN1Doc utility</div>
+</body>
+</html>

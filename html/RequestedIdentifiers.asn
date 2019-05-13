@@ -1,0 +1,111 @@
+RequestedIdentifiers DEFINITIONS IMPLICIT TAGS ::=
+BEGIN
+
+EXPORTS
+  RequestedIdentifier,
+  requestedPagerIdentifier,
+  requestedPstnIdentifier,
+  requestedGsmIdentifier,
+  requestedCdmaIdentifier
+  ;
+
+IMPORTS TAGGED,
+    sorm-request-identifier-pager,
+    sorm-request-identifier-pstn,
+    sorm-request-identifier-gsm,
+    sorm-request-identifier-cdma,
+    sorm-request-identifier-data-network,
+    sorm-request-identifier-voip
+  FROM Classification
+
+    DataNetworkEquipment,
+    IPAddress
+  FROM NetworkIdentifiers
+  ;
+
+RequestedIdentifier ::= SEQUENCE {
+ id TAGGED.&id ({RequestedIdentifierVariants}),
+ data TAGGED.&Data ({RequestedIdentifierVariants}{@id})
+}
+
+--- варианты запрашиваемых идентификаторов
+RequestedIdentifierVariants TAGGED ::= {
+ requestedPagerIdentifier |                                  --- идентификатор сети персонального радиовызова
+ requestedPstnIdentifier |                                   --- идентификатор ТФОП
+ requestedGsmIdentifier |                                    --- идентификатор GSM
+ requestedCdmaIdentifier |                                   --- идентификатор CDMA
+ requestedDataNetworkIdentifier |                            --- идентификатор сети передачи данных
+ requestedVoipIdentifier                                     --- идентификатор voip
+}
+
+--- идентификатор сети персонального радиовызова
+requestedPagerIdentifier TAGGED ::= {
+ OID { sorm-request-identifier-pager }
+ DATA RequestedPagerIdentifier
+}
+
+RequestedPagerIdentifier ::= NumericString (SIZE (2 .. 18))
+
+--- идентификатор телефонной сети общего пользования
+requestedPstnIdentifier TAGGED ::= {
+ OID { sorm-request-identifier-pstn }
+ DATA RequestedPstnIdentifier
+}
+
+RequestedPstnIdentifier ::= SEQUENCE {
+ directory-number UTF8String (SIZE  (2 .. 32)),              --- телефонный номер в международном формате
+ internal-number  NumericString (SIZE (1 .. 32)) OPTIONAL    --- дополнительный внутренний номер, если есть
+}
+
+-- идентификатор абонента GSM
+requestedGsmIdentifier TAGGED ::= {
+ OID { sorm-request-identifier-gsm }
+ DATA RequestedGsmIdentifier
+}
+
+RequestedGsmIdentifier ::= CHOICE {
+ directory-number [0]      UTF8String (SIZE (2 .. 32)),      --- телефонный номер в международном формате
+ imsi [1]                  NumericString (SIZE (2 .. 18)),   --- идентификатор мобильного абонента
+ imei [2]                  NumericString (SIZE (2 .. 18))    --- идентификатор мобильной станции
+}
+
+-- идентификатор абонента CDMA
+requestedCdmaIdentifier TAGGED ::= {
+ OID { sorm-request-identifier-cdma }
+ DATA RequestedCdmaIdentifier
+}
+
+RequestedCdmaIdentifier ::= CHOICE {
+ directory-number [0]      UTF8String (SIZE (2 .. 32)),      --- телефонный номер в международном формате
+ imsi [1]                  NumericString (SIZE (2 .. 18)),   --- идентификатор мобильного абонента
+ esn [2]                   NumericString (SIZE (2 .. 18)),   --- идентификатор мобильной станции
+ min [3]                   NumericString  (SIZE  (2 .. 18))  --- идентификатор мобильного абонента (CDMA)
+}
+
+-- Идентификатор сети передачи данных
+requestedDataNetworkIdentifier TAGGED ::= {
+ OID { sorm-request-identifier-data-network }
+ DATA RequestedDataNetworkIdentifier
+}
+
+RequestedDataNetworkIdentifier ::= CHOICE {
+ user-equipment [0]        DataNetworkEquipment,             --- идентификатор пользовательского оборудования
+ login [1]                 UTF8String (SIZE (1 .. 128)),     --- имя пользоавателя - login
+ ip-address [2]            IPAddress,                        --- IP адрес
+ e-mail [3]                UTF8String (SIZE (1 .. 128)),     --- адрес электронной почты
+ phone-number [5]          UTF8String (SIZE (2 .. 32))       --- номер телефона
+}
+
+-- Идентификатор voip
+requestedVoipIdentifier TAGGED ::= {
+ OID { sorm-request-identifier-voip }
+ DATA RequestedVoipIdentifier
+}
+
+RequestedVoipIdentifier ::= CHOICE {
+ ip-address [0]            IPAddress,                        --- IP-адрес абонента
+ originator-name [1]       UTF8String (SIZE (1 .. 512)),     --- общедоступное имя инициатора связи
+ calling-number [2]        UTF8String (SIZE (1 .. 32))       --- номер вызывающего абонента
+}
+
+END

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+<meta charset='utf-8'>
+<title>Reports.asn</title>
+<link rel=stylesheet href='Asn1doc.css' type='text/css'>
+</head>
+<body onload='Init()'><span id=I923>Schema File <b class=SF>Reports.asn</b></span><section class='asn1 notinteractive'><p
+><a class=MN id=I924 href='./summary.html#I925'><b>Reports</b></a> <span class=K>DEFINITIONS IMPLICIT TAGS </span><span class=D>::=</span><p
+><span class=K>BEGIN</span><p
+> <p
+><span class=K>EXPORTS</span><p
+>     <a class=EN href=#I926>reportMessage</a><span class=D>, </span><a class=EN href=#I927>Acknowledgement</a><span class=D>;</span><p
+> <p
+><span class=K>IMPORTS</span><p
+>     <a class=EN id=I928 href='./Classification.asn.html#I47'><b>TAGGED</b></a><span class=D>, </span><a class=EN href='./Classification.asn.html#I51'><b>sorm-message-report</b></a><p
+>          <span class=K>FROM </span><a class=MN href='./Classification.asn.html#I45'>Classification</a><p
+>     <span class=E3 title='Error: Invalid reference for symbol &quot;Message&quot;: Invalid reference definition.'><a class=EN id=I929 href='./Sorm.asn.html#I930'><b>Message</b></a></span><span class=D>, </span><a class=EN href='./Sorm.asn.html#I931'><b>MessageID</b></a><span class=D>, </span><a class=EN href='./Sorm.asn.html#I264'><b>DateAndTime</b></a><p
+>          <span class=K>FROM </span><a class=MN href='./Sorm.asn.html#I265'>Sorm</a><p
+>     <a class=EN id=I932 href='./Tasks.asn.html#I933'><b>TaskID</b></a><p
+>          <span class=K>FROM </span><a class=MN href='./Tasks.asn.html#I934'>Tasks</a><p
+>     <a class=EN id=I935 href='./Dictionaries.asn.html#I261'><b>DictionaryReport</b></a><p
+>          <span class=K>FROM </span><a class=MN href='./Dictionaries.asn.html#I256'>Dictionaries</a><p
+>     <a class=EN id=I936 href='./ReportsConnections.asn.html#I937'><b>ConnectionsReport</b></a><p
+>          <span class=K>FROM </span><a class=MN href='./ReportsConnections.asn.html#I938'>ReportsConnections</a><p
+>     <a class=EN id=I939 href='./ReportsLocations.asn.html#I940'><b>LocationReport</b></a><p
+>          <span class=K>FROM </span><a class=MN href='./ReportsLocations.asn.html#I941'>ReportsLocations</a><p
+>     <a class=EN id=I942 href='./ReportsPayments.asn.html#I943'><b>PaymentsReport</b></a><p
+>          <span class=K>FROM </span><a class=MN href='./ReportsPayments.asn.html#I944'>ReportsPayments</a><p
+>     <a class=EN id=I945 href='./ReportsPresense.asn.html#I946'><b>PresenseReport</b></a><p
+>          <span class=K>FROM </span><a class=MN href='./ReportsPresense.asn.html#I947'>ReportsPresense</a><p
+>     <a class=EN id=I948 href='./ReportsNonFormalized.asn.html#I949'><b>NonFormalizedReport</b></a><p
+>          <span class=K>FROM </span><a class=MN href='./ReportsNonFormalized.asn.html#I950'>ReportsNonFormalized</a><p
+>     <a class=EN id=I951 href='./ReportsAbonents.asn.html#I952'><b>AbonentsReport</b></a><p
+>          <span class=K>FROM </span><a class=MN href='./ReportsAbonents.asn.html#I953'>ReportsAbonents</a><p
+>     <a class=EN id=I954 href='./ReportsDataContent.asn.html#I955'><b>DataContentReport</b></a><p
+>          <span class=K>FROM </span><a class=MN href='./ReportsDataContent.asn.html#I956'>ReportsDataContent</a><span class=D>;</span><p
+> <p
+><span class=E3 title='Error: Invalid object assignment for object &quot;reportMessage&quot;: Invalid assignment.'><a class=EN id=I926 href='./summary.html#I957'><b>reportMessage</b></a></span>                           <a class=EN href='./Classification.asn.html#I47'>TAGGED</a> <span class=D>::= {</span><p
+>   <span class=W>OID </span><span class=E3 title='Error: Invalid value: The type of the value is incompatible with its context.'><span class=D id=I958>{</span></span><span class=E>sorm-message-report</span><span class=D>} </span><span class=W>DATA </span><span class=K>CHOICE </span><span class=D>{</span><p
+>      <b class=CI id=I959>report</b>                                  <span class=D>[</span><span class=N>0</span><span class=D>] </span><a class=EN href=#I960>Report</a><span class=D>,                             </span><span class=C>--- тип сообщения "отчет"</span><p
+>      <b class=CI id=I961>ack</b>                                     <span class=D>[</span><span class=N>1</span><span class=D>] </span><a class=EN href=#I927>Acknowledgement</a>                     <span class=C>--- тип сообщения "подтверждение"</span><p
+>   <span class=D>}</span><p
+><span class=D>}</span><p
+> <p
+><span class=C>-- Блок данных сообщения типа "отчет"</span><p
+><span class=E3 title='Error: Invalid type assignment for type &quot;Report&quot;: Invalid assignment.'><a class=EN id=I960 href='./summary.html#I962'><b>Report</b></a></span> <span class=D>::=                              </span><span class=K>SEQUENCE </span><span class=D>{</span><p
+>   <b class=CI id=I963>request-id</b>                              <a class=EN href='./Sorm.asn.html#I931'>MessageID</a><span class=D>,                       </span><span class=C>--- идентификатор запроса, запросивший отчет</span><p
+>   <b class=CI id=I964>task-id</b>                                 <a class=EN href='./Tasks.asn.html#I933'>TaskID</a><span class=D>,                </span><span class=C>--- идентификатор задачи, сгенерировавшей данный отчет</span><p
+>   <b class=CI id=I965>total-blocks-number</b>                     <span class=K>INTEGER</span><span class=D>,                                 </span><span class=C>--- общее количество блоков в отчете</span><p
+>   <b class=CI id=I966>block-number</b>                            <span class=K>INTEGER</span><span class=D>,                                  </span><span class=C>--- порядковый номер текущего блока</span><p
+>   <b class=CI id=I967>report-block</b>                            <a class=EN href=#I968>ReportDataBlock</a>                              <span class=C>--- блок данных отчета</span><p
+><span class=D>}</span><p
+> <p
+><span class=C>-- Подтверждение приема блока, передается с номером соощения соответствующему номеру сообщения блока отчета</span><p
+><a class=EN id=I927 href='./summary.html#I969'><b>Acknowledgement</b></a> <span class=D>::=                     </span><span class=K>SEQUENCE </span><span class=D>{</span><p
+>   <b class=CI id=I970>successful</b>                              <span class=K>BOOLEAN</span><span class=D>,                                   </span><span class=C>--- признак успешного приема блока</span><p
+>   <b class=CI id=I971>broken-record</b>                           <span class=K>INTEGER                                 OPTIONAL</span><span class=D>,</span><p
+>                                                                 <span class=C>--- номер записи в отчете, обработанной на ПУ с ошибкой</span><p
+>   <b class=CI id=I972>error-description</b>                       <span class=K>UTF8String </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>1</span><span class=D>..</span><span class=N>1024</span><span class=D>))             </span><span class=K>OPTIONAL</span><p
+>                                                                   <span class=C>--- описание ошибки приема блока в произвольной форме</span><p
+><span class=D>}</span><p
+> <p
+><span class=E3 title='Error: Invalid type assignment for type &quot;ReportDataBlock&quot;: Invalid assignment.'><a class=EN id=I968 href='./summary.html#I973'><b>ReportDataBlock</b></a></span> <span class=D>::=                     </span><span class=K>CHOICE </span><span class=D>{</span><p
+>   <b class=CI id=I974>dictionary</b>                              <span class=D>[</span><span class=N>0</span><span class=D>] </span><a class=EN href='./Dictionaries.asn.html#I261'>DictionaryReport</a><span class=D>,</span><p
+>                                             <span class=C>--- отчеты задач пополнения справочников (нормативно-справочная информация)</span><p
+>   <b class=CI id=I975>abonents</b>                                <span class=D>[</span><span class=N>1</span><span class=D>] </span><a class=EN href='./ReportsAbonents.asn.html#I952'>AbonentsReport</a><span class=D>,      </span><span class=C>--- отчеты задач поисков по принадлежности абонентов</span><p
+>   <b class=CI id=I976>connections</b>                             <span class=D>[</span><span class=N>2</span><span class=D>] </span><a class=EN href='./ReportsConnections.asn.html#I937'>ConnectionsReport</a><span class=D>,      </span><span class=C>--- отчеты задач поисков по соединениям абонентов</span><p
+>   <b class=CI id=I977>locations</b>                               <span class=D>[</span><span class=N>3</span><span class=D>] </span><a class=EN href='./ReportsLocations.asn.html#I940'>LocationReport</a><span class=D>,</span><p
+>                                                              <span class=C>--- отчет задачи получения данных местоположения абонентов</span><p
+>   <b class=CI id=I978>payments</b>                                <span class=D>[</span><span class=N>4</span><span class=D>] </span><a class=EN href='./ReportsPayments.asn.html#I943'>PaymentsReport</a><span class=D>,          </span><span class=C>--- отчеты задач поисков по совершенным платежам</span><p
+>   <b class=CI id=I979>presense</b>                                <span class=D>[</span><span class=N>6</span><span class=D>] </span><a class=EN href='./ReportsPresense.asn.html#I946'>PresenseReport</a><span class=D>,  </span><span class=C>--- отчеты задач по запросу наличия в ИС СОРМ информации</span><p
+>   <b class=CI id=I980>nonFormalized</b>                           <span class=D>[</span><span class=N>7</span><span class=D>] </span><a class=EN href='./ReportsNonFormalized.asn.html#I949'>NonFormalizedReport</a><span class=D>,</span><p
+>                                                                  <span class=C>--- отчеты задач по обработке неформализованных данных</span><p
+>   <b class=CI id=I981>data-content</b>                            <span class=D>[</span><span class=N>10</span><span class=D>] </span><a class=EN href='./ReportsDataContent.asn.html#I955'>DataContentReport</a>      <span class=C>--- отчеты задач по получению содержимого потоков</span><p
+><span class=D>}</span><p
+> <p
+><span class=K>END</span></section><div class=footer>HTML generated by OSS Nokalva's ASN1Doc utility</div>
+</body>
+</html>

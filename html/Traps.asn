@@ -1,0 +1,44 @@
+Traps DEFINITIONS IMPLICIT TAGS ::=
+BEGIN
+
+EXPORTS trapMessage;
+
+IMPORTS
+  TAGGED,
+  sorm-message-trap
+  FROM Classification
+
+  MessageID
+  FROM Sorm
+  ;
+
+trapMessage TAGGED ::= {
+   OID { sorm-message-trap }
+   DATA CHOICE {
+    trap [0]   Trap,                                  --- тип сообщения "сигнал"
+    trap-ack [1] TrapAck                              --- тип сообщения "подтверждение сигнала"
+   }
+}
+
+-- Блок данных сообщения типа "сигнал"
+Trap ::= SEQUENCE {
+ trap-type          TrapType,                             -- тип сообщения
+ trap-message       UTF8String (SIZE (1..256)) OPTIONAL,  -- описание сообщения
+ reference-message  MessageID OPTIONAL                    -- номер сообщение к которому относится данный сигнал
+                                                          -- (например номер сообщения запросившего отчет при прерывании передачи)
+}
+
+TrapType ::= ENUMERATED {
+ heartbeat (0),              -- тестовый пакет
+ restart-software (1),       -- перезапуск ПО
+ unauthorized-access (2),    -- попытка несанкционированного доступа
+ critical-error (3),         -- критическая ошибка ПО, потеря данных, дальнейшая работа невозможна
+ major-error (4),            -- серьезная ошибка ПО, потеря данных, но дальнейшая работа возможна
+ minor-error (5)             -- незначительная ошибка ПО, данные не потеряны, дальнейшая работа возможна
+}
+
+-- Блок данных сообщения типа "подтверждение сигнала"
+-- Номер сообщения TrapAck должен соответствовать номеру сообщения Trap
+TrapAck ::= NULL
+
+END

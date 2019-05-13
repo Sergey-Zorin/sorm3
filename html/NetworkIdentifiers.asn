@@ -1,0 +1,111 @@
+NetworkIdentifiers DEFINITIONS IMPLICIT TAGS ::=
+BEGIN
+
+EXPORTS 
+  Bunch, DataNetworkEquipment, IPAddress, IPPort, IPMask, 
+  NetworkPeerInfo, PortRange, NetworkType, DataVoipNumber, 
+  IMProtocol, VoipProtocol, HttpMethod;
+
+--- идентификаторы пучка
+Bunch ::= CHOICE {
+ gsm [0]       INTEGER (0 .. 4294967295),            --- идентификатор пучка для GSM-Сети
+ cdma-umts [1] DataNetworkEquipment                  --- идентификатор пучка для W/CDMA, UMTS-сети
+}
+
+-- идентификатор оборудования сети передачи данных
+DataNetworkEquipment ::= CHOICE {
+ mac [0]       OCTET STRING (SIZE (6)),              --- MAC-адрес оконечного сетевого оборудования
+ atm [1]       DataNetworkATM
+}
+
+--- АТМ адрес (SDH/PDH сети)
+DataNetworkATM ::= SEQUENCE {
+ vpi   OCTET STRING (SIZE (1)),                      --- номер виртуального пути сети АТМ (VPI)
+ vci   OCTET STRING (SIZE (2)) OPTIONAL                      --- номер виртуального канала сети АТМ (VCI)
+}
+
+--- тип сети связи (стандарт)
+NetworkType ::= ENUMERATED {
+ not-specified(0),                 --- неконкретизированный стандарт
+ mob-gsm(1),                       --- сеть мобильной связи стандарта GSM
+ mob-cdma(2),                      --- сеть мобильной связи стандарта CDMA
+ fix-pstn(3),                      --- ТФоП-сеть
+ data-ip(4),                       --- стационарные сети передачи данных
+ data-srv(5),                      --- ТМС-службы
+ data-ip-mob(6),                   --- мобильная сеть передачи данных
+ data-ip-wifi (7),                 --- беспроводная сеть передачи данных стандарта WiFi
+ data-ip-max (8),                  --- беспроводная сеть передачи данных стандарта WiMAX
+ paging(9),                        --- персональный радиовызов 
+ voip(10)                          --- сеть передачи голосовой информации посредством сети передачи данных
+}
+
+--- IP-адрес
+IPAddress ::= CHOICE {
+ ipv4 [0]              IPV4Address,                          --- IPv4-адрес
+ ipv6 [1]              IPV6Address                           --- IPv6-адрес
+}
+
+-- IPv4-адрес
+IPV4Address ::= OCTET STRING (SIZE (4))              -- IP адрес (4 байта)
+
+-- IPv6-адрес
+IPV6Address ::= OCTET STRING (SIZE (16))             -- IP адрес (16 байт)
+
+--- IP/UDP/TCP-порт
+IPPort ::= OCTET STRING (SIZE (2)) -- порт
+
+--- маска IP-подсети
+IPMask ::= CHOICE {
+ ipv4-mask [0] IPV4Mask,                             --- IPv4-маска
+ ipv6-mask [1] IPV6Mask                              --- IPv6-маска
+}
+
+--- информация об участнике соединения передачи данных
+NetworkPeerInfo ::= SEQUENCE {
+ ip-address     IPAddress,                           --- IP-адрес
+ ip-port        IPPort OPTIONAL                      --- IP-порт
+}
+
+PortRange ::= SEQUENCE {
+ port-from [0]  IPPort,
+ port-to [1]    IPPort
+}
+
+--- IPv4-маска
+IPV4Mask ::= OCTET STRING (SIZE (4))
+
+--- IPv6-маска
+IPV6Mask ::= OCTET STRING (SIZE (16))
+
+-- Номер телефона VoIP-абонента
+DataVoipNumber ::= SEQUENCE {
+ original-number       UTF8String (SIZE (1 .. 512)),         --- исходный номер абонента
+ translated-number [0] UTF8String (SIZE (1 .. 32)) OPTIONAL, --- номер абонента после преобразования
+ e164-number [1]       UTF8String (SIZE (1 .. 15)) OPTIONAL  --- номер абонента в E164-сети
+}
+
+VoipProtocol ::= ENUMERATED {
+  sip(0),
+  h323(1),
+  iax(2),
+  skype(100)
+}
+IMProtocol ::= ENUMERATED {        --- протокол, при помощи которого отправлены сообщения
+   icq(0),
+   aol(1),
+   msn(2),
+   yahoo(3),
+   web-mail(4),            --- передача сообщения пользователем посредством почтового веб-сервера
+   mms(98),
+   sms(99)
+}
+
+--- http метод
+HttpMethod ::= ENUMERATED {
+   get(0),
+   post(1),
+   put(2),
+   delete (3)
+}
+
+END

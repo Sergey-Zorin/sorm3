@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+<meta charset='utf-8'>
+<title>Locations.asn</title>
+<link rel=stylesheet href='Asn1doc.css' type='text/css'>
+</head>
+<body onload='Init()'><span id=I646>Schema File <b class=SF>Locations.asn</b></span><section class='asn1 notinteractive'><p
+><a class=MN id=I279 href='./summary.html#I647'><b>Locations</b></a> <span class=K>DEFINITIONS IMPLICIT TAGS </span><span class=D>::=</span><p
+><span class=K>BEGIN</span><p
+> <p
+><span class=K>EXPORTS</span><p
+>     <a class=EN href=#I648>Location</a><span class=D>, </span><a class=EN href=#I278>GeoLocation</a><span class=D>;</span><p
+> <p
+><a class=EN id=I648 href='./summary.html#I649'><b>Location</b></a> <span class=D>::=                            </span><span class=K>CHOICE </span><span class=D>{</span><p
+>   <b class=CI id=I650>mobile-location</b>                         <span class=D>[</span><span class=N>0</span><span class=D>] </span><a class=EN href=#I651>MobileLocation</a><span class=D>,                    </span><span class=C>--- местоположение мобильного абонента</span><p
+>   <b class=CI id=I652>wireless-location</b>                       <span class=D>[</span><span class=N>1</span><span class=D>] </span><a class=EN href=#I653>WirelessLocation</a><span class=D>,</span><p
+>                                                              <span class=C>--- местоположение абонента мобильной сети передачи данных</span><p
+>   <b class=CI id=I654>geo-location</b>                            <span class=D>[</span><span class=N>2</span><span class=D>] </span><a class=EN href=#I278>GeoLocation</a>                         <span class=C>--- географическое местоположение</span><p
+><span class=D>}</span><p
+> <p
+><a class=EN id=I651 href='./summary.html#I655'><b>MobileLocation</b></a> <span class=D>::=                      </span><span class=K>SEQUENCE </span><span class=D>{</span><p
+>   <b class=CI id=I656>lac</b>                                     <span class=K>INTEGER </span><span class=D>(</span><span class=N>0</span><span class=D>..</span><span class=N>65535</span><span class=D>),                          </span><span class=C>--- код зоны</span><p
+>   <b class=CI id=I657>cell</b>                                    <span class=K>INTEGER </span><span class=D>(</span><span class=N>0</span><span class=D>..</span><span class=N>4294967295</span><span class=D>),                    </span><span class=C>--- идентификатор базовой станции</span><p
+>   <b class=CI id=I658>ta</b>                                      <span class=D>[</span><span class=N>0</span><span class=D>] </span><span class=K>INTEGER </span><span class=D>(</span><span class=N>0</span><span class=D>..</span><span class=N>63</span><span class=D>)                     </span><span class=K>OPTIONAL</span><p
+>                                                                              <span class=C>--- Timing Advance (временная компенсация)</span><p
+><span class=D>}</span><p
+> <p
+><a class=EN id=I653 href='./summary.html#I659'><b>WirelessLocation</b></a> <span class=D>::=                    </span><span class=K>SEQUENCE </span><span class=D>{</span><p
+>   <b class=CI id=I660>cell</b>                                    <span class=K>UTF8String </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>1</span><span class=D>..</span><span class=N>64</span><span class=D>)),                   </span><span class=C>--- идентификатор сектора</span><p
+>   <b class=CI id=I661>mac</b>                                     <span class=K>OCTET STRING </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>6</span><span class=D>))           </span><span class=C>--- MAC-адрес сетевого оборудования сектора</span><p
+><span class=D>}</span><p
+> <p
+><a class=EN id=I278 href='./summary.html#I662'><b>GeoLocation</b></a> <span class=D>::=                         </span><span class=K>SEQUENCE </span><span class=D>{</span><p
+>   <b class=CI id=I663>latitude-grade</b>                          <span class=K>REAL</span><span class=D>,  </span><span class=C>--- широта в формате [целое_число_градусов].[стотысячные_доли_градуса]</span><p
+>   <b class=CI id=I664>longitude-grade</b>                         <span class=K>REAL</span><span class=D>, </span><span class=C>--- долгота в формате [целое_число_градусов].[стотысячные_доли_градуса]</span><p
+>   <b class=CI id=I665>projection-type</b>                         <span class=K>ENUMERATED </span><span class=D>{ </span><span class=C>--- тип проекции координат</span><p
+>                                              <b class=II id=I666>wgs84</b> <span class=D>(</span><span class=N>0</span><span class=D>), </span><b class=II id=I667>utm</b> <span class=D>(</span><span class=N>1</span><span class=D>), </span><b class=II id=I668>sgs85</b> <span class=D>(</span><span class=N>2</span><span class=D>)</span><p
+>                                           <span class=D>}</span><p
+><span class=D>}</span><p
+> <p
+><span class=K>END</span></section><div class=footer>HTML generated by OSS Nokalva's ASN1Doc utility</div>
+</body>
+</html>

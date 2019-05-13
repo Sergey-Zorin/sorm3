@@ -1,0 +1,112 @@
+ReportsPresense DEFINITIONS IMPLICIT TAGS ::=
+BEGIN
+
+EXPORTS PresenseReport,
+     StandardInterval;
+
+IMPORTS FindRange,
+     DateAndTime
+ FROM Sorm
+
+     TelcoID
+ FROM Dictionaries
+
+     Location
+ FROM Locations
+
+     ReportedIdentifier
+ FROM ReportedIdentifiers
+
+     NetworkType
+ FROM NetworkIdentifiers
+
+     TAGGED,
+     sorm-report-presense-abonents,
+     sorm-report-presense-connections,
+     sorm-report-presense-payments,
+     sorm-report-presense-dictionaries,
+     sorm-report-presense-locations
+ FROM Classification;
+
+---отчет по запросу наличия информации
+PresenseReport ::= SEQUENCE {
+  id     TAGGED.&id ({ReportedPresensesVariants}),
+  data   TAGGED.&Data ({ReportedPresensesVariants}{@id})
+}
+
+ReportedPresensesVariants TAGGED ::= {
+   subsPresence
+  |connectionsPresence
+  |paymentsPresense
+  |dictionariesPresence
+  |locationPresence
+}
+
+--- отчет по наличию информации по абонентам и их идентификаторам.
+--- Для каждого стандарта может быть указано более одного, либо ни
+--- одногоинтервала (фактические периоды наличия информации);
+subsPresence TAGGED ::= {
+ OID { sorm-report-presense-abonents }
+ DATA SEQUENCE OF StandardInterval
+}
+
+-- отчет по наличию информации по соединениям. Для каждого стандарта может быть указано более одного,
+-- либо ни одного, интервала (фактические периоды наличия информации);
+connectionsPresence TAGGED ::= {
+ OID { sorm-report-presense-connections }
+ DATA SEQUENCE OF ConnectionsPresenseRecord
+}
+
+ConnectionsPresenseRecord ::= SEQUENCE {
+ standard-interval StandardInterval,
+ data-type ENUMERATED {                  --- вид соединений передачи данных, информация по которым есть в ИС СОРМ
+   telephone-pstn (0),                   --- телефонные ТФоП-соединения
+   telephone-mobile (1),                 --- телефонные соединения мобильной связи
+   pager (2),                            --- соединения сети персонального радиовызова
+   data-aaa (3),                         --- подключения/отключения абонента к сети связи
+   data-resource (4),                    --- HTTP-обращения к информационному ресурсу сети связи (сайт, портал)
+   data-email (5),                       --- передача почтовых сообщений
+   data-im (6),                          --- передача мгновенных электронных сообщений между пользователями
+   data-voip (7),                        --- голосовая связь посредством сети передачи данных
+   data-file (8),                        --- передача файловых данных
+   data-term (9),                        --- терминальный доступ к оборудованию
+   data-raw (10),                        --- иные данные, принимаемые, получаемые пользователем при помощи закрытых протоколов обмена
+   data-address-translations (11)        --- трансляции сетевых адресов
+ }
+}
+
+paymentsPresense TAGGED ::= {
+ OID { sorm-report-presense-payments }
+ DATA SEQUENCE OF StandardInterval       --- описание имеющейся информации по пополнениям балансов абонентов
+}
+
+--- отчет о наличии информации справочников в ИС. Если какой-либо из справочников не публикуется ИС СОРМ, запись о нем отсутствует
+dictionariesPresence TAGGED ::= {
+ OID { sorm-report-presense-dictionaries }
+ DATA SEQUENCE OF DictionaryInfo
+}
+
+--- запись отчета о наличии информации справочников
+DictionaryInfo ::= SEQUENCE {
+ telco-id          TelcoID,              --- идентификатор оператора связи или структурного подразделения
+ dict              ObjectDescriptor,     --- тип справочника, по которому есть информация
+                                         --- (идентификатор запроса справочника) (Requested...)
+ count             INTEGER  (1 .. 4294967295), --- количество записей в справочнике
+ change-dates      FindRange             --- минимальное и максимальное дата/время изменения записей в справочнике
+}
+
+--- отчет по наличию информации по местоположению абонентов
+locationPresence TAGGED ::= {
+ OID { sorm-report-presense-locations }
+ DATA SEQUENCE OF StandardInterval
+}
+
+--- интервал времени, на котором имеются данные по абонентам, соединениям и платежам, в рамках стандарта связи
+StandardInterval ::= SEQUENCE {
+ telco-id        TelcoID,                --- идентификатор оператора связи или структурного подразделения
+ standard        NetworkType,            --- стандарт связи, информация по которому имеется в ИС
+ range           FindRange,              --- интервал времени, на который имеются данные в ИС
+ count           INTEGER OPTIONAL        --- количество записей
+}
+
+END

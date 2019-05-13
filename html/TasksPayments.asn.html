@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+<meta charset='utf-8'>
+<title>TasksPayments.asn</title>
+<link rel=stylesheet href='Asn1doc.css' type='text/css'>
+</head>
+<body onload='Init()'><span id=I2383>Schema File <b class=SF>TasksPayments.asn</b></span><section class='asn1 notinteractive'><p
+><a class=MN id=I2118 href='./summary.html#I2384'><b>TasksPayments</b></a> <span class=K>DEFINITIONS IMPLICIT TAGS </span><span class=D>::=</span><p
+><span class=K>BEGIN</span><p
+> <p
+><span class=K>EXPORTS</span><p
+>     <a class=EN href=#I2117>PaymentsTask</a><span class=D>;</span><p
+> <p
+><span class=K>IMPORTS</span><p
+>     <a class=EN id=I2385 href='./Tasks.asn.html#I2102'><b>LogicalOperation</b></a><p
+>          <span class=K>FROM </span><a class=MN href='./Tasks.asn.html#I934'>Tasks</a><p
+>     <span class=E3 title='Error: Invalid reference for symbol &quot;RequestedConnection&quot;: Invalid reference definition.'><a class=EN id=I2386 href='./RequestedConnections.asn.html#I1769'><b>RequestedConnection</b></a></span><p
+>          <span class=K>FROM </span><a class=MN href='./RequestedConnections.asn.html#I1766'>RequestedConnections</a><p
+>     <a class=EN id=I2387 href='./RequestedIdentifiers.asn.html#I1975'><b>RequestedIdentifier</b></a><p
+>          <span class=K>FROM </span><a class=MN href='./RequestedIdentifiers.asn.html#I1776'>RequestedIdentifiers</a><p
+>     <a class=EN id=I2388 href='./Addresses.asn.html#I7'><b>RequestedAddress</b></a><p
+>          <span class=K>FROM </span><a class=MN href='./Addresses.asn.html#I2'>Addresses</a><p
+>     <a class=EN id=I2389 href='./Classification.asn.html#I47'><b>TAGGED</b></a><span class=D>, </span><a class=EN href='./Classification.asn.html#I67'><b>sorm-request-payment-bank-transaction</b></a><span class=D>, </span><a class=EN href='./Classification.asn.html#I68'><b>sorm-request-payment-express-pays</b></a><span class=D>,</span><p
+>     <a class=EN href='./Classification.asn.html#I69'><b>sorm-request-payment-terminal-pays</b></a><span class=D>, </span><a class=EN href='./Classification.asn.html#I70'><b>sorm-request-payment-service-center</b></a><span class=D>, </span><a class=EN href='./Classification.asn.html#I71'><b>sorm-request-payment-cross-account</b></a><span class=D>,</span><p
+>     <a class=EN href='./Classification.asn.html#I72'><b>sorm-request-payment-telephone-card</b></a><span class=D>, </span><a class=EN href='./Classification.asn.html#I73'><b>sorm-request-payment-balance-fillups</b></a><span class=D>,</span><p
+>     <a class=EN href='./Classification.asn.html#I74'><b>sorm-request-payment-bank-division-transfer</b></a><span class=D>, </span><a class=EN href='./Classification.asn.html#I75'><b>sorm-request-payment-bank-card-transfer</b></a><span class=D>,</span><p
+>     <a class=EN href='./Classification.asn.html#I76'><b>sorm-request-payment-bank-account-transfer</b></a><p
+>          <span class=K>FROM </span><a class=MN href='./Classification.asn.html#I45'>Classification</a><span class=D>;</span><p
+> <p
+><span class=E3 title='Error: Invalid type assignment for type &quot;PaymentsTask&quot;: Invalid assignment.'><a class=EN id=I2117 href='./summary.html#I2390'><b>PaymentsTask</b></a></span> <span class=D>::=                        </span><span class=K>SEQUENCE </span><span class=D>{</span><p
+>   <b class=CI id=I2391>id</b>                                      <a class=EN href='./Classification.asn.html#I47'>TAGGED</a><span class=D>.</span><a class=FN href='./Classification.asn.html#I146'>&amp;id</a> <span class=D>({</span><a class=EN href=#I2392>RequestedPaymentsVariants</a><span class=D>}),</span><p
+>   <b class=CI id=I2393>data</b>                                    <a class=EN href='./Classification.asn.html#I47'>TAGGED</a><span class=D>.</span><a class=FN href='./Classification.asn.html#I147'>&amp;Data</a> <span class=D>({</span><a class=EN href=#I2392>RequestedPaymentsVariants</a><span class=D>} {@</span><a class=CI href=#I2391>id</a><span class=D>})</span><p
+><span class=D>}</span><p
+> <p
+><span class=C>--- варианты запрашиваемых параметров связей</span><p
+><span class=E3 title='Error: Invalid object set assignment for object set &quot;RequestedPaymentsVariants&quot;: Invalid assignment.'><a class=EN id=I2392 href='./summary.html#I2394'><b>RequestedPaymentsVariants</b></a></span>               <a class=EN href='./Classification.asn.html#I47'>TAGGED</a> <span class=D>::= {</span><p
+>   <a class=EN href=#I2395>bankTransactionTask</a> <span class=D>|</span><p
+>   <a class=EN href=#I2396>expressCardTask</a> <span class=D>|</span><p
+>   <a class=EN href=#I2397>publicTerminalTask</a> <span class=D>|</span><p
+>   <a class=EN href=#I2398>serviceCenterTask</a> <span class=D>|</span><p
+>   <a class=EN href=#I2399>crossAccountTask</a> <span class=D>|</span><p
+>   <a class=EN href=#I2400>telephoneCardTask</a> <span class=D>|</span><p
+>   <a class=EN href=#I2401>balanceFillupTask</a> <span class=D>|</span><p
+>   <a class=EN href=#I2402>bankDivisionTransferTask</a> <span class=D>|</span><p
+>   <a class=EN href=#I2403>bankCardTransferTask</a> <span class=D>|</span><p
+>   <a class=EN href=#I2404>bankAccountTransferTask</a><p
+><span class=D>}</span><p
+> <p
+><span class=C>--- задача на поиск пополнения баланса через банковский перевод</span><p
+><span class=E3 title='Error: Invalid object assignment for object &quot;bankTransactionTask&quot;: Invalid assignment.'><a class=EN id=I2395 href='./summary.html#I2405'><b>bankTransactionTask</b></a></span>                     <a class=EN href='./Classification.asn.html#I47'>TAGGED</a> <span class=D>::= {</span><span class=W>OID </span><span class=E3 title='Error: Invalid value: The type of the value is incompatible with its context.'><span class=D id=I2406>{</span></span><span class=E>sorm-request-payment-bank-transaction</span><span class=D>} </span><span class=W>DATA</span><p
+>                                             <a class=EN href=#I2407>RequestedBankTransactionPays</a><span class=D>}</span><p
+> <p
+><a class=EN id=I2407 href='./summary.html#I2408'><b>RequestedBankTransactionPays</b></a> <span class=D>::=        </span><span class=K>SEQUENCE OF </span><a class=EN id=I2409 href=#I2410>RequestedBankTransactionPaysParameters</a><p
+> <p
+><span class=C>--- последовательность логических операций и параметров</span><p
+><a class=EN id=I2410 href='./summary.html#I2411'><b>RequestedBankTransactionPaysParameters</b></a> <span class=D>::= </span><span class=K>CHOICE </span><span class=D>{</span><p
+>   <b class=CI id=I2412>separator</b>                               <span class=D>[</span><span class=N>0</span><span class=D>] </span><a class=EN href='./Tasks.asn.html#I2102'>LogicalOperation</a><span class=D>,                   </span><span class=C>--- логический оператор связки</span><p
+>   <b class=CI id=I2413>bank-account</b>                            <span class=D>[</span><span class=N>1</span><span class=D>] </span><span class=K>UTF8String </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>1</span><span class=D>..</span><span class=N>64</span><span class=D>)),</span><p
+>                                                                 <span class=C>--- номер банковского счета, с которого совершен платеж</span><p
+>   <b class=CI id=I2414>bank-name</b>                               <span class=D>[</span><span class=N>2</span><span class=D>] </span><span class=K>UTF8String </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>1</span><span class=D>..</span><span class=N>512</span><span class=D>))</span><p
+>                                                              <span class=C>--- наименование банка, со счета которого совершен перевод</span><p
+><span class=D>}</span><p
+> <p
+><span class=C>--- задача на поиск пополнения баланса через карты экспресс-оплаты</span><p
+><span class=E3 title='Error: Invalid object assignment for object &quot;expressCardTask&quot;: Invalid assignment.'><a class=EN id=I2396 href='./summary.html#I2415'><b>expressCardTask</b></a></span>                         <a class=EN href='./Classification.asn.html#I47'>TAGGED</a> <span class=D>::= {</span><span class=W>OID </span><span class=E3 title='Error: Invalid value: The type of the value is incompatible with its context.'><span class=D id=I2416>{</span></span><span class=E>sorm-request-payment-express-pays</span><span class=D>} </span><span class=W>DATA </span><a class=EN href=#I2417>RequestedExpressPays</a><span class=D>}</span><p
+> <p
+><a class=EN id=I2417 href='./summary.html#I2418'><b>RequestedExpressPays</b></a> <span class=D>::=                </span><span class=K>SEQUENCE OF </span><a class=EN id=I2419 href=#I2420>RequestedExpressPaysParameters</a><p
+>                                                                 <span class=C>--- последовательность логических операций и параметров</span><p
+> <p
+><a class=EN id=I2420 href='./summary.html#I2421'><b>RequestedExpressPaysParameters</b></a> <span class=D>::=      </span><span class=K>CHOICE </span><span class=D>{</span><p
+>   <b class=CI id=I2422>separator</b>                               <span class=D>[</span><span class=N>0</span><span class=D>] </span><a class=EN href='./Tasks.asn.html#I2102'>LogicalOperation</a><span class=D>,                   </span><span class=C>--- логический оператор связки</span><p
+>   <b class=CI id=I2423>express-card</b>                            <span class=D>[</span><span class=N>1</span><span class=D>] </span><span class=K>NumericString </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>2</span><span class=D>..</span><span class=N>20</span><span class=D>))        </span><span class=C>--- номер карты экспресс-оплаты</span><p
+><span class=D>}</span><p
+> <p
+><span class=C>--- задача на поиск пополнения баланса через терминалы моментальных платежей</span><p
+><span class=E3 title='Error: Invalid object assignment for object &quot;publicTerminalTask&quot;: Invalid assignment.'><a class=EN id=I2397 href='./summary.html#I2424'><b>publicTerminalTask</b></a></span>                      <a class=EN href='./Classification.asn.html#I47'>TAGGED</a> <span class=D>::= {</span><span class=W>OID </span><span class=E3 title='Error: Invalid value: The type of the value is incompatible with its context.'><span class=D id=I2425>{</span></span><span class=E>sorm-request-payment-terminal-pays</span><span class=D>} </span><span class=W>DATA </span><a class=EN href=#I2426>RequestedTerminalPays</a><span class=D>}</span><p
+> <p
+><a class=EN id=I2426 href='./summary.html#I2427'><b>RequestedTerminalPays</b></a> <span class=D>::=               </span><span class=K>SEQUENCE OF </span><a class=EN id=I2428 href=#I2429>RequestedTerminalPaysParameters</a><p
+>                                                                 <span class=C>--- последовательность логических операций и параметров</span><p
+> <p
+><a class=EN id=I2429 href='./summary.html#I2430'><b>RequestedTerminalPaysParameters</b></a> <span class=D>::=     </span><span class=K>CHOICE </span><span class=D>{</span><p
+>   <b class=CI id=I2431>separator</b>                               <span class=D>[</span><span class=N>0</span><span class=D>] </span><a class=EN href='./Tasks.asn.html#I2102'>LogicalOperation</a><span class=D>,                   </span><span class=C>--- логический оператор связки</span><p
+>   <b class=CI id=I2432>terminal-id</b>                             <span class=D>[</span><span class=N>1</span><span class=D>] </span><span class=K>UTF8String </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>1</span><span class=D>..</span><span class=N>64</span><span class=D>)),          </span><span class=C>--- идентификатор терминала</span><p
+>   <b class=CI id=I2433>terminal-number</b>                         <span class=D>[</span><span class=N>2</span><span class=D>] </span><span class=K>NumericString </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>2</span><span class=D>..</span><span class=N>20</span><span class=D>)),       </span><span class=C>--- номер терминала</span><p
+>   <b class=CI id=I2434>terminal-address</b>                        <span class=D>[</span><span class=N>3</span><span class=D>] </span><a class=EN href='./Addresses.asn.html#I7'>RequestedAddress</a>                    <span class=C>--- адрес терминала</span><p
+><span class=D>}</span><p
+> <p
+><span class=C>--- задача на поиск пополнения баланса через центры обслуживания клиентов (ЦОК)</span><p
+><span class=E3 title='Error: Invalid object assignment for object &quot;serviceCenterTask&quot;: Invalid assignment.'><a class=EN id=I2398 href='./summary.html#I2435'><b>serviceCenterTask</b></a></span>                       <a class=EN href='./Classification.asn.html#I47'>TAGGED</a> <span class=D>::= {</span><span class=W>OID </span><span class=E3 title='Error: Invalid value: The type of the value is incompatible with its context.'><span class=D id=I2436>{</span></span><span class=E>sorm-request-payment-service-center</span><span class=D>} </span><span class=W>DATA</span><p
+>                                             <a class=EN href=#I2437>RequestedServiceCenterPays</a><span class=D>}</span><p
+> <p
+><a class=EN id=I2437 href='./summary.html#I2438'><b>RequestedServiceCenterPays</b></a> <span class=D>::=          </span><span class=K>SEQUENCE OF </span><a class=EN id=I2439 href=#I2440>RequestedServiceCenterPaysParameters</a><p
+>                                                                 <span class=C>--- последовательность логических операций и параметров</span><p
+> <p
+><a class=EN id=I2440 href='./summary.html#I2441'><b>RequestedServiceCenterPaysParameters</b></a> <span class=D>::= </span><span class=K>CHOICE </span><span class=D>{</span><p
+>   <b class=CI id=I2442>separator</b>                               <span class=D>[</span><span class=N>0</span><span class=D>] </span><a class=EN href='./Tasks.asn.html#I2102'>LogicalOperation</a><span class=D>,                   </span><span class=C>--- логический оператор связки</span><p
+>   <b class=CI id=I2443>center-id</b>                               <span class=D>[</span><span class=N>1</span><span class=D>] </span><span class=K>UTF8String </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>1</span><span class=D>..</span><span class=N>64</span><span class=D>)), </span><span class=C>--- идентификатор центра обслуживания клиентов</span><p
+>   <b class=CI id=I2444>center-address</b>                          <span class=D>[</span><span class=N>2</span><span class=D>] </span><a class=EN href='./Addresses.asn.html#I7'>RequestedAddress</a>                   <span class=C>--- адрес центра обслуживания клиентов</span><p
+><span class=D>}</span><p
+> <p
+><span class=C>--- задача на поиск пополнения баланса посредством снятия денег со счета другого абонента</span><p
+><span class=E3 title='Error: Invalid object assignment for object &quot;crossAccountTask&quot;: Invalid assignment.'><a class=EN id=I2399 href='./summary.html#I2445'><b>crossAccountTask</b></a></span>                        <a class=EN href='./Classification.asn.html#I47'>TAGGED</a> <span class=D>::= {</span><span class=W>OID </span><span class=E3 title='Error: Invalid value: The type of the value is incompatible with its context.'><span class=D id=I2446>{</span></span><span class=E>sorm-request-payment-cross-account</span><span class=D>} </span><span class=W>DATA</span><p
+>                                             <a class=EN href=#I2447>RequestedCrossAccountPays</a><span class=D>}</span><p
+> <p
+><span class=E3 title='Error: Invalid type assignment for type &quot;RequestedCrossAccountPays&quot;: Invalid assignment.'><a class=EN id=I2447 href='./summary.html#I2448'><b>RequestedCrossAccountPays</b></a></span> <span class=D>::=           </span><span class=K>SEQUENCE OF </span><a class=EN id=I2449 href=#I2450>RequestedCrossAccountPaysParameters</a><p
+>                                                                 <span class=C>--- последовательность логических операций и параметров</span><p
+> <p
+><span class=E3 title='Error: Invalid type assignment for type &quot;RequestedCrossAccountPaysParameters&quot;: Invalid assignment.'><a class=EN id=I2450 href='./summary.html#I2451'><b>RequestedCrossAccountPaysParameters</b></a></span> <span class=D>::= </span><span class=K>CHOICE </span><span class=D>{</span><p
+>   <b class=CI id=I2452>separator</b>                               <span class=D>[</span><span class=N>0</span><span class=D>] </span><a class=EN href='./Tasks.asn.html#I2102'>LogicalOperation</a><span class=D>,                   </span><span class=C>--- логический оператор связки</span><p
+>   <b class=CI id=I2453>source-identifier</b>                       <span class=D>[</span><span class=N>1</span><span class=D>] </span><a class=EN href='./RequestedIdentifiers.asn.html#I1975'>RequestedIdentifier</a><span class=D>,</span><p
+>                                                      <span class=C>--- идентификатор абонента, со счета которого переводятся средства</span><p
+>   <b class=CI id=I2454>dest-identifier</b>                         <span class=D>[</span><span class=N>2</span><span class=D>] </span><a class=EN href='./RequestedIdentifiers.asn.html#I1975'>RequestedIdentifier</a><p
+>                                                       <span class=C>--- идентификатор абонента, на счет которого переводятся средства</span><p
+><span class=D>}</span><p
+> <p
+><span class=C>--- задача на поиск пополнения баланса через телефонные карты</span><p
+><span class=E3 title='Error: Invalid object assignment for object &quot;telephoneCardTask&quot;: Invalid assignment.'><a class=EN id=I2400 href='./summary.html#I2455'><b>telephoneCardTask</b></a></span>                       <a class=EN href='./Classification.asn.html#I47'>TAGGED</a> <span class=D>::= {</span><span class=W>OID </span><span class=E3 title='Error: Invalid value: The type of the value is incompatible with its context.'><span class=D id=I2456>{</span></span><span class=E>sorm-request-payment-telephone-card</span><span class=D>} </span><span class=W>DATA</span><p
+>                                             <a class=EN href=#I2457>RequestedTelephoneCardPays</a><span class=D>}</span><p
+> <p
+><a class=EN id=I2457 href='./summary.html#I2458'><b>RequestedTelephoneCardPays</b></a> <span class=D>::=          </span><span class=K>SEQUENCE OF </span><a class=EN id=I2459 href=#I2460>RequestedTelephoneCardPaysParameters</a><p
+>                                                                 <span class=C>--- последовательность логических операций и параметров</span><p
+> <p
+><a class=EN id=I2460 href='./summary.html#I2461'><b>RequestedTelephoneCardPaysParameters</b></a> <span class=D>::= </span><span class=K>CHOICE </span><span class=D>{</span><p
+>   <b class=CI id=I2462>separator</b>                               <span class=D>[</span><span class=N>0</span><span class=D>] </span><a class=EN href='./Tasks.asn.html#I2102'>LogicalOperation</a><span class=D>,                   </span><span class=C>--- логический оператор связки</span><p
+>   <b class=CI id=I2463>card-number</b>                             <span class=D>[</span><span class=N>1</span><span class=D>] </span><span class=K>NumericString </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>2</span><span class=D>..</span><span class=N>20</span><span class=D>))        </span><span class=C>--- номер телефонной карты</span><p
+><span class=D>}</span><p
+> <p
+><span class=C>--- общая задача на поиск пополнения баланса личного счета абонента</span><p
+><span class=E3 title='Error: Invalid object assignment for object &quot;balanceFillupTask&quot;: Invalid assignment.'><a class=EN id=I2401 href='./summary.html#I2464'><b>balanceFillupTask</b></a></span>                       <a class=EN href='./Classification.asn.html#I47'>TAGGED</a> <span class=D>::= {</span><p
+>   <span class=W>OID </span><span class=E3 title='Error: Invalid value: The type of the value is incompatible with its context.'><span class=D id=I2465>{</span></span><span class=E>sorm-request-payment-balance-fillups</span><span class=D>} </span><span class=W>DATA </span><a class=EN href=#I2466>RequestedBalanceFillups</a> <span class=C>--- параметры запроса</span><p
+><span class=D>}</span><p
+> <p
+><span class=E3 title='Error: Invalid type assignment for type &quot;RequestedBalanceFillups&quot;: Invalid assignment.'><a class=EN id=I2466 href='./summary.html#I2467'><b>RequestedBalanceFillups</b></a></span> <span class=D>::=             </span><span class=K>SEQUENCE OF </span><a class=EN id=I2468 href=#I2469>RequestedBalanceFillupsParameters</a><p
+>                                                                 <span class=C>--- последовательность логических операций и параметров</span><p
+> <p
+><span class=E3 title='Error: Invalid type assignment for type &quot;RequestedBalanceFillupsParameters&quot;: Invalid assignment.'><a class=EN id=I2469 href='./summary.html#I2470'><b>RequestedBalanceFillupsParameters</b></a></span> <span class=D>::=   </span><span class=K>CHOICE </span><span class=D>{</span><p
+>   <b class=CI id=I2471>separator</b>                               <span class=D>[</span><span class=N>0</span><span class=D>] </span><a class=EN href='./Tasks.asn.html#I2102'>LogicalOperation</a><span class=D>,                   </span><span class=C>--- логический оператор связки</span><p
+>   <b class=CI id=I2472>identifier</b>                              <span class=D>[</span><span class=N>1</span><span class=D>] </span><a class=EN href='./RequestedIdentifiers.asn.html#I1975'>RequestedIdentifier</a>                 <span class=C>--- идентификатор абонента</span><p
+><span class=D>}</span><p
+> <p
+><span class=C>--- задача на поиск перевода средств со счета абонента для их снятия в отделении банка</span><p
+><span class=E3 title='Error: Invalid object assignment for object &quot;bankDivisionTransferTask&quot;: Invalid assignment.'><a class=EN id=I2402 href='./summary.html#I2473'><b>bankDivisionTransferTask</b></a></span>                <a class=EN href='./Classification.asn.html#I47'>TAGGED</a> <span class=D>::= {</span><p
+>   <span class=W>OID </span><span class=E3 title='Error: Invalid value: The type of the value is incompatible with its context.'><span class=D id=I2474>{</span></span><span class=E>sorm-request-payment-bank-division-transfer</span><span class=D>} </span><span class=W>DATA </span><a class=EN href=#I2475>RequestedBankDivisionTranferPays</a> <span class=C>--- параметры запроса</span><p
+><span class=D>}</span><p
+> <p
+><span class=E3 title='Error: Invalid type assignment for type &quot;RequestedBankDivisionTranferPays&quot;: Invalid assignment.'><a class=EN id=I2475 href='./summary.html#I2476'><b>RequestedBankDivisionTranferPays</b></a></span> <span class=D>::=    </span><span class=K>SEQUENCE OF </span><a class=EN id=I2477 href=#I2478>RequestedTranferParameters</a><p
+>                                                                 <span class=C>--- последовательность логических операций и параметров</span><p
+> <p
+><span class=C>--- задача на поиск перевода средств со счета абонента на банковскую карту</span><p
+><span class=E3 title='Error: Invalid object assignment for object &quot;bankCardTransferTask&quot;: Invalid assignment.'><a class=EN id=I2403 href='./summary.html#I2479'><b>bankCardTransferTask</b></a></span>                    <a class=EN href='./Classification.asn.html#I47'>TAGGED</a> <span class=D>::= {</span><p
+>   <span class=W>OID </span><span class=E3 title='Error: Invalid value: The type of the value is incompatible with its context.'><span class=D id=I2480>{</span></span><span class=E>sorm-request-payment-bank-card-transfer</span><span class=D>} </span><span class=W>DATA </span><a class=EN href=#I2481>RequestedBankCardTranferPays</a> <span class=C>--- параметры запроса</span><p
+><span class=D>}</span><p
+> <p
+><span class=E3 title='Error: Invalid type assignment for type &quot;RequestedBankCardTranferPays&quot;: Invalid assignment.'><a class=EN id=I2481 href='./summary.html#I2482'><b>RequestedBankCardTranferPays</b></a></span> <span class=D>::=        </span><span class=K>SEQUENCE OF </span><a class=EN id=I2483 href=#I2478>RequestedTranferParameters</a><p
+>                                                                 <span class=C>--- последовательность логических операций и параметров</span><p
+> <p
+><span class=C>--- задача на поиск перевода средств со счета абонента на счет в банке</span><p
+><span class=E3 title='Error: Invalid object assignment for object &quot;bankAccountTransferTask&quot;: Invalid assignment.'><a class=EN id=I2404 href='./summary.html#I2484'><b>bankAccountTransferTask</b></a></span>                 <a class=EN href='./Classification.asn.html#I47'>TAGGED</a> <span class=D>::= {</span><p
+>   <span class=W>OID </span><span class=E3 title='Error: Invalid value: The type of the value is incompatible with its context.'><span class=D id=I2485>{</span></span><span class=E>sorm-request-payment-bank-account-transfer</span><span class=D>} </span><span class=W>DATA </span><a class=EN href=#I2486>RequestedBankAccountTranferPays</a> <span class=C>--- параметры запроса</span><p
+><span class=D>}</span><p
+> <p
+><span class=E3 title='Error: Invalid type assignment for type &quot;RequestedBankAccountTranferPays&quot;: Invalid assignment.'><a class=EN id=I2486 href='./summary.html#I2487'><b>RequestedBankAccountTranferPays</b></a></span> <span class=D>::=     </span><span class=K>SEQUENCE OF </span><a class=EN id=I2488 href=#I2478>RequestedTranferParameters</a><p
+>                                                                 <span class=C>--- последовательность логических операций и параметров</span><p
+> <p
+><span class=E3 title='Error: Invalid type assignment for type &quot;RequestedTranferParameters&quot;: Invalid assignment.'><a class=EN id=I2478 href='./summary.html#I2489'><b>RequestedTranferParameters</b></a></span> <span class=D>::=          </span><span class=K>CHOICE </span><span class=D>{</span><p
+>   <b class=CI id=I2490>separator</b>                               <span class=D>[</span><span class=N>0</span><span class=D>] </span><a class=EN href='./Tasks.asn.html#I2102'>LogicalOperation</a><span class=D>,                   </span><span class=C>--- логический оператор связки</span><p
+>   <b class=CI id=I2491>source-identifier</b>                       <span class=D>[</span><span class=N>1</span><span class=D>] </span><a class=EN href='./RequestedIdentifiers.asn.html#I1975'>RequestedIdentifier</a><p
+>                                                                  <span class=C>--- идентификатор абонента инициатора перевода средств</span><p
+><span class=D>}</span><p
+> <p
+><span class=K>END</span></section><div class=footer>HTML generated by OSS Nokalva's ASN1Doc utility</div>
+</body>
+</html>

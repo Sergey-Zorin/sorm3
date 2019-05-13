@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+<meta charset='utf-8'>
+<title>Sorm.asn</title>
+<link rel=stylesheet href='Asn1doc.css' type='text/css'>
+</head>
+<body onload='Init()'><span id=I2065>Schema File <b class=SF>Sorm.asn</b></span><section class='asn1 notinteractive'><p
+><a class=MN id=I265 href='./summary.html#I2066'><b>Sorm</b></a> <span class=K>DEFINITIONS IMPLICIT TAGS </span><span class=D>::=</span><p
+><span class=K>BEGIN</span><p
+> <p
+><span class=K>EXPORTS</span><p
+>     <a class=EN href=#I264>DateAndTime</a><span class=D>, </span><a class=EN href=#I1669>FindRange</a><span class=D>, </span><a class=EN href=#I931>MessageID</a><span class=D>, </span><span class=E3 title='Error: Invalid reference for symbol &quot;Message&quot;: Invalid reference definition.'><a class=EN id=I2067 href=#I930>Message</a></span><span class=D>;</span><p
+> <p
+><span class=K>IMPORTS</span><p
+>     <a class=EN id=I2068 href='./Classification.asn.html#I47'><b>TAGGED</b></a><p
+>          <span class=K>FROM </span><a class=MN href='./Classification.asn.html#I45'>Classification</a><p
+>     <a class=EN id=I2069 href='./Sessions.asn.html#I2029'><b>sessionMessage</b></a><p
+>          <span class=K>FROM </span><a class=MN href='./Sessions.asn.html#I2027'>Sessions</a><p
+>     <a class=EN id=I2070 href='./Traps.asn.html#I2071'><b>trapMessage</b></a><p
+>          <span class=K>FROM </span><a class=MN href='./Traps.asn.html#I2072'>Traps</a><p
+>     <span class=E3 title='Error: Invalid reference for symbol &quot;taskMessage&quot;: Invalid reference definition.'><a class=EN id=I2073 href='./Tasks.asn.html#I2074'><b>taskMessage</b></a></span><p
+>          <span class=K>FROM </span><a class=MN href='./Tasks.asn.html#I934'>Tasks</a><p
+>     <a class=EN id=I2075 href='./Reports.asn.html#I926'><b>reportMessage</b></a><p
+>          <span class=K>FROM </span><a class=MN href='./Reports.asn.html#I924'>Reports</a><p
+>     <a class=EN id=I2076 href='./Management.asn.html#I672'><b>managementMessage</b></a><p
+>          <span class=K>FROM </span><a class=MN href='./Management.asn.html#I670'>Management</a><p
+>     <a class=EN id=I2077 href='./Unformatted.asn.html#I2078'><b>unformattedMessage</b></a><p
+>          <span class=K>FROM </span><a class=MN href='./Unformatted.asn.html#I2079'>Unformatted</a><p
+>     <span class=E3 title='Error: Invalid reference for symbol &quot;filterMessage&quot;: Reference not found.'><b class=EN id=I2080>filterMessage</b></span><p
+>          <span class=K>FROM </span><span class=MN>Filters</span><span class=D>;</span><p
+> <p
+><a class=EN id=I2081 href='./summary.html#I2082'><b>Version</b></a> <span class=D>::=                             </span><span class=K>PrintableString</span><p
+> <p
+><a class=EN id=I2083 href='./summary.html#I2084'><b>vers</b></a>                                    <a class=EN href=#I2081>Version</a> <span class=D>::= </span><span class=S>"3.0.0"                     </span><span class=C>--- текущая версия протокола</span><p
+> <p
+><span class=C>-- Оболочка сообщения СОРМ --</span><p
+><span class=E3 title='Error: Invalid type assignment for type &quot;Message&quot;: Invalid assignment.'><a class=EN id=I930 href='./summary.html#I2085'><b>Message</b></a></span> <span class=D>::=                             </span><span class=K>SEQUENCE </span><span class=D>{</span><p
+>   <b class=CI id=I2086>version</b>                                 <a class=EN href=#I2081>Version</a>                                 <span class=K>DEFAULT </span><span class=E>vers</span><span class=D>, </span><span class=C>--- версия протокола</span><p
+>   <b class=CI id=I2087>message-id</b>                              <a class=EN href=#I931>MessageID</a><span class=D>,                                   </span><span class=C>--- номер запроса</span><p
+>   <b class=CI id=I2088>message-time</b>                            <a class=EN href=#I264>DateAndTime</a><span class=D>,                                 </span><span class=C>--- время и дата запроса</span><p
+>   <b class=CI id=I2089>operator-name</b>                           <span class=K>PrintableString </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>1</span><span class=D>..</span><span class=N>128</span><span class=D>))         </span><span class=K>OPTIONAL</span><span class=D>,</span><p
+>                                                                                        <span class=C>--- наименование оператора связи</span><p
+>   <b class=CI id=I2090>id</b>                                      <a class=EN href='./Classification.asn.html#I47'>TAGGED</a><span class=D>.</span><a class=FN href='./Classification.asn.html#I146'>&amp;id</a> <span class=D>({</span><a class=EN href=#I2091>SormPDUs</a><span class=D>}),                     </span><span class=C>--- идентификтор блока данных</span><p
+>   <b class=CI id=I2092>data</b>                                    <a class=EN href='./Classification.asn.html#I47'>TAGGED</a><span class=D>.</span><a class=FN href='./Classification.asn.html#I147'>&amp;Data</a> <span class=D>({</span><a class=EN href=#I2091>SormPDUs</a><span class=D>} {@</span><a class=CI href=#I2090>id</a><span class=D>})              </span><span class=C>--- данные блока данных</span><p
+><span class=D>}</span><p
+> <p
+><span class=C>-- Блок данных сообщения</span><p
+><span class=E3 title='Error: Invalid object set assignment for object set &quot;SormPDUs&quot;: Invalid assignment.'><a class=EN id=I2091 href='./summary.html#I2093'><b>SormPDUs</b></a></span>                                <a class=EN href='./Classification.asn.html#I47'>TAGGED</a> <span class=D>::= {</span><p
+>   <a class=EN href='./Sessions.asn.html#I2029'>sessionMessage</a> <span class=C>--- сообщения организации сессии</span><p
+>   <span class=D>|</span><p
+>   <a class=EN href='./Traps.asn.html#I2071'>trapMessage</a> <span class=C>--- сообщения сигналов</span><p
+>   <span class=D>|</span><p
+>   <a class=EN href='./Tasks.asn.html#I2074'>taskMessage</a> <span class=C>--- сообщения работы с задачами</span><p
+>   <span class=D>|</span><p
+>   <a class=EN href='./Reports.asn.html#I926'>reportMessage</a> <span class=C>--- сообщения работы с отчетами</span><p
+>   <span class=D>|</span><p
+>   <a class=EN href='./Management.asn.html#I672'>managementMessage</a> <span class=C>--- сообщения канала передачи мониторинга (КПМ)</span><p
+>   <span class=D>|</span><p
+>   <a class=EN href='./Unformatted.asn.html#I2078'>unformattedMessage</a> <span class=C>--- сообщения канала передачи неформатированных данных (КПНФ)</span><p
+>   <span class=D>|</span><p
+>   <span class=EN>filterMessage </span><span class=C>--- сообщения установки/снятия фильтров записываемого содержимого соединений сети передачи данных</span><p
+><span class=D>}</span><p
+> <p
+><span class=C>--- Общие данные</span><p
+><span class=C>-- Номер сообщения</span><p
+><a class=EN id=I931 href='./summary.html#I2094'><b>MessageID</b></a> <span class=D>::=                           </span><span class=K>INTEGER </span><span class=D>(</span><span class=N>0</span><span class=D>..</span><span class=N>4294967295</span><span class=D>)</span><p
+> <p
+><span class=C>-- Дата и время</span><p
+><a class=EN id=I264 href='./summary.html#I2095'><b>DateAndTime</b></a> <span class=D>::=                         </span><span class=K>UTCTime</span><p
+> <p
+><span class=C>-- Диапазон поиска</span><p
+><a class=EN id=I1669 href='./summary.html#I2096'><b>FindRange</b></a> <span class=D>::=                           </span><span class=K>SEQUENCE </span><span class=D>{</span><p
+>   <b class=CI id=I2097>begin-find</b>                              <span class=D>[</span><span class=N>0</span><span class=D>] </span><a class=EN href=#I264>DateAndTime</a>                         <span class=K>OPTIONAL</span><span class=D>,</span><p
+>                                                                               <span class=C>--- время и дата начала поиска информации</span><p
+>   <b class=CI id=I2098>end-find</b>                                <span class=D>[</span><span class=N>1</span><span class=D>] </span><a class=EN href=#I264>DateAndTime</a>                         <span class=K>OPTIONAL</span><p
+>                                                                            <span class=C>--- время и дата окончания поиска информации</span><p
+><span class=D>}</span><p
+> <p
+><span class=K>END</span></section><div class=footer>HTML generated by OSS Nokalva's ASN1Doc utility</div>
+</body>
+</html>

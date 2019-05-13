@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+<meta charset='utf-8'>
+<title>Unformatted.asn</title>
+<link rel=stylesheet href='Asn1doc.css' type='text/css'>
+</head>
+<body onload='Init()'><span id=I2531>Schema File <b class=SF>Unformatted.asn</b></span><section class='asn1 notinteractive'><p
+><a class=MN id=I2079 href='./summary.html#I2532'><b>Unformatted</b></a> <span class=K>DEFINITIONS IMPLICIT TAGS </span><span class=D>::=</span><p
+><span class=K>BEGIN</span><p
+> <p
+><span class=K>EXPORTS</span><p
+>     <a class=EN href=#I2078>unformattedMessage</a><span class=D>;</span><p
+> <p
+><span class=K>IMPORTS</span><p
+>     <a class=EN id=I2533 href='./Classification.asn.html#I47'><b>TAGGED</b></a><span class=D>, </span><a class=EN href='./Classification.asn.html#I53'><b>sorm-message-unformatted</b></a><p
+>          <span class=K>FROM </span><a class=MN href='./Classification.asn.html#I45'>Classification</a><p
+>     <a class=EN id=I2534 href='./Dictionaries.asn.html#I259'><b>TelcoList</b></a><p
+>          <span class=K>FROM </span><a class=MN href='./Dictionaries.asn.html#I256'>Dictionaries</a><p
+>     <a class=EN id=I2535 href='./Reports.asn.html#I927'><b>Acknowledgement</b></a><p
+>          <span class=K>FROM </span><a class=MN href='./Reports.asn.html#I924'>Reports</a><p
+>     <a class=EN id=I2536 href='./ReportsConnections.asn.html#I1103'><b>CallsRecords</b></a><p
+>          <span class=K>FROM </span><a class=MN href='./ReportsConnections.asn.html#I938'>ReportsConnections</a><p
+>     <a class=EN id=I2537 href='./Sorm.asn.html#I264'><b>DateAndTime</b></a><span class=D>, </span><a class=EN href='./Sorm.asn.html#I931'><b>MessageID</b></a><p
+>          <span class=K>FROM </span><a class=MN href='./Sorm.asn.html#I265'>Sorm</a><span class=D>;</span><p
+> <p
+><span class=E3 title='Error: Invalid object assignment for object &quot;unformattedMessage&quot;: Invalid assignment.'><a class=EN id=I2078 href='./summary.html#I2538'><b>unformattedMessage</b></a></span>                      <a class=EN href='./Classification.asn.html#I47'>TAGGED</a> <span class=D>::= {</span><span class=W>OID </span><span class=E3 title='Error: Invalid value: The type of the value is incompatible with its context.'><span class=D id=I2539>{</span></span><span class=E>sorm-message-unformatted</span><span class=D>} </span><span class=W>DATA </span><span class=K>CHOICE </span><span class=D>{</span><p
+>   <b class=CI id=I2540>request</b>                                 <span class=D>[</span><span class=N>0</span><span class=D>] </span><a class=EN href=#I2541>RawRequest</a><span class=D>,</span><p
+>   <b class=CI id=I2542>response</b>                                <span class=D>[</span><span class=N>1</span><span class=D>] </span><a class=EN href=#I2543>RawResponse</a><span class=D>,</span><p
+>   <b class=CI id=I2544>report</b>                                  <span class=D>[</span><span class=N>2</span><span class=D>] </span><a class=EN href=#I2545>RawReport</a><span class=D>,</span><p
+>   <b class=CI id=I2546>report-ack</b>                              <span class=D>[</span><span class=N>3</span><span class=D>] </span><a class=EN href=#I2547>RawAcknowledgement</a><p
+><span class=D>}}</span><p
+> <p
+><a class=EN id=I2541 href='./summary.html#I2548'><b>RawRequest</b></a> <span class=D>::=                          </span><span class=K>SEQUENCE </span><span class=D>{</span><p
+>   <b class=CI id=I2549>telcos</b>                                  <a class=EN href='./Dictionaries.asn.html#I259'>TelcoList</a><span class=D>,                                   </span><span class=C>--- список операторов связи</span><p
+>   <b class=CI id=I2550>raw-task</b>                                <a class=EN href=#I2551>RawRequestTask</a>                  <span class=C>--- запрос получения неформатированных данных</span><p
+><span class=D>}</span><p
+> <p
+><a class=EN id=I2551 href='./summary.html#I2552'><b>RawRequestTask</b></a> <span class=D>::=                      </span><span class=K>CHOICE </span><span class=D>{</span><p
+>   <b class=CI id=I2553>data-types-request</b>                      <span class=D>[</span><span class=N>0</span><span class=D>] </span><a class=EN href=#I2554>DataTypesRequest</a><span class=D>,</span><p
+>                                                     <span class=C>--- запрос проверки наличия вида неформатированных данных в ИС СОРМ</span><p
+>   <b class=CI id=I2555>data-start-request</b>                      <span class=D>[</span><span class=N>1</span><span class=D>] </span><a class=EN href=#I2556>DataStartRequest</a><span class=D>,  </span><span class=C>--- запрос на начало передачи неформатированных данных</span><p
+>   <b class=CI id=I2557>data-stop-request</b>                       <span class=D>[</span><span class=N>2</span><span class=D>] </span><a class=EN href=#I2558>DataStopRequest</a> <span class=C>--- запрос на остановку передачи неформатированных данных</span><p
+><span class=D>}</span><p
+> <p
+><span class=C>--- типы данных, передаваемых ИС СОРМ</span><p
+><a class=EN id=I2559 href='./summary.html#I2560'><b>RawDataType</b></a> <span class=D>::=                         </span><span class=K>ENUMERATED </span><span class=D>{</span><p
+>                                           <b class=II id=I2561>data-reports</b> <span class=D>(</span><span class=N>0</span><span class=D>), </span><span class=C>--- записи о соединениях в формате сообщений кпд2</span><p
+>                                           <b class=II id=I2562>raw-cdr</b> <span class=D>(</span><span class=N>1</span><span class=D>) </span><span class=C>--- "сырые" CDR-файлы</span><p
+>                                        <span class=D>}</span><p
+> <p
+><a class=EN id=I2563 href='./summary.html#I2564'><b>ControlCommandType</b></a> <span class=D>::=                  </span><span class=K>ENUMERATED </span><span class=D>{</span><p
+>                                           <b class=II id=I2565>start</b> <span class=D>(</span><span class=N>0</span><span class=D>), </span><span class=C>--- команда начала передачи ИС СОРМ данных</span><p
+>                                           <b class=II id=I2566>stop</b> <span class=D>(</span><span class=N>1</span><span class=D>) </span><span class=C>--- команда прерывания передачи ИС СОРМ данных</span><p
+>                                        <span class=D>}</span><p
+> <p
+><a class=EN id=I2554 href='./summary.html#I2567'><b>DataTypesRequest</b></a> <span class=D>::=                    </span><a class=EN href=#I2559>RawDataType</a><p
+> <p
+><a class=EN id=I2556 href='./summary.html#I2568'><b>DataStartRequest</b></a> <span class=D>::=                    </span><span class=K>SEQUENCE </span><span class=D>{</span><p
+>   <b class=CI id=I2569>time-from</b>                               <a class=EN href='./Sorm.asn.html#I264'>DateAndTime</a><span class=D>,</span><p
+>                                           <span class=C>--- начало временного периода в буфере, с которого необходимо получить данные</span><p
+>   <b class=CI id=I2570>time-to</b>                                 <a class=EN href='./Sorm.asn.html#I264'>DateAndTime</a><span class=D>,</span><p
+>                                            <span class=C>--- конец временного периода в буфере, с которого необходимо получить данные</span><p
+>   <b class=CI id=I2571>raw-type</b>                                <a class=EN href=#I2559>RawDataType</a>                         <span class=C>--- тип неформатированных данных передачи</span><p
+><span class=D>}</span><p
+> <p
+><a class=EN id=I2558 href='./summary.html#I2572'><b>DataStopRequest</b></a> <span class=D>::=                     </span><span class=K>NULL</span><p
+> <p
+><a class=EN id=I2543 href='./summary.html#I2573'><b>RawResponse</b></a> <span class=D>::=                         </span><span class=K>CHOICE </span><span class=D>{</span><p
+>   <b class=CI id=I2574>data-types-response</b>                     <span class=D>[</span><span class=N>0</span><span class=D>] </span><a class=EN href=#I2575>DataTypesResponse</a><span class=D>,</span><p
+>                                            <span class=C>--- ответ на запрос проверки наличия неформатированных вида данных в ИС СОРМ</span><p
+>   <b class=CI id=I2576>data-start-response</b>                     <span class=D>[</span><span class=N>1</span><span class=D>] </span><a class=EN href=#I2577>DataStartResponse</a><span class=D>,</span><p
+>                                                            <span class=C>--- ответ на запрос начала передачи неформатированных данных</span><p
+>   <b class=CI id=I2578>data-stop-response</b>                      <span class=D>[</span><span class=N>2</span><span class=D>] </span><a class=EN href=#I2579>DataStopResponse</a><p
+>                                                         <span class=C>--- ответ на запрос остановки передачи неформатированных данных</span><p
+><span class=D>}</span><p
+> <p
+><a class=EN id=I2575 href='./summary.html#I2580'><b>DataTypesResponse</b></a> <span class=D>::=                   </span><span class=K>SEQUENCE </span><span class=D>{</span><p
+>   <b class=CI id=I2581>successful</b>                              <span class=K>BOOLEAN</span><span class=D>,</span><p
+>                                                <span class=C>--- признак наличия в ИС СОРМ запрошенного вида неформатированных данных</span><p
+>   <b class=CI id=I2582>selected-type</b>                           <a class=EN href=#I2559>RawDataType</a><span class=D>,                            </span><span class=C>--- выбранный вид данных для передачи</span><p
+>   <b class=CI id=I2583>time-from</b>                               <a class=EN href='./Sorm.asn.html#I264'>DateAndTime</a><span class=D>,</span><p
+>                                             <span class=C>--- начало временного периода в буфере, начиная с которого накоплены данные</span><p
+>   <b class=CI id=I2584>time-to</b>                                 <a class=EN href='./Sorm.asn.html#I264'>DateAndTime</a><p
+>                                                     <span class=C>--- конец временного периода в буфере, по которому накоплены данные</span><p
+><span class=D>}</span><p
+> <p
+><a class=EN id=I2577 href='./summary.html#I2585'><b>DataStartResponse</b></a> <span class=D>::=                   </span><span class=K>BOOLEAN                                </span><span class=C>--- признак успешности выполнения команды</span><p
+> <p
+><a class=EN id=I2579 href='./summary.html#I2586'><b>DataStopResponse</b></a> <span class=D>::=                    </span><span class=K>BOOLEAN                                </span><span class=C>--- признак успешности выполнения команды</span><p
+> <p
+><span class=E3 title='Error: Invalid type assignment for type &quot;RawReport&quot;: Invalid assignment.'><a class=EN id=I2545 href='./summary.html#I2587'><b>RawReport</b></a></span> <span class=D>::=                           </span><span class=K>SEQUENCE </span><span class=D>{</span><p
+>   <b class=CI id=I2588>request-id</b>                              <a class=EN href='./Sorm.asn.html#I931'>MessageID</a><span class=D>,                                   </span><span class=C>--- идентификатор запроса</span><p
+>   <b class=CI id=I2589>stream-id</b>                               <span class=K>UTF8String </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>1</span><span class=D>..</span><span class=N>256</span><span class=D>)),                 </span><span class=C>--- идентификатор потока в сессии</span><p
+>   <b class=CI id=I2590>total-blocks-number</b>                     <span class=K>INTEGER </span><span class=D>(</span><span class=N>0</span><span class=D>..</span><span class=N>999999999999</span><span class=D>),               </span><span class=C>--- общее количество блоков в отчете</span><p
+>   <b class=CI id=I2591>block-number</b>                            <span class=K>INTEGER </span><span class=D>(</span><span class=N>1</span><span class=D>..</span><span class=N>1000000000000</span><span class=D>),               </span><span class=C>--- порядковый номер текущего блока</span><p
+>   <b class=CI id=I2592>report-block</b>                            <a class=EN href=#I2593>RawDataBlock</a>                                 <span class=C>--- блок данных отчета</span><p
+><span class=D>}</span><p
+> <p
+><span class=E3 title='Error: Invalid type assignment for type &quot;RawDataBlock&quot;: Invalid assignment.'><a class=EN id=I2593 href='./summary.html#I2594'><b>RawDataBlock</b></a></span> <span class=D>::=                        </span><span class=K>CHOICE </span><span class=D>{</span><p
+>   <b class=CI id=I2595>reports</b>                                 <span class=D>[</span><span class=N>0</span><span class=D>] </span><a class=EN href='./ReportsConnections.asn.html#I1103'>CallsRecords</a><span class=D>,              </span><span class=C>--- записи отчетов о соединениях в формате КПД</span><p
+>   <b class=CI id=I2596>raw-cdr</b>                                 <span class=D>[</span><span class=N>1</span><span class=D>] </span><a class=EN href=#I2597>RawBytesBlock</a><p
+><span class=D>}</span><p
+> <p
+><a class=EN id=I2597 href='./summary.html#I2598'><b>RawBytesBlock</b></a> <span class=D>::=                       </span><span class=K>SEQUENCE OF </span><a class=EN id=I2599 href=#I2600>RawBytes</a><p
+> <p
+><a class=EN id=I2600 href='./summary.html#I2601'><b>RawBytes</b></a> <span class=D>::=                            </span><span class=K>OCTET STRING </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>1</span><span class=D>..</span><span class=N>4096</span><span class=D>))</span><p
+> <p
+><a class=EN id=I2547 href='./summary.html#I2602'><b>RawAcknowledgement</b></a> <span class=D>::=                  </span><a class=EN href='./Reports.asn.html#I927'>Acknowledgement</a><p
+> <p
+><span class=K>END</span></section><div class=footer>HTML generated by OSS Nokalva's ASN1Doc utility</div>
+</body>
+</html>

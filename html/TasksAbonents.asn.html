@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+<meta charset='utf-8'>
+<title>TasksAbonents.asn</title>
+<link rel=stylesheet href='Asn1doc.css' type='text/css'>
+</head>
+<body onload='Init()'><span id=I2212>Schema File <b class=SF>TasksAbonents.asn</b></span><section class='asn1 notinteractive'><p
+><a class=MN id=I2109 href='./summary.html#I2213'><b>TasksAbonents</b></a> <span class=K>DEFINITIONS IMPLICIT TAGS </span><span class=D>::=</span><p
+><span class=K>BEGIN</span><p
+> <p
+><span class=K>EXPORTS</span><p
+>     <a class=EN href=#I2108>AbonentsTask</a><span class=D>;</span><p
+> <p
+><span class=K>IMPORTS</span><p
+>     <a class=EN id=I2214 href='./Tasks.asn.html#I2102'><b>LogicalOperation</b></a><p
+>          <span class=K>FROM </span><a class=MN href='./Tasks.asn.html#I934'>Tasks</a><p
+>     <a class=EN id=I2215 href='./RequestedIdentifiers.asn.html#I1975'><b>RequestedIdentifier</b></a><p
+>          <span class=K>FROM </span><a class=MN href='./RequestedIdentifiers.asn.html#I1776'>RequestedIdentifiers</a><p
+>     <a class=EN id=I2216 href='./RequestedAbonents.asn.html#I1730'><b>RequestedAbonent</b></a><p
+>          <span class=K>FROM </span><a class=MN href='./RequestedAbonents.asn.html#I1728'>RequestedAbonents</a><span class=D>;</span><p
+> <p
+><span class=E3 title='Error: Invalid type assignment for type &quot;AbonentsTask&quot;: Invalid assignment.'><a class=EN id=I2108 href='./summary.html#I2217'><b>AbonentsTask</b></a></span> <span class=D>::=                        </span><span class=K>CHOICE </span><span class=D>{</span><p
+>   <b class=CI id=I2218>validate-abonents-task</b>                  <span class=D>[</span><span class=N>0</span><span class=D>] </span><a class=EN href=#I2219>ValidateAbonentsTask</a><span class=D>,     </span><span class=C>--- задача на поиск информации о принадлежности</span><p
+>                                                                      <span class=C>--- идентификаторов абонентов сети оператора связи</span><p
+>   <b class=CI id=I2220>validate-identifiers</b>                    <span class=D>[</span><span class=N>1</span><span class=D>] </span><a class=EN href=#I2221>ValidateIdentifiersTask</a><span class=D>,</span><p
+>                                                                       <span class=C>--- задача на поиск информации об идентификаторах</span><p
+>                                                                   <span class=C>--- абонентов сети оператора связи зарегистрированных</span><p
+>                                                                       <span class=C>--- на физическое или юридическое лицо</span><p
+>   <b class=CI id=I2222>validate-services</b>                       <span class=D>[</span><span class=N>2</span><span class=D>] </span><a class=EN href=#I2223>ValidateServicesTask</a><p
+>                                                    <span class=C>-- задача на поиск информации о доступных абоненту видам услуг связи</span><p
+><span class=D>}</span><p
+> <p
+><span class=C>--- задача на поиск информации о принадлежности идентификаторов абонентов сети оператора связи</span><p
+><span class=E3 title='Error: Invalid type assignment for type &quot;ValidateAbonentsTask&quot;: Invalid assignment.'><a class=EN id=I2219 href='./summary.html#I2224'><b>ValidateAbonentsTask</b></a></span> <span class=D>::=                </span><a class=EN href=#I2225>RequestedIdentifiers</a>                    <span class=C>--- запрашиваемые идентификаторы</span><p
+> <p
+><span class=E3 title='Error: Invalid type assignment for type &quot;RequestedIdentifiers&quot;: Invalid assignment.'><a class=EN id=I2225 href='./summary.html#I2226'><b>RequestedIdentifiers</b></a></span> <span class=D>::=                </span><span class=K>SEQUENCE OF </span><a class=EN id=I2227 href=#I2228>RequestedIdentifierParameters</a><p
+>                                                          <span class=C>-- последовательность из идентификаторов и логических операций</span><p
+> <p
+><span class=E3 title='Error: Invalid type assignment for type &quot;RequestedIdentifierParameters&quot;: Invalid assignment.'><a class=EN id=I2228 href='./summary.html#I2229'><b>RequestedIdentifierParameters</b></a></span> <span class=D>::=       </span><span class=K>CHOICE </span><span class=D>{</span><p
+>   <b class=CI id=I2230>separator</b>                               <span class=D>[</span><span class=N>0</span><span class=D>] </span><a class=EN href='./Tasks.asn.html#I2102'>LogicalOperation</a><span class=D>,                   </span><span class=C>--- логическая операция или скобка</span><p
+>   <b class=CI id=I2231>find-mask</b>                               <span class=D>[</span><span class=N>1</span><span class=D>] </span><a class=EN href='./RequestedIdentifiers.asn.html#I1975'>RequestedIdentifier</a>                 <span class=C>--- параметр - идентификатор</span><p
+><span class=D>}</span><p
+> <p
+><span class=C>--- задача на поиск информации об идентификаторах абонентов сети оператора связи зарегистрированных на физическое или юридическое лицо</span><p
+><span class=E3 title='Error: Invalid type assignment for type &quot;ValidateIdentifiersTask&quot;: Invalid assignment.'><a class=EN id=I2221 href='./summary.html#I2232'><b>ValidateIdentifiersTask</b></a></span> <span class=D>::=             </span><a class=EN href=#I2233>RequestedAbonents</a>                       <span class=C>--- запрашиваемые абоненты</span><p
+> <p
+><span class=E3 title='Error: Invalid type assignment for type &quot;RequestedAbonents&quot;: Invalid assignment.'><a class=EN id=I2233 href='./summary.html#I2234'><b>RequestedAbonents</b></a></span> <span class=D>::=                   </span><span class=K>SEQUENCE OF </span><a class=EN id=I2235 href=#I2236>RequestedAbonentsParameters</a><p
+>                                                                 <span class=C>--- последовательность логических операций и параметров</span><p
+> <p
+><span class=E3 title='Error: Invalid type assignment for type &quot;RequestedAbonentsParameters&quot;: Invalid assignment.'><a class=EN id=I2236 href='./summary.html#I2237'><b>RequestedAbonentsParameters</b></a></span> <span class=D>::=         </span><span class=K>CHOICE </span><span class=D>{</span><p
+>   <b class=CI id=I2238>separator</b>                               <span class=D>[</span><span class=N>0</span><span class=D>] </span><a class=EN href='./Tasks.asn.html#I2102'>LogicalOperation</a><span class=D>,                   </span><span class=C>--- логический оператор связки</span><p
+>   <b class=CI id=I2239>find-mask</b>                               <span class=D>[</span><span class=N>1</span><span class=D>] </span><a class=EN href='./RequestedAbonents.asn.html#I1730'>RequestedAbonent</a>                    <span class=C>--- информация запроса об абоненте</span><p
+><span class=D>}</span><p
+> <p
+><span class=C>--- задача на поиск истории услуг связи абонента</span><p
+><span class=C>--- запрос по маске запрещен, идентификатор должен быть указан полностью</span><p
+><span class=E3 title='Error: Invalid type assignment for type &quot;ValidateServicesTask&quot;: Invalid assignment.'><a class=EN id=I2223 href='./summary.html#I2240'><b>ValidateServicesTask</b></a></span> <span class=D>::=                </span><span class=K>SEQUENCE OF </span><a class=EN id=I2241 href=#I2242>ValidateServicesParameters</a><p
+> <p
+><span class=E3 title='Error: Invalid type assignment for type &quot;ValidateServicesParameters&quot;: Invalid assignment.'><a class=EN id=I2242 href='./summary.html#I2243'><b>ValidateServicesParameters</b></a></span> <span class=D>::=          </span><span class=K>CHOICE </span><span class=D>{</span><p
+>   <b class=CI id=I2244>separator</b>                               <span class=D>[</span><span class=N>0</span><span class=D>] </span><a class=EN href='./Tasks.asn.html#I2102'>LogicalOperation</a><span class=D>,                   </span><span class=C>--- логическая операция или скобка</span><p
+>   <b class=CI id=I2245>find-mask</b>                               <span class=D>[</span><span class=N>1</span><span class=D>] </span><a class=EN href=#I2246>ValidateServicesParameter</a>           <span class=C>--- параметр - идентификатор</span><p
+><span class=D>}</span><p
+> <p
+><span class=E3 title='Error: Invalid type assignment for type &quot;ValidateServicesParameter&quot;: Invalid assignment.'><a class=EN id=I2246 href='./summary.html#I2247'><b>ValidateServicesParameter</b></a></span> <span class=D>::=           </span><span class=K>CHOICE </span><span class=D>{</span><p
+>   <b class=CI id=I2248>contract</b>                                <span class=D>[</span><span class=N>0</span><span class=D>] </span><span class=K>UTF8String </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>1</span><span class=D>..</span><span class=N>64</span><span class=D>)),          </span><span class=C>--- номер договора</span><p
+>   <b class=CI id=I2249>identifier</b>                              <span class=D>[</span><span class=N>1</span><span class=D>] </span><a class=EN href='./RequestedIdentifiers.asn.html#I1975'>RequestedIdentifier</a><p
+><span class=D>}</span><p
+> <p
+><span class=K>END</span></section><div class=footer>HTML generated by OSS Nokalva's ASN1Doc utility</div>
+</body>
+</html>

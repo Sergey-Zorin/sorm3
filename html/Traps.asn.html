@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+<meta charset='utf-8'>
+<title>Traps.asn</title>
+<link rel=stylesheet href='Asn1doc.css' type='text/css'>
+</head>
+<body onload='Init()'><span id=I2508>Schema File <b class=SF>Traps.asn</b></span><section class='asn1 notinteractive'><p
+><a class=MN id=I2072 href='./summary.html#I2509'><b>Traps</b></a> <span class=K>DEFINITIONS IMPLICIT TAGS </span><span class=D>::=</span><p
+><span class=K>BEGIN</span><p
+> <p
+><span class=K>EXPORTS</span><p
+>     <a class=EN href=#I2071>trapMessage</a><span class=D>;</span><p
+> <p
+><span class=K>IMPORTS</span><p
+>     <a class=EN id=I2510 href='./Classification.asn.html#I47'><b>TAGGED</b></a><span class=D>, </span><a class=EN href='./Classification.asn.html#I49'><b>sorm-message-trap</b></a><p
+>          <span class=K>FROM </span><a class=MN href='./Classification.asn.html#I45'>Classification</a><p
+>     <a class=EN id=I2511 href='./Sorm.asn.html#I931'><b>MessageID</b></a><p
+>          <span class=K>FROM </span><a class=MN href='./Sorm.asn.html#I265'>Sorm</a><span class=D>;</span><p
+> <p
+><span class=E3 title='Error: Invalid object assignment for object &quot;trapMessage&quot;: Invalid assignment.'><a class=EN id=I2071 href='./summary.html#I2512'><b>trapMessage</b></a></span>                             <a class=EN href='./Classification.asn.html#I47'>TAGGED</a> <span class=D>::= {</span><p
+>   <span class=W>OID </span><span class=E3 title='Error: Invalid value: The type of the value is incompatible with its context.'><span class=D id=I2513>{</span></span><span class=E>sorm-message-trap</span><span class=D>} </span><span class=W>DATA </span><span class=K>CHOICE </span><span class=D>{</span><p
+>      <b class=CI id=I2514>trap</b>                                    <span class=D>[</span><span class=N>0</span><span class=D>] </span><a class=EN href=#I2515>Trap</a><span class=D>,                               </span><span class=C>--- тип сообщения "сигнал"</span><p
+>      <b class=CI id=I2516>trap-ack</b>                                <span class=D>[</span><span class=N>1</span><span class=D>] </span><a class=EN href=#I2517>TrapAck</a>                      <span class=C>--- тип сообщения "подтверждение сигнала"</span><p
+>   <span class=D>}</span><p
+><span class=D>}</span><p
+> <p
+><span class=C>-- Блок данных сообщения типа "сигнал"</span><p
+><a class=EN id=I2515 href='./summary.html#I2518'><b>Trap</b></a> <span class=D>::=                                </span><span class=K>SEQUENCE </span><span class=D>{</span><p
+>   <b class=CI id=I2519>trap-type</b>                               <a class=EN href=#I2520>TrapType</a><span class=D>,                                    </span><span class=C>-- тип сообщения</span><p
+>   <b class=CI id=I2521>trap-message</b>                            <span class=K>UTF8String </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>1</span><span class=D>..</span><span class=N>256</span><span class=D>))              </span><span class=K>OPTIONAL</span><span class=D>, </span><span class=C>-- описание сообщения</span><p
+>   <b class=CI id=I2522>reference-message</b>                       <a class=EN href='./Sorm.asn.html#I931'>MessageID</a>                               <span class=K>OPTIONAL</span><p
+>                                                                   <span class=C>-- номер сообщение к которому относится данный сигнал</span><p
+>                                                <span class=C>-- (например номер сообщения запросившего отчет при прерывании передачи)</span><p
+><span class=D>}</span><p
+> <p
+><a class=EN id=I2520 href='./summary.html#I2523'><b>TrapType</b></a> <span class=D>::=                            </span><span class=K>ENUMERATED </span><span class=D>{</span><p
+>                                           <b class=II id=I2524>heartbeat</b> <span class=D>(</span><span class=N>0</span><span class=D>), </span><span class=C>-- тестовый пакет</span><p
+>                                           <b class=II id=I2525>restart-software</b> <span class=D>(</span><span class=N>1</span><span class=D>), </span><span class=C>-- перезапуск ПО</span><p
+>                                           <b class=II id=I2526>unauthorized-access</b> <span class=D>(</span><span class=N>2</span><span class=D>), </span><span class=C>-- попытка несанкционированного доступа</span><p
+>                                           <b class=II id=I2527>critical-error</b> <span class=D>(</span><span class=N>3</span><span class=D>),</span><p
+>                                           <span class=C>-- критическая ошибка ПО, потеря данных, дальнейшая работа невозможна</span><p
+>                                           <b class=II id=I2528>major-error</b> <span class=D>(</span><span class=N>4</span><span class=D>),</span><p
+>                                           <span class=C>-- серьезная ошибка ПО, потеря данных, но дальнейшая работа возможна</span><p
+>                                           <b class=II id=I2529>minor-error</b> <span class=D>(</span><span class=N>5</span><span class=D>)</span><p
+>                                             <span class=C>-- незначительная ошибка ПО, данные не потеряны, дальнейшая работа возможна</span><p
+>                                        <span class=D>}</span><p
+> <p
+><span class=C>-- Блок данных сообщения типа "подтверждение сигнала"</span><p
+><span class=C>-- Номер сообщения TrapAck должен соответствовать номеру сообщения Trap</span><p
+><a class=EN id=I2517 href='./summary.html#I2530'><b>TrapAck</b></a> <span class=D>::=                             </span><span class=K>NULL</span><p
+> <p
+><span class=K>END</span></section><div class=footer>HTML generated by OSS Nokalva's ASN1Doc utility</div>
+</body>
+</html>

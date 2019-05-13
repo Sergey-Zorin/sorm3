@@ -1,0 +1,24 @@
+TasksLocation DEFINITIONS IMPLICIT TAGS ::=
+BEGIN
+
+EXPORTS LocationTask;
+
+IMPORTS
+        LogicalOperation FROM Tasks
+        RequestedConnection FROM RequestedConnections
+
+        IPAddress
+        FROM NetworkIdentifiers;
+
+--- задача получения данных местоположения абонентов
+LocationTask ::= RequestedLocationIdentifier         --- запрашиваемые единтификаторы для определения местоположения
+
+RequestedLocationIdentifier ::=
+        CHOICE {
+               directory-number [0] UTF8String (SIZE (2 .. 32)),    --- телефонный номер в международном формате
+               imsi [1]             NumericString (SIZE (2 .. 18)), --- идентификатор мобильного абонента
+               ip-address [2]       IPAddress,                      --- IP-адрес абонента
+               imei [3]             NumericString (SIZE (2 .. 18))  --- идентификатор мобильной станции
+        }
+
+END

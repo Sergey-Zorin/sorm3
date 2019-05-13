@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+<meta charset='utf-8'>
+<title>TasksConnections.asn</title>
+<link rel=stylesheet href='Asn1doc.css' type='text/css'>
+</head>
+<body onload='Init()'><span id=I2250>Schema File <b class=SF>TasksConnections.asn</b></span><section class='asn1 notinteractive'><p
+><a class=MN id=I2112 href='./summary.html#I2251'><b>TasksConnections</b></a> <span class=K>DEFINITIONS IMPLICIT TAGS </span><span class=D>::=</span><p
+><span class=K>BEGIN</span><p
+> <p
+><span class=K>EXPORTS</span><p
+>     <span class=E3 title='Error: Invalid reference for symbol &quot;ConnectionsTask&quot;: Invalid reference definition.'><a class=EN id=I2252 href=#I2111>ConnectionsTask</a></span><span class=D>;</span><p
+> <p
+><span class=K>IMPORTS</span><p
+>     <a class=EN id=I2253 href='./Tasks.asn.html#I2102'><b>LogicalOperation</b></a><p
+>          <span class=K>FROM </span><a class=MN href='./Tasks.asn.html#I934'>Tasks</a><p
+>     <span class=E3 title='Error: Invalid reference for symbol &quot;RequestedConnection&quot;: Invalid reference definition.'><a class=EN id=I2254 href='./RequestedConnections.asn.html#I1769'><b>RequestedConnection</b></a></span><p
+>          <span class=K>FROM </span><a class=MN href='./RequestedConnections.asn.html#I1766'>RequestedConnections</a><span class=D>;</span><p
+> <p
+><span class=E3 title='Error: Invalid type assignment for type &quot;ConnectionsTask&quot;: Invalid assignment.'><a class=EN id=I2111 href='./summary.html#I2255'><b>ConnectionsTask</b></a></span> <span class=D>::=                     </span><span class=K>CHOICE </span><span class=D>{</span><p
+>   <b class=CI id=I2256>validate-connections</b>                    <span class=D>[</span><span class=N>0</span><span class=D>] </span><span class=E3 title='Error: Invalid reference error for &apos;ValidateConnectionsTask&apos;: Invalid reference definition.'><a class=EN id=I2257 href=#I2258>ValidateConnectionsTask</a></span><span class=D>,</span><p
+>                                                              <span class=C>--- задача на поиск телефонных соединений между абонентами</span><p
+>   <b class=CI id=I2259>validate-data</b>                           <span class=D>[</span><span class=N>1</span><span class=D>] </span><span class=E3 title='Error: Invalid reference error for &apos;ValidateDataTask&apos;: Invalid reference definition.'><a class=EN id=I2260 href=#I2261>ValidateDataTask</a></span><span class=D>,</span><p
+>                                                    <span class=C>--- задача на поиск соединений между абонентами сети передачи данных</span><p
+>   <b class=CI id=I2262>validate-entrance</b>                       <span class=D>[</span><span class=N>2</span><span class=D>] </span><span class=E3 title='Error: Invalid reference error for &apos;ValidateEntranceTask&apos;: Invalid reference definition.'><a class=EN id=I2263 href=#I2264>ValidateEntranceTask</a></span><p
+>                                      <span class=C>--- задача на поиск информации о появлении абонента в сети связь (выхода на связь)</span><p
+><span class=D>}</span><p
+> <p
+><span class=C>-- Зачем разделение ValidateConnectionsTask ValidateDataTask</span><p
+><span class=C>--- задача на поиск по соединениям абонентов</span><p
+><span class=E3 title='Error: Invalid type assignment for type &quot;ValidateConnectionsTask&quot;: Invalid assignment.'><a class=EN id=I2258 href='./summary.html#I2265'><b>ValidateConnectionsTask</b></a></span> <span class=D>::=             </span><span class=E3 title='Error: Invalid reference error for &apos;RequestedConnectionIdentifiers&apos;: Invalid reference definition.'><a class=EN id=I2266 href=#I2267>RequestedConnectionIdentifiers</a></span><p
+>                                                                <span class=C>--- запрашиваемые идентификаторы, указываются все, кроме</span><p
+>                                                                <span class=C>--- RequestedDataNetworkIdentifier</span><p
+> <p
+><span class=E3 title='Error: Invalid type assignment for type &quot;ValidateDataTask&quot;: Invalid assignment.'><a class=EN id=I2261 href='./summary.html#I2268'><b>ValidateDataTask</b></a></span> <span class=D>::=                    </span><span class=E3 title='Error: Invalid reference error for &apos;RequestedConnectionIdentifiers&apos;: Invalid reference definition.'><a class=EN id=I2269 href=#I2267>RequestedConnectionIdentifiers</a></span>     <span class=C>--- запрашиваемые идентификаторы, указываются</span><p
+>                                                                           <span class=C>--- RequestedDataNetworkIdentifier</span><p
+> <p
+><span class=E3 title='Error: Invalid type assignment for type &quot;ValidateEntranceTask&quot;: Invalid assignment.'><a class=EN id=I2264 href='./summary.html#I2270'><b>ValidateEntranceTask</b></a></span> <span class=D>::=                </span><span class=E3 title='Error: Invalid reference error for &apos;RequestedConnectionIdentifiers&apos;: Invalid reference definition.'><a class=EN id=I2271 href=#I2267>RequestedConnectionIdentifiers</a></span><p
+>                                      <span class=C>--- задача на поиск информации о появлении абонента в сети связь (выхода на связь)</span><p
+> <p
+><span class=E3 title='Error: Invalid type assignment for type &quot;RequestedConnectionIdentifiers&quot;: Invalid assignment.'><a class=EN id=I2267 href='./summary.html#I2272'><b>RequestedConnectionIdentifiers</b></a></span> <span class=D>::=      </span><span class=K>SEQUENCE OF </span><span class=E3 title='Error: Invalid reference error for &apos;RequestedConnectionParameter&apos;: Invalid reference definition.'><a class=EN id=I2273 href=#I2274>RequestedConnectionParameter</a></span><p
+> <p
+><span class=E3 title='Error: Invalid type assignment for type &quot;RequestedConnectionParameter&quot;: Invalid assignment.'><a class=EN id=I2274 href='./summary.html#I2275'><b>RequestedConnectionParameter</b></a></span> <span class=D>::=        </span><span class=K>CHOICE </span><span class=D>{</span><p
+>   <b class=CI id=I2276>separator</b>                               <span class=D>[</span><span class=N>0</span><span class=D>] </span><a class=EN href='./Tasks.asn.html#I2102'>LogicalOperation</a><span class=D>,                   </span><span class=C>--- логический оператор связки</span><p
+>   <b class=CI id=I2277>find-mask</b>                               <span class=D>[</span><span class=N>1</span><span class=D>] </span><span class=E3 title='Error: Invalid reference error for &apos;RequestedConnection&apos;: Invalid reference definition.'><a class=EN id=I2278 href='./RequestedConnections.asn.html#I1769'>RequestedConnection</a></span>                 <span class=C>--- параметр запроса</span><p
+><span class=D>}</span><p
+> <p
+><span class=K>END</span></section><div class=footer>HTML generated by OSS Nokalva's ASN1Doc utility</div>
+</body>
+</html>

@@ -1,0 +1,61 @@
+RequestedAbonents DEFINITIONS IMPLICIT TAGS ::=
+BEGIN
+
+EXPORTS RequestedAbonent;
+
+IMPORTS TAGGED,
+      sorm-request-abonent-person,
+      sorm-request-abonent-organization
+      FROM Classification
+
+      RequestedAddress FROM Addresses;
+
+RequestedAbonent ::= SEQUENCE {
+ id   TAGGED.&id ({RequestedAbonentVariants}),
+ data TAGGED.&Data ({RequestedAbonentVariants}{@id})
+}
+
+--- варианты запрашиваемых идентификаторов
+RequestedAbonentVariants TAGGED ::= {
+ requestedPerson |                                   --- физическое лицо
+ requestedOrganization                               --- юридическое лицо - организация
+}
+
+--- поля параметра запроса на физическое лицо
+requestedPerson TAGGED ::= {
+ OID { sorm-request-abonent-person }
+ DATA RequestedPerson
+}
+
+RequestedPerson ::= SEQUENCE {
+ given-name [0]    UTF8String (SIZE (1 .. 256)) OPTIONAL,          --- имя
+ initial [1]       UTF8String (SIZE (1 .. 256)) OPTIONAL,          --- отчество
+ family-name [2]   UTF8String (SIZE (1 .. 256)) OPTIONAL,          --- фамилия
+ passport-info [3] RequestedPassport OPTIONAL,                     --- паспортные данные
+ address [4]       RequestedAddress OPTIONAL,                      --- адресные данные
+ icc [5]           NumericString (SIZE (10 .. 20)) OPTIONAL,       --- идентификатор SIM-карты абонента
+ contract [6]      UTF8String (SIZE (1 .. 64)) OPTIONAL            --- номер договора
+
+}
+--- поля паспортных данных
+RequestedPassport ::= SEQUENCE {
+ doc-type-id [0]       INTEGER (0 .. 65535) OPTIONAL,              --- идентификатор типа документа, удостоверяющего личность
+ passport-serial [1]   UTF8String (SIZE (1..16)) OPTIONAL,         --- серия паспорта
+ passport-number [2]   NumericString (SIZE (1..16)) OPTIONAL       --- номер паспорта
+}
+
+-- поля параметра запроса на юридическое лицо
+requestedOrganization TAGGED ::= {
+ OID { sorm-request-abonent-organization }
+ DATA RequestedOrganization
+}
+
+RequestedOrganization ::= SEQUENCE {
+ full-name [0]     UTF8String (SIZE (1 .. 256)) OPTIONAL,          --- полное наименование организации
+ address [1]       RequestedAddress OPTIONAL,                      --- юридический адрес организации
+ inn [2]           NumericString (SIZE (1 .. 64)) OPTIONAL,        --- ИНН
+ internal-user [3] UTF8String (SIZE (1 .. 64)) OPTIONAL,           --- внутренний пользователь
+ contract [4]      UTF8String (SIZE (1 .. 64)) OPTIONAL            --- номер договора
+}
+
+END

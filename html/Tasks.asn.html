@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+<meta charset='utf-8'>
+<title>Tasks.asn</title>
+<link rel=stylesheet href='Asn1doc.css' type='text/css'>
+</head>
+<body onload='Init()'><span id=I2099>Schema File <b class=SF>Tasks.asn</b></span><section class='asn1 notinteractive'><p
+><a class=MN id=I934 href='./summary.html#I2100'><b>Tasks</b></a> <span class=K>DEFINITIONS IMPLICIT TAGS </span><span class=D>::=</span><p
+><span class=K>BEGIN</span><p
+> <p
+><span class=K>EXPORTS</span><p
+>     <span class=E3 title='Error: Invalid reference for symbol &quot;taskMessage&quot;: Invalid reference definition.'><a class=EN id=I2101 href=#I2074>taskMessage</a></span><span class=D>, </span><a class=EN href=#I933>TaskID</a><span class=D>, </span><a class=EN href=#I2102>LogicalOperation</a><span class=D>, </span><a class=EN href=#I2103>CreateTaskResponse</a><span class=D>, </span><a class=EN href=#I1106>DataContentID</a><span class=D>;</span><p
+> <p
+><span class=K>IMPORTS</span><p
+>     <a class=EN id=I2104 href='./Classification.asn.html#I47'><b>TAGGED</b></a><span class=D>, </span><a class=EN href='./Classification.asn.html#I50'><b>sorm-message-task</b></a><p
+>          <span class=K>FROM </span><a class=MN href='./Classification.asn.html#I45'>Classification</a><p
+>     <a class=EN id=I2105 href='./Sorm.asn.html#I1669'><b>FindRange</b></a><span class=D>, </span><a class=EN href='./Sorm.asn.html#I931'><b>MessageID</b></a><p
+>          <span class=K>FROM </span><a class=MN href='./Sorm.asn.html#I265'>Sorm</a><p
+>     <a class=EN id=I2106 href='./Dictionaries.asn.html#I259'><b>TelcoList</b></a><span class=D>, </span><a class=EN href='./Dictionaries.asn.html#I260'><b>DictionaryTask</b></a><p
+>          <span class=K>FROM </span><a class=MN href='./Dictionaries.asn.html#I256'>Dictionaries</a><p
+>     <a class=EN id=I2107 href='./TasksAbonents.asn.html#I2108'><b>AbonentsTask</b></a><p
+>          <span class=K>FROM </span><a class=MN href='./TasksAbonents.asn.html#I2109'>TasksAbonents</a><p
+>     <span class=E3 title='Error: Invalid reference for symbol &quot;ConnectionsTask&quot;: Invalid reference definition.'><a class=EN id=I2110 href='./TasksConnections.asn.html#I2111'><b>ConnectionsTask</b></a></span><p
+>          <span class=K>FROM </span><a class=MN href='./TasksConnections.asn.html#I2112'>TasksConnections</a><p
+>     <a class=EN id=I2113 href='./TasksLocation.asn.html#I2114'><b>LocationTask</b></a><p
+>          <span class=K>FROM </span><a class=MN href='./TasksLocation.asn.html#I2115'>TasksLocation</a><p
+>     <a class=EN id=I2116 href='./TasksPayments.asn.html#I2117'><b>PaymentsTask</b></a><p
+>          <span class=K>FROM </span><a class=MN href='./TasksPayments.asn.html#I2118'>TasksPayments</a><p
+>     <a class=EN id=I2119 href='./TasksPresense.asn.html#I2120'><b>PresenseTask</b></a><p
+>          <span class=K>FROM </span><a class=MN href='./TasksPresense.asn.html#I2121'>TasksPresense</a><p
+>     <a class=EN id=I2122 href='./TasksContentTask.asn.html#I2123'><b>DataContentTask</b></a><p
+>          <span class=K>FROM </span><a class=MN href='./TasksContentTask.asn.html#I2124'>TasksContentTask</a><p
+>     <a class=EN id=I2125 href='./TasksNonFormalized.asn.html#I2126'><b>NonFormalizedTaskRequest</b></a><span class=D>, </span><span class=E3 title='Error: Invalid reference for symbol &quot;NonFormalizedTaskResponse&quot;: Invalid reference definition.'><a class=EN id=I2127 href='./TasksNonFormalized.asn.html#I2128'><b>NonFormalizedTaskResponse</b></a></span><p
+>          <span class=K>FROM </span><a class=MN href='./TasksNonFormalized.asn.html#I1517'>TasksNonFormalized</a><span class=D>;</span><p
+> <p
+><span class=E3 title='Error: Invalid object assignment for object &quot;taskMessage&quot;: Invalid assignment.'><a class=EN id=I2074 href='./summary.html#I2129'><b>taskMessage</b></a></span>                             <a class=EN href='./Classification.asn.html#I47'>TAGGED</a> <span class=D>::= {</span><p
+>   <span class=W>OID </span><span class=D>{</span><span class=E>sorm-message-task</span><span class=D>} </span><span class=W>DATA </span><span class=K>CHOICE </span><span class=D>{</span><p
+>      <b class=CI id=I2130>data-ready-request</b>                      <span class=D>[</span><span class=N>0</span><span class=D>] </span><a class=EN href=#I2131>DataReadyRequest</a><span class=D>,                   </span><span class=C>--- запрос готовности данных</span><p
+>      <b class=CI id=I2132>data-ready-response</b>                     <span class=D>[</span><span class=N>1</span><span class=D>] </span><a class=EN href=#I2133>DataReadyResponse</a><span class=D>,               </span><span class=C>--- ответ на запрос готовности данных</span><p
+>      <b class=CI id=I2134>data-load-request</b>                       <span class=D>[</span><span class=N>2</span><span class=D>] </span><a class=EN href=#I2135>DataLoadRequest</a><span class=D>,                    </span><span class=C>--- запрос загрузки данных</span><p
+>      <b class=CI id=I2136>data-load-response</b>                      <span class=D>[</span><span class=N>3</span><span class=D>] </span><a class=EN href=#I2137>DataLoadResponse</a><span class=D>,                  </span><span class=C>--- ответ на запрос загрузки данных</span><p
+>      <b class=CI id=I2138>data-drop-request</b>                       <span class=D>[</span><span class=N>4</span><span class=D>] </span><a class=EN href=#I2139>DataDropRequest</a><span class=D>,                    </span><span class=C>--- запрос удаления данных</span><p
+>      <b class=CI id=I2140>data-drop-response</b>                      <span class=D>[</span><span class=N>5</span><span class=D>] </span><a class=EN href=#I2141>DataDropResponse</a><span class=D>,                  </span><span class=C>--- ответ на запрос удаления данных</span><p
+>      <b class=CI id=I2142>data-interrupt-request</b>                  <span class=D>[</span><span class=N>6</span><span class=D>] </span><a class=EN href=#I2143>DataInterruptRequest</a><span class=D>,            </span><span class=C>--- запрос прерывания загрузки данных</span><p
+>      <b class=CI id=I2144>data-interrupt-response</b>                 <span class=D>[</span><span class=N>7</span><span class=D>] </span><a class=EN href=#I2145>DataInterruptResponse</a><span class=D>,  </span><span class=C>--- ответ на запрос прерывания загрузки данных</span><p
+>      <b class=CI id=I2146>create-task-request</b>                     <span class=D>[</span><span class=N>8</span><span class=D>] </span><span class=E3 title='Error: Invalid reference error for &apos;CreateTaskRequest&apos;: Invalid reference definition.'><a class=EN id=I2147 href=#I2148>CreateTaskRequest</a></span><span class=D>,</span><p
+>                                                                   <span class=C>--- запрос на создание задачи по обработке информации</span><p
+>      <b class=CI id=I2149>create-task-response</b>                    <span class=D>[</span><span class=N>9</span><span class=D>] </span><a class=EN href=#I2103>CreateTaskResponse</a><span class=D>,                </span><span class=C>--- ответ на запрос создания задачи</span><p
+>      <b class=CI id=I2150>non-formalized-task-request</b>             <span class=D>[</span><span class=N>10</span><span class=D>] </span><a class=EN href='./TasksNonFormalized.asn.html#I2126'>NonFormalizedTaskRequest</a><span class=D>,</span><p
+>                                                     <span class=C>--- запрос на создание задачи по обработке неформализованных данных</span><p
+>      <b class=CI id=I2151>non-formalized-task-response</b>            <span class=D>[</span><span class=N>11</span><span class=D>] </span><span class=E3 title='Error: Invalid reference error for &apos;NonFormalizedTaskResponse&apos;: Invalid reference definition.'><a class=EN id=I2152 href='./TasksNonFormalized.asn.html#I2128'>NonFormalizedTaskResponse</a></span><p
+>                                               <span class=C>--- ответ на запрос создания задачи по обработке неформализованных данных</span><p
+>   <span class=D>}</span><p
+><span class=D>}</span><p
+> <p
+><span class=C>--- в этом запросе не параметров</span><p
+><a class=EN id=I2131 href='./summary.html#I2153'><b>DataReadyRequest</b></a> <span class=D>::=                    </span><span class=K>NULL</span><p
+> <p
+><span class=C>--- запрос загрузки данных конкретной задачи</span><p
+><a class=EN id=I2135 href='./summary.html#I2154'><b>DataLoadRequest</b></a> <span class=D>::=                     </span><a class=EN href=#I933>TaskID</a><p
+> <p
+><span class=C>--- запрос удаления данных конкретной задачи</span><p
+><a class=EN id=I2139 href='./summary.html#I2155'><b>DataDropRequest</b></a> <span class=D>::=                     </span><a class=EN href=#I933>TaskID</a><p
+> <p
+><span class=C>--- запрос прерывания загрузки данных</span><p
+><a class=EN id=I2143 href='./summary.html#I2156'><b>DataInterruptRequest</b></a> <span class=D>::=                </span><a class=EN href=#I933>TaskID</a><p
+> <p
+><span class=C>--- запрос на создание задачи поиска</span><p
+><span class=E3 title='Error: Invalid type assignment for type &quot;CreateTaskRequest&quot;: Invalid assignment.'><a class=EN id=I2148 href='./summary.html#I2157'><b>CreateTaskRequest</b></a></span> <span class=D>::=                   </span><span class=K>SEQUENCE </span><span class=D>{</span><p
+>   <b class=CI id=I2158>telcos</b>                                  <span class=D>[</span><span class=N>0</span><span class=D>] </span><a class=EN href='./Dictionaries.asn.html#I259'>TelcoList</a>                           <span class=K>OPTIONAL</span><span class=D>, </span><span class=C>--- список операторов связи</span><p
+>   <b class=CI id=I2159>range</b>                                   <span class=D>[</span><span class=N>1</span><span class=D>] </span><a class=EN href='./Sorm.asn.html#I1669'>FindRange</a>                           <span class=K>OPTIONAL</span><span class=D>,</span><p
+>                                                                                           <span class=C>--- временной диапазон поиска</span><p
+>   <b class=CI id=I2160>report-limit</b>                            <span class=D>[</span><span class=N>2</span><span class=D>] </span><span class=K>INTEGER </span><span class=D>(</span><span class=N>1</span><span class=D>..</span><span class=N>10000000</span><span class=D>)               </span><span class=K>OPTIONAL</span><span class=D>,</span><p
+>                                                         <span class=C>--- ограничение на максимальное количество возвращаемых записей</span><p
+>   <b class=CI id=I2161>task</b>                                    <span class=D>[</span><span class=N>3</span><span class=D>] </span><span class=K>CHOICE </span><span class=D>{</span><p
+>      <b class=CI id=I2162>dictionary</b>                              <span class=D>[</span><span class=N>0</span><span class=D>] </span><a class=EN href='./Dictionaries.asn.html#I260'>DictionaryTask</a><span class=D>,</span><p
+>                                                   <span class=C>--- задачи пополнения справочников (нормативно-справочная информация)</span><p
+>      <b class=CI id=I2163>abonents</b>                                <span class=D>[</span><span class=N>1</span><span class=D>] </span><a class=EN href='./TasksAbonents.asn.html#I2108'>AbonentsTask</a><span class=D>,           </span><span class=C>--- задачи поисков по принадлежности абонентов</span><p
+>      <b class=CI id=I2164>connections</b>                             <span class=D>[</span><span class=N>2</span><span class=D>] </span><span class=E3 title='Error: Invalid reference error for &apos;ConnectionsTask&apos;: Invalid reference definition.'><a class=EN id=I2165 href='./TasksConnections.asn.html#I2111'>ConnectionsTask</a></span><span class=D>,           </span><span class=C>--- задачи поисков по соединениям абонентов</span><p
+>      <b class=CI id=I2166>location</b>                                <span class=D>[</span><span class=N>3</span><span class=D>] </span><a class=EN href='./TasksLocation.asn.html#I2114'>LocationTask</a><span class=D>,     </span><span class=C>--- задача получения данных местоположения абонентов</span><p
+>      <b class=CI id=I2167>payments</b>                                <span class=D>[</span><span class=N>4</span><span class=D>] </span><a class=EN href='./TasksPayments.asn.html#I2117'>PaymentsTask</a><span class=D>,               </span><span class=C>--- задачи поисков по совершенным платежам</span><p
+>      <b class=CI id=I2168>presense</b>                                <span class=D>[</span><span class=N>6</span><span class=D>] </span><a class=EN href='./TasksPresense.asn.html#I2120'>PresenseTask</a><span class=D>,      </span><span class=C>--- задачи предоставления сведений о наличии данных</span><p
+>      <b class=CI id=I2169>data-content</b>                            <span class=D>[</span><span class=N>9</span><span class=D>] </span><a class=EN href='./TasksContentTask.asn.html#I2123'>DataContentTask</a>               <span class=C>--- задачи получения содержимого потоков</span><p
+>   <span class=D>}</span><p
+><span class=D>}</span><p
+> <p
+><span class=C>--------------------------------------------------------------------------</span><p
+><span class=C>-- последовательность записей о готовности данных задач</span><p
+><a class=EN id=I2133 href='./summary.html#I2170'><b>DataReadyResponse</b></a> <span class=D>::=                   </span><span class=K>SEQUENCE OF </span><a class=EN id=I2171 href=#I2172>DataReadyTaskRecord</a><p
+> <p
+><a class=EN id=I2172 href='./summary.html#I2173'><b>DataReadyTaskRecord</b></a> <span class=D>::=                 </span><span class=K>SEQUENCE </span><span class=D>{</span><p
+>   <b class=CI id=I2174>task-id</b>                                 <a class=EN href=#I933>TaskID</a><span class=D>,                                      </span><span class=C>--- идентификатор задачи</span><p
+>   <b class=CI id=I2175>result</b>                                  <a class=EN href=#I2176>TaskResult</a>                                   <span class=C>--- результат выполнения задачи</span><p
+><span class=D>}</span><p
+> <p
+><a class=EN id=I2176 href='./summary.html#I2177'><b>TaskResult</b></a> <span class=D>::=                          </span><span class=K>SEQUENCE </span><span class=D>{</span><p
+>   <b class=CI id=I2178>result</b>                                  <span class=K>ENUMERATED </span><span class=D>{</span><p
+>                                              <b class=II id=I2179>data-not-ready</b> <span class=D>(</span><span class=N>0</span><span class=D>), </span><span class=C>--- данные не готовы, задача еще выполняется</span><p
+>                                              <b class=II id=I2180>data-ready</b> <span class=D>(</span><span class=N>1</span><span class=D>), </span><span class=C>--- данные есть, задача выполнена</span><p
+>                                              <b class=II id=I2181>data-not-found</b> <span class=D>(</span><span class=N>2</span><span class=D>), </span><span class=C>--- данных нет, задача выполнена</span><p
+>                                              <b class=II id=I2182>error</b> <span class=D>(</span><span class=N>3</span><span class=D>) </span><span class=C>--- в процессе выполнения задачи произошла ошибка</span><p
+>                                           <span class=D>},</span><p
+>   <b class=CI id=I2183>report-records-number</b>                   <span class=D>[</span><span class=N>0</span><span class=D>] </span><span class=K>INTEGER </span><span class=D>(</span><span class=N>0</span><span class=D>..</span><span class=N>999999999999</span><span class=D>)           </span><span class=K>OPTIONAL</span><span class=D>,</span><p
+>                                                                <span class=C>--- для выполненной задачи - количество записей в отчете</span><p
+>   <b class=CI id=I2184>report-limit-exeeded</b>                    <span class=D>[</span><span class=N>1</span><span class=D>] </span><span class=K>BOOLEAN                             OPTIONAL</span><span class=D>,</span><p
+>                                                    <span class=C>--- количество записей превысило лимит, заданный при создании задачи</span><p
+>   <b class=CI id=I2185>error-description</b>                       <span class=D>[</span><span class=N>2</span><span class=D>] </span><span class=K>UTF8String </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>1</span><span class=D>..</span><span class=N>256</span><span class=D>))          </span><span class=K>OPTIONAL</span><p
+>                                                                               <span class=C>--- краткое описание произошедшей ошибки,</span><p
+>                                                                               <span class=C>--- если обнаружена</span><p
+><span class=D>}</span><p
+> <p
+><a class=EN id=I2137 href='./summary.html#I2186'><b>DataLoadResponse</b></a> <span class=D>::=                    </span><span class=K>SEQUENCE </span><span class=D>{</span><p
+>   <b class=CI id=I2187>task-id</b>                                 <a class=EN href=#I933>TaskID</a><span class=D>,                </span><span class=C>--- идентификатор задачи, сгенерировавшей данный отчет</span><p
+>   <b class=CI id=I2188>data-exists</b>                             <span class=K>BOOLEAN</span><span class=D>,              </span><span class=C>--- признак существования результатов исполнения задачи</span><p
+>                                                                 <span class=C>--- (есть данные или нет)</span><p
+>   <b class=CI id=I2189>data-blocks-number</b>                      <span class=K>INTEGER </span><span class=D>(</span><span class=N>0</span><span class=D>..</span><span class=N>999999999999</span><span class=D>)               </span><span class=K>OPTIONAL</span><span class=D>,</span><p
+>                                                                                          <span class=C>--- количество блоков в отчете</span><p
+>   <b class=CI id=I2190>error-description</b>                       <span class=K>UTF8String </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>1</span><span class=D>..</span><span class=N>256</span><span class=D>))              </span><span class=K>OPTIONAL</span><p
+>                                                                            <span class=C>--- краткое описание ошибки, если обнаружена</span><p
+><span class=D>}</span><p
+> <p
+><a class=EN id=I2141 href='./summary.html#I2191'><b>DataDropResponse</b></a> <span class=D>::=                    </span><span class=K>SEQUENCE </span><span class=D>{</span><p
+>   <b class=CI id=I2192>task-id</b>                                 <a class=EN href=#I933>TaskID</a><span class=D>,                </span><span class=C>--- идентификатор задачи, данные которой будут удалены</span><p
+>   <b class=CI id=I2193>successful</b>                              <span class=K>BOOLEAN</span><span class=D>,                             </span><span class=C>--- признак успешного выполнения запроса</span><p
+>   <b class=CI id=I2194>error-description</b>                       <span class=K>UTF8String </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>1</span><span class=D>..</span><span class=N>256</span><span class=D>))              </span><span class=K>OPTIONAL</span><p
+>                                                                            <span class=C>--- краткое описание ошибки, если обнаружена</span><p
+><span class=D>}</span><p
+> <p
+><a class=EN id=I2145 href='./summary.html#I2195'><b>DataInterruptResponse</b></a> <span class=D>::=               </span><span class=K>SEQUENCE </span><span class=D>{</span><p
+>   <b class=CI id=I2196>request-id</b>                              <a class=EN href='./Sorm.asn.html#I931'>MessageID</a><span class=D>,              </span><span class=C>--- идентификатор прерванного запроса загрузки данных</span><p
+>   <b class=CI id=I2197>successful</b>                              <span class=K>BOOLEAN</span><span class=D>,                             </span><span class=C>--- признак успешного выполнения запроса</span><p
+>   <b class=CI id=I2198>data-blocks-available</b>                   <span class=K>INTEGER </span><span class=D>(</span><span class=N>0</span><span class=D>..</span><span class=N>999999999999</span><span class=D>)               </span><span class=K>OPTIONAL</span><span class=D>,</span><p
+>                                                                          <span class=C>--- количество оставшихся непереданными блоков</span><p
+>   <b class=CI id=I2199>error-description</b>                       <span class=K>UTF8String </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>1</span><span class=D>..</span><span class=N>256</span><span class=D>))              </span><span class=K>OPTIONAL</span><p
+>                                                                            <span class=C>--- краткое описание ошибки, если обнаружена</span><p
+><span class=D>}</span><p
+> <p
+><a class=EN id=I2103 href='./summary.html#I2200'><b>CreateTaskResponse</b></a> <span class=D>::=                  </span><span class=K>SEQUENCE </span><span class=D>{</span><p
+>   <b class=CI id=I2201>task-id</b>                                 <a class=EN href=#I933>TaskID</a>                                  <span class=K>OPTIONAL</span><span class=D>, </span><span class=C>--- идентификатор задачи</span><p
+>   <b class=CI id=I2202>successful</b>                              <span class=K>BOOLEAN</span><span class=D>,                             </span><span class=C>--- признак успешного выполнения запроса</span><p
+>   <b class=CI id=I2203>error-description</b>                       <span class=K>UTF8String </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>1</span><span class=D>..</span><span class=N>256</span><span class=D>))              </span><span class=K>OPTIONAL</span><p
+>                                                                            <span class=C>--- краткое описание ошибки, если обнаружена</span><p
+><span class=D>}</span><p
+> <p
+><span class=C>---------------------------------------------------------------------------</span><p
+><span class=C>-- идентификатор задачи</span><p
+><a class=EN id=I933 href='./summary.html#I2204'><b>TaskID</b></a> <span class=D>::=                              </span><span class=K>INTEGER </span><span class=D>(</span><span class=N>0</span><span class=D>..</span><span class=N>4294967295</span><span class=D>)</span><p
+> <p
+><span class=C>-- идентификатор потока</span><p
+><a class=EN id=I1106 href='./summary.html#I2205'><b>DataContentID</b></a> <span class=D>::=                       </span><span class=K>UTF8String </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>1</span><span class=D>..</span><span class=N>512</span><span class=D>))</span><p
+> <p
+><a class=EN id=I2102 href='./summary.html#I2206'><b>LogicalOperation</b></a> <span class=D>::=                    </span><span class=K>ENUMERATED </span><span class=D>{</span><p
+>                                           <b class=II id=I2207>operation-open-bracket</b> <span class=D>(</span><span class=N>0</span><span class=D>), </span><span class=C>-- открывающая скобка - "("</span><p
+>                                           <b class=II id=I2208>operation-close-bracket</b> <span class=D>(</span><span class=N>1</span><span class=D>), </span><span class=C>-- закрывающая скобка - ")"</span><p
+>                                           <b class=II id=I2209>operation-or</b> <span class=D>(</span><span class=N>2</span><span class=D>), </span><span class=C>-- логическое "или"</span><p
+>                                           <b class=II id=I2210>operation-and</b> <span class=D>(</span><span class=N>3</span><span class=D>), </span><span class=C>-- логическое "и"</span><p
+>                                           <b class=II id=I2211>operation-not</b> <span class=D>(</span><span class=N>4</span><span class=D>) </span><span class=C>-- логическое "не"</span><p
+>                                        <span class=D>}</span><p
+> <p
+><span class=K>END</span></section><div class=footer>HTML generated by OSS Nokalva's ASN1Doc utility</div>
+</body>
+</html>

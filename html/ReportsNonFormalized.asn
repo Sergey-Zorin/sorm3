@@ -1,0 +1,27 @@
+ReportsNonFormalized DEFINITIONS IMPLICIT TAGS ::=
+BEGIN
+
+EXPORTS NonFormalizedReport;
+
+IMPORTS
+     EntityId,
+     NonFormalizedEntityAttributeData
+     FROM TasksNonFormalized
+
+     StandardInterval
+     FROM ReportsPresense;
+
+--- отчет задачи по обработке неформализованных данных
+NonFormalizedReport ::= CHOICE {
+ nonformalized-report [0] NonFormalizedRecords,              --- отчет по задаче обработки неформализованных данных
+ nonformalized-presense [1] NonFormalizedPresenseInfo        --- отчет по наличию неформализованных данных заданного вида
+}
+
+NonFormalizedRecords ::= SEQUENCE OF NonFormalizedRecord
+
+NonFormalizedPresenseInfo ::= SEQUENCE OF StandardInterval   --- диапазоны времени за которые есть неформализованные данные
+
+--- запись неформализованных данных
+NonFormalizedRecord ::= SEQUENCE OF NonFormalizedEntityAttributeData
+
+END

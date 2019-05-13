@@ -1,0 +1,204 @@
+ReportsPayments DEFINITIONS IMPLICIT TAGS ::=
+BEGIN
+
+EXPORTS PaymentsReport;
+
+IMPORTS TAGGED,
+     sorm-report-payment-bank-transaction,
+     sorm-report-payment-express-pays,
+     sorm-report-payment-terminal-pays,
+     sorm-report-payment-service-center,
+     sorm-report-payment-cross-account,
+     sorm-report-payment-telephone-card,
+     sorm-report-payment-balance-fillups,
+     sorm-report-payment-bank-division-transfer,
+     sorm-report-payment-bank-card-transfer,
+     sorm-report-payment-bank-account-transfer
+  FROM Classification
+
+      DateAndTime
+  FROM Sorm
+
+      TelcoID
+  FROM Dictionaries
+
+      Location
+  FROM Locations
+
+      ReportedIdentifier
+  FROM ReportedIdentifiers
+
+      ReportedAddress
+  FROM Addresses;
+
+PaymentsReport ::= SEQUENCE {
+ id TAGGED.&id ({ReportedPaymentsVariants}),
+ data TAGGED.&Data ({ReportedPaymentsVariants}{@id})
+}
+
+--- варианты запрашиваемых параметров связей
+ReportedPaymentsVariants TAGGED ::= {
+  bankTransactionReport
+ |expressCardReport
+ |publicTerminalReport
+ |serviceCenterReport
+ |crossAccountReport
+ |telephoneCardReport
+ |balanceFillupReport
+ |bankDivisionTransferReport
+ |bankCardTransferReport
+ |bankAccountTransferReport
+}
+
+--- отчет задачи на поиск пополнения баланса через банковский перевод
+bankTransactionReport TAGGED ::= {
+ OID { sorm-report-payment-bank-transaction }
+ DATA SEQUENCE OF BankTransactionRecord
+}
+
+BankTransactionRecord ::= SEQUENCE {
+ telco-id         TelcoID,                           --- идентификатор оператора связи или структурного подразделения
+ device-id        ReportedIdentifier,                --- идентификатор абонента
+ date-time-fillup DateAndTime,                       --- время и дата пополнения баланса
+ bank-account     UTF8String (SIZE (1 .. 64)),       --- номер банковского счета, с которого совершен платеж
+ bank-name        UTF8String (SIZE (1 .. 512)),      --- наименование банка, со счета которого совершен перевод
+ bank-address     ReportedAddress,                   --- адрес банка, со счета которого совершен перевод
+ amount           UTF8String (SIZE (1 .. 64))        --- сумма перевода
+}
+
+--- отчет задачи на поиск пополнения баланса через карты экспресс-оплаты
+expressCardReport TAGGED ::= {
+ OID { sorm-report-payment-express-pays }
+ DATA SEQUENCE OF ExpressPaysRecord
+}
+
+ExpressPaysRecord ::= SEQUENCE {
+ telco-id         TelcoID,                           --- идентификатор оператора связи или структурного подразделения
+ device-id        ReportedIdentifier,                --- идентификатор абонента
+ date-time-fillup DateAndTime,                       --- время и дата пополнения баланса
+ card-number      UTF8String (SIZE (1 .. 64)),       --- номер карты
+ amount           UTF8String (SIZE (1 .. 64))        --- сумма перевода
+}
+
+--- отчет задачи на поиск пополнения баланса через терминалы моментальных платежей
+publicTerminalReport TAGGED ::= {
+ OID { sorm-report-payment-terminal-pays }
+ DATA SEQUENCE OF PublicTerminalRecord
+}
+
+PublicTerminalRecord ::= SEQUENCE {
+ telco-id         TelcoID,                           --- идентификатор оператора связи или структурного подразделения
+ device-id        ReportedIdentifier,                --- идентификатор абонента
+ date-time-fillup DateAndTime,                       --- время и дата пополнения баланса
+ terminal-id      UTF8String (SIZE (1 .. 64)),       --- идентификатор терминала
+ terminal-number  NumericString (SIZE (2 .. 20)),    --- номер терминала
+ terminal-address ReportedAddress,                   --- адрес терминала
+ amount           UTF8String (SIZE (1 .. 64)),       --- сумма перевода
+ location         Location OPTIONAL                  --- адрес совершения платежа
+}
+
+--- отчет задачи на поиск пополнения баланса через центры обслуживания клиентов
+serviceCenterReport TAGGED ::= {
+ OID { sorm-report-payment-service-center }
+ DATA SEQUENCE OF ServiceCenterRecord
+}
+
+ServiceCenterRecord ::= SEQUENCE {
+ telco-id         TelcoID,                           --- идентификатор оператора связи или структурного подразделения
+ device-id        ReportedIdentifier,                --- идентификатор абонента
+ date-time-fillup DateAndTime,                       --- время и дата пополнения баланса
+ center-id        UTF8String (SIZE (1 .. 64)),       --- идентификатор центра обслуживания клиентов
+ center-address   ReportedAddress,                   --- адрес центра обслуживания клиентов
+ amount           UTF8String (SIZE (1 .. 64))        --- сумма перевода
+}
+
+--- отчет задачи на поиск пополнения баланса посредством снятия денег со счета другого абонента
+crossAccountReport TAGGED ::= {
+ OID { sorm-report-payment-cross-account }
+ DATA SEQUENCE OF CrossAccountRecord
+}
+
+CrossAccountRecord ::= SEQUENCE {
+ telco-id         TelcoID,                           --- идентификатор оператора связи или структурного подразделения
+ device-id        ReportedIdentifier,                --- идентификатор абонента-получателя платежа
+ date-time-fillup DateAndTime,                       --- время и дата пополнения баланса
+ donanted-id      ReportedIdentifier,                --- идентификатор абонента-отправителя платежа
+ amount           UTF8String (SIZE (1 .. 64))        --- сумма перевода
+}
+
+--- отчет задачи на поиск пополнения баланса через телефонные карты
+telephoneCardReport TAGGED ::= {
+ OID { sorm-report-payment-telephone-card }
+ DATA SEQUENCE OF ValidateTelephoneCardRecord
+}
+
+ValidateTelephoneCardRecord ::= SEQUENCE {
+ telco-id            TelcoID,                        --- идентификатор оператора связи или структурного подразделения
+ activator-device-id ReportedIdentifier,             --- идентификатор абонента, активировавшего карту
+ date-time-fillup    DateAndTime,                    --- время и дата пополнения баланса
+ card-number         NumericString (SIZE (2 .. 20)), --- номер телефонной карты
+ amount              UTF8String (SIZE (1 .. 64))     --- сумма перевода
+}
+
+--- отчет задачи на поиск пополнения баланса личного счета абонента
+balanceFillupReport TAGGED ::= {
+ OID { sorm-report-payment-balance-fillups }
+ DATA SEQUENCE OF ValidateBalanceFillupRecord
+}
+
+ValidateBalanceFillupRecord ::= SEQUENCE {
+ telco-id         TelcoID,                               --- идентификатор оператора связи или структурного подразделения
+ pay-type-id      INTEGER (0 .. 4294967295),             --- тип платежа (способ оплаты)
+ device-id        ReportedIdentifier,                    --- идентификатор абонента
+ date-time-fillup DateAndTime,                           --- время и дата пополнения баланса
+ amount           UTF8String (SIZE (1 .. 64)),           --- сумма перевода
+ pay-parameters   UTF8String (SIZE (1 .. 512)) OPTIONAL  --- "неструктурированная" информация
+}
+
+--- отчет задачи по переводу средств со счета абонента для их снятия в отделении банка
+bankDivisionTransferReport TAGGED ::= {
+ OID { sorm-report-payment-bank-division-transfer }
+ DATA SEQUENCE OF ValidateBankDivisonTransferRecord
+}
+
+ValidateBankDivisonTransferRecord ::= SEQUENCE {
+        telco-id              TelcoID,                       --- идентификатор оператора связи или структурного подразделения
+        donanted-id           ReportedIdentifier,            --- идентификатор инициатора перевода средств
+        date-time-fillup      DateAndTime,                   --- время и дата перевода средств
+        person-recieved       UTF8String(SIZE (1 .. 512)),   --- получатель платежа (ФИО и прочая неструктурированная информация)
+        bank-name             UTF8String (SIZE (1 .. 256)),  --- наименование банка получателя
+        bank-division-name    UTF8String (SIZE (1 .. 512)),  --- наименование отделения банка получателя
+        bank-division-address ReportedAddress,               --- адрес отделения банка получателя
+        amount                UTF8String (SIZE (1 .. 64))    --- сумма перевода
+}
+
+--- отчет задачи по переводу средств со счета абонента на банковскую карту
+bankCardTransferReport TAGGED ::= {
+ OID { sorm-report-payment-bank-card-transfer }
+ DATA SEQUENCE OF ValidateBankCardTransferRecord
+}
+
+ValidateBankCardTransferRecord ::= SEQUENCE {
+        telco-id         TelcoID,                            --- идентификатор оператора связи или структурного подразделения
+        donanted-id      ReportedIdentifier,                 --- идентификатор инициатора перевода средств
+        bank-card-id     NumericString (SIZE (1 .. 12)),     --- номер банковской карты получателя перевода
+        date-time-fillup DateAndTime,                        --- время и дата перевода средств
+        amount           UTF8String (SIZE (1 .. 64))         --- сумма перевода
+}
+
+--- отчет задачи по переводу средств со счета абонента на счет в банке
+bankAccountTransferReport TAGGED ::= {
+ OID { sorm-report-payment-bank-account-transfer }
+ DATA SEQUENCE OF ValidateBankAccountTransferRecord
+}
+
+ValidateBankAccountTransferRecord ::= SEQUENCE {
+        telco-id         TelcoID,                            --- идентификатор оператора связи или структурного подразделения
+        donated-id       ReportedIdentifier,                 --- идентификатор инициатора перевода средств
+        bank-name        UTF8String (SIZE (1 .. 256)),       --- наименование банка получателя
+        bank-account     UTF8String (SIZE (1 .. 64)),        --- номер банковского счета получателя
+        date-time-fillup DateAndTime,                        --- время и дата перевода средств
+        amount           UTF8String (SIZE (1 .. 64))         --- сумма перевода
+}
+
+END

@@ -1,0 +1,57 @@
+Sorm DEFINITIONS IMPLICIT TAGS ::=
+BEGIN
+
+EXPORTS DateAndTime,
+    FindRange,
+    MessageID,
+    Message;
+
+IMPORTS TAGGED FROM Classification
+    sessionMessage FROM Sessions
+    trapMessage FROM Traps
+    taskMessage FROM Tasks
+    reportMessage FROM Reports
+    managementMessage FROM Management
+    unformattedMessage FROM Unformatted
+  filterMessage FROM Filters;
+
+Version ::= PrintableString
+vers Version ::= "3.0.0"                                     --- текущая версия протокола
+
+-- Оболочка сообщения СОРМ --
+Message ::= SEQUENCE {
+  version              Version DEFAULT vers,                 --- версия протокола
+  message-id           MessageID,                            --- номер запроса
+  message-time         DateAndTime,                          --- время и дата запроса
+  operator-name  PrintableString (SIZE (1 .. 128)) OPTIONAL, --- наименование оператора связи
+
+  id                   TAGGED.&id ({SormPDUs}),              --- идентификтор блока данных
+  data      TAGGED.&Data({SormPDUs}{@id})                    --- данные блока данных
+}
+
+-- Блок данных сообщения
+SormPDUs TAGGED ::= {
+      sessionMessage                                 --- сообщения организации сессии
+    | trapMessage                                    --- сообщения сигналов
+    | taskMessage                                    --- сообщения работы с задачами
+    | reportMessage                                  --- сообщения работы с отчетами
+    | managementMessage                              --- сообщения канала передачи мониторинга (КПМ)
+    | unformattedMessage                             --- сообщения канала передачи неформатированных данных (КПНФ)
+    | filterMessage                                  --- сообщения установки/снятия фильтров записываемого содержимого соединений сети передачи данных
+}
+
+--- Общие данные
+
+-- Номер сообщения
+MessageID ::= INTEGER (0 .. 4294967295)
+
+-- Дата и время
+DateAndTime ::= UTCTime
+
+-- Диапазон поиска
+FindRange ::= SEQUENCE {
+  begin-find [0]       DateAndTime OPTIONAL,         --- время и дата начала поиска информации
+  end-find [1]         DateAndTime  OPTIONAL         --- время и дата окончания поиска информации
+}
+
+END

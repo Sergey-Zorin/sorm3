@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+<meta charset='utf-8'>
+<title>NetworkIdentifiers.asn</title>
+<link rel=stylesheet href='Asn1doc.css' type='text/css'>
+</head>
+<body onload='Init()'><span id=I787>Schema File <b class=SF>NetworkIdentifiers.asn</b></span><section class='asn1 notinteractive'><p
+><a class=MN id=I276 href='./summary.html#I788'><b>NetworkIdentifiers</b></a> <span class=K>DEFINITIONS IMPLICIT TAGS </span><span class=D>::=</span><p
+><span class=K>BEGIN</span><p
+> <p
+><span class=K>EXPORTS</span><p
+>     <a class=EN href=#I269>Bunch</a><span class=D>, </span><a class=EN href=#I270>DataNetworkEquipment</a><span class=D>, </span><a class=EN href=#I271>IPAddress</a><span class=D>, </span><a class=EN href=#I272>IPPort</a><span class=D>, </span><a class=EN href=#I273>IPMask</a><span class=D>, </span><a class=EN href=#I274>NetworkPeerInfo</a><span class=D>, </span><a class=EN href=#I789>PortRange</a><span class=D>, </span><a class=EN href=#I275>NetworkType</a><span class=D>, </span><a class=EN href=#I790>DataVoipNumber</a><span class=D>,</span><p
+>     <a class=EN href=#I791>IMProtocol</a><span class=D>, </span><a class=EN href=#I792>VoipProtocol</a><span class=D>, </span><a class=EN href=#I793>HttpMethod</a><span class=D>;</span><p
+> <p
+><span class=C>--- идентификаторы пучка</span><p
+><a class=EN id=I269 href='./summary.html#I794'><b>Bunch</b></a> <span class=D>::=                               </span><span class=K>CHOICE </span><span class=D>{</span><p
+>   <b class=CI id=I795>gsm</b>                                     <span class=D>[</span><span class=N>0</span><span class=D>] </span><span class=K>INTEGER </span><span class=D>(</span><span class=N>0</span><span class=D>..</span><span class=N>4294967295</span><span class=D>),            </span><span class=C>--- идентификатор пучка для GSM-Сети</span><p
+>   <b class=CI id=I796>cdma-umts</b>                               <span class=D>[</span><span class=N>1</span><span class=D>] </span><a class=EN href=#I270>DataNetworkEquipment</a>        <span class=C>--- идентификатор пучка для W/CDMA, UMTS-сети</span><p
+><span class=D>}</span><p
+> <p
+><span class=C>-- идентификатор оборудования сети передачи данных</span><p
+><a class=EN id=I270 href='./summary.html#I797'><b>DataNetworkEquipment</b></a> <span class=D>::=                </span><span class=K>CHOICE </span><span class=D>{</span><p
+>   <b class=CI id=I798>mac</b>                                     <span class=D>[</span><span class=N>0</span><span class=D>] </span><span class=K>OCTET STRING </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>6</span><span class=D>)),   </span><span class=C>--- MAC-адрес оконечного сетевого оборудования</span><p
+>   <b class=CI id=I799>atm</b>                                     <span class=D>[</span><span class=N>1</span><span class=D>] </span><a class=EN href=#I800>DataNetworkATM</a><p
+><span class=D>}</span><p
+> <p
+><span class=C>--- АТМ адрес (SDH/PDH сети)</span><p
+><a class=EN id=I800 href='./summary.html#I801'><b>DataNetworkATM</b></a> <span class=D>::=                      </span><span class=K>SEQUENCE </span><span class=D>{</span><p
+>   <b class=CI id=I802>vpi</b>                                     <span class=K>OCTET STRING </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>1</span><span class=D>)),           </span><span class=C>--- номер виртуального пути сети АТМ (VPI)</span><p
+>   <b class=CI id=I803>vci</b>                                     <span class=K>OCTET STRING </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>2</span><span class=D>))                 </span><span class=K>OPTIONAL</span><p
+>                                                                            <span class=C>--- номер виртуального канала сети АТМ (VCI)</span><p
+><span class=D>}</span><p
+> <p
+><span class=C>--- тип сети связи (стандарт)</span><p
+><a class=EN id=I275 href='./summary.html#I804'><b>NetworkType</b></a> <span class=D>::=                         </span><span class=K>ENUMERATED </span><span class=D>{</span><p
+>                                           <b class=II id=I805>not-specified</b> <span class=D>(</span><span class=N>0</span><span class=D>), </span><span class=C>--- неконкретизированный стандарт</span><p
+>                                           <b class=II id=I806>mob-gsm</b> <span class=D>(</span><span class=N>1</span><span class=D>), </span><span class=C>--- сеть мобильной связи стандарта GSM</span><p
+>                                           <b class=II id=I807>mob-cdma</b> <span class=D>(</span><span class=N>2</span><span class=D>), </span><span class=C>--- сеть мобильной связи стандарта CDMA</span><p
+>                                           <b class=II id=I808>fix-pstn</b> <span class=D>(</span><span class=N>3</span><span class=D>), </span><span class=C>--- ТФоП-сеть</span><p
+>                                           <b class=II id=I809>data-ip</b> <span class=D>(</span><span class=N>4</span><span class=D>), </span><span class=C>--- стационарные сети передачи данных</span><p
+>                                           <b class=II id=I810>data-srv</b> <span class=D>(</span><span class=N>5</span><span class=D>), </span><span class=C>--- ТМС-службы</span><p
+>                                           <b class=II id=I811>data-ip-mob</b> <span class=D>(</span><span class=N>6</span><span class=D>), </span><span class=C>--- мобильная сеть передачи данных</span><p
+>                                           <b class=II id=I812>data-ip-wifi</b> <span class=D>(</span><span class=N>7</span><span class=D>), </span><span class=C>--- беспроводная сеть передачи данных стандарта WiFi</span><p
+>                                           <b class=II id=I813>data-ip-max</b> <span class=D>(</span><span class=N>8</span><span class=D>), </span><span class=C>--- беспроводная сеть передачи данных стандарта WiMAX</span><p
+>                                           <b class=II id=I814>paging</b> <span class=D>(</span><span class=N>9</span><span class=D>), </span><span class=C>--- персональный радиовызов</span><p
+>                                           <b class=II id=I815>voip</b> <span class=D>(</span><span class=N>10</span><span class=D>)</span><p
+>                                                <span class=C>--- сеть передачи голосовой информации посредством сети передачи данных</span><p
+>                                        <span class=D>}</span><p
+> <p
+><span class=C>--- IP-адрес</span><p
+><a class=EN id=I271 href='./summary.html#I816'><b>IPAddress</b></a> <span class=D>::=                           </span><span class=K>CHOICE </span><span class=D>{</span><p
+>   <b class=CI id=I817>ipv4</b>                                    <span class=D>[</span><span class=N>0</span><span class=D>] </span><a class=EN href=#I818>IPV4Address</a><span class=D>,                        </span><span class=C>--- IPv4-адрес</span><p
+>   <b class=CI id=I819>ipv6</b>                                    <span class=D>[</span><span class=N>1</span><span class=D>] </span><a class=EN href=#I820>IPV6Address</a>                         <span class=C>--- IPv6-адрес</span><p
+><span class=D>}</span><p
+> <p
+><span class=C>-- IPv4-адрес</span><p
+><a class=EN id=I818 href='./summary.html#I821'><b>IPV4Address</b></a> <span class=D>::=                         </span><span class=K>OCTET STRING </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>4</span><span class=D>))                 </span><span class=C>-- IP адрес (4 байта)</span><p
+> <p
+><span class=C>-- IPv6-адрес</span><p
+><a class=EN id=I820 href='./summary.html#I822'><b>IPV6Address</b></a> <span class=D>::=                         </span><span class=K>OCTET STRING </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>16</span><span class=D>))                </span><span class=C>-- IP адрес (16 байт)</span><p
+> <p
+><span class=C>--- IP/UDP/TCP-порт</span><p
+><a class=EN id=I272 href='./summary.html#I823'><b>IPPort</b></a> <span class=D>::=                              </span><span class=K>OCTET STRING </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>2</span><span class=D>))                 </span><span class=C>-- порт</span><p
+> <p
+><span class=C>--- маска IP-подсети</span><p
+><a class=EN id=I273 href='./summary.html#I824'><b>IPMask</b></a> <span class=D>::=                              </span><span class=K>CHOICE </span><span class=D>{</span><p
+>   <b class=CI id=I825>ipv4-mask</b>                               <span class=D>[</span><span class=N>0</span><span class=D>] </span><a class=EN href=#I826>IPV4Mask</a><span class=D>,                           </span><span class=C>--- IPv4-маска</span><p
+>   <b class=CI id=I827>ipv6-mask</b>                               <span class=D>[</span><span class=N>1</span><span class=D>] </span><a class=EN href=#I828>IPV6Mask</a>                            <span class=C>--- IPv6-маска</span><p
+><span class=D>}</span><p
+> <p
+><span class=C>--- информация об участнике соединения передачи данных</span><p
+><a class=EN id=I274 href='./summary.html#I829'><b>NetworkPeerInfo</b></a> <span class=D>::=                     </span><span class=K>SEQUENCE </span><span class=D>{</span><p
+>   <b class=CI id=I830>ip-address</b>                              <a class=EN href=#I271>IPAddress</a><span class=D>,                                   </span><span class=C>--- IP-адрес</span><p
+>   <b class=CI id=I831>ip-port</b>                                 <a class=EN href=#I272>IPPort</a>                                  <span class=K>OPTIONAL  </span><span class=C>--- IP-порт</span><p
+><span class=D>}</span><p
+> <p
+><a class=EN id=I789 href='./summary.html#I832'><b>PortRange</b></a> <span class=D>::=                           </span><span class=K>SEQUENCE </span><span class=D>{</span><p
+>   <b class=CI id=I833>port-from</b>                               <span class=D>[</span><span class=N>0</span><span class=D>] </span><a class=EN href=#I272>IPPort</a><span class=D>,</span><p
+>   <b class=CI id=I834>port-to</b>                                 <span class=D>[</span><span class=N>1</span><span class=D>] </span><a class=EN href=#I272>IPPort</a><p
+><span class=D>}</span><p
+> <p
+><span class=C>--- IPv4-маска</span><p
+><a class=EN id=I826 href='./summary.html#I835'><b>IPV4Mask</b></a> <span class=D>::=                            </span><span class=K>OCTET STRING </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>4</span><span class=D>))</span><p
+> <p
+><span class=C>--- IPv6-маска</span><p
+><a class=EN id=I828 href='./summary.html#I836'><b>IPV6Mask</b></a> <span class=D>::=                            </span><span class=K>OCTET STRING </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>16</span><span class=D>))</span><p
+> <p
+><span class=C>-- Номер телефона VoIP-абонента</span><p
+><a class=EN id=I790 href='./summary.html#I837'><b>DataVoipNumber</b></a> <span class=D>::=                      </span><span class=K>SEQUENCE </span><span class=D>{</span><p
+>   <b class=CI id=I838>original-number</b>                         <span class=K>UTF8String </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>1</span><span class=D>..</span><span class=N>512</span><span class=D>)),                  </span><span class=C>--- исходный номер абонента</span><p
+>   <b class=CI id=I839>translated-number</b>                       <span class=D>[</span><span class=N>0</span><span class=D>] </span><span class=K>UTF8String </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>1</span><span class=D>..</span><span class=N>32</span><span class=D>))           </span><span class=K>OPTIONAL</span><span class=D>,</span><p
+>                                                                                 <span class=C>--- номер абонента после преобразования</span><p
+>   <b class=CI id=I840>e164-number</b>                             <span class=D>[</span><span class=N>1</span><span class=D>] </span><span class=K>UTF8String </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>1</span><span class=D>..</span><span class=N>15</span><span class=D>))           </span><span class=K>OPTIONAL</span><p
+>                                                                                          <span class=C>--- номер абонента в E164-сети</span><p
+><span class=D>}</span><p
+> <p
+><a class=EN id=I792 href='./summary.html#I841'><b>VoipProtocol</b></a> <span class=D>::=                        </span><span class=K>ENUMERATED </span><span class=D>{</span><b class=II id=I842>sip</b> <span class=D>(</span><span class=N>0</span><span class=D>), </span><b class=II id=I843>h323</b> <span class=D>(</span><span class=N>1</span><span class=D>), </span><b class=II id=I844>iax</b> <span class=D>(</span><span class=N>2</span><span class=D>), </span><b class=II id=I845>skype</b> <span class=D>(</span><span class=N>100</span><span class=D>)}</span><p
+> <p
+><a class=EN id=I791 href='./summary.html#I846'><b>IMProtocol</b></a> <span class=D>::=                          </span><span class=K>ENUMERATED </span><span class=D>{ </span><span class=C>--- протокол, при помощи которого отправлены сообщения</span><p
+>                                           <b class=II id=I847>icq</b> <span class=D>(</span><span class=N>0</span><span class=D>), </span><b class=II id=I848>aol</b> <span class=D>(</span><span class=N>1</span><span class=D>), </span><b class=II id=I849>msn</b> <span class=D>(</span><span class=N>2</span><span class=D>), </span><b class=II id=I850>yahoo</b> <span class=D>(</span><span class=N>3</span><span class=D>), </span><b class=II id=I851>web-mail</b> <span class=D>(</span><span class=N>4</span><span class=D>),</span><p
+>                                           <span class=C>--- передача сообщения пользователем посредством почтового веб-сервера</span><p
+>                                           <b class=II id=I852>mms</b> <span class=D>(</span><span class=N>98</span><span class=D>), </span><b class=II id=I853>sms</b> <span class=D>(</span><span class=N>99</span><span class=D>)</span><p
+>                                        <span class=D>}</span><p
+> <p
+><span class=C>--- http метод</span><p
+><a class=EN id=I793 href='./summary.html#I854'><b>HttpMethod</b></a> <span class=D>::=                          </span><span class=K>ENUMERATED </span><span class=D>{</span><b class=II id=I855>get</b> <span class=D>(</span><span class=N>0</span><span class=D>), </span><b class=II id=I856>post</b> <span class=D>(</span><span class=N>1</span><span class=D>), </span><b class=II id=I857>put</b> <span class=D>(</span><span class=N>2</span><span class=D>), </span><b class=II id=I858>delete</b> <span class=D>(</span><span class=N>3</span><span class=D>)}</span><p
+> <p
+><span class=K>END</span></section><div class=footer>HTML generated by OSS Nokalva's ASN1Doc utility</div>
+</body>
+</html>

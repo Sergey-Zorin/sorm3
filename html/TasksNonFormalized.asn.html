@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+<meta charset='utf-8'>
+<title>TasksNonFormalized.asn</title>
+<link rel=stylesheet href='Asn1doc.css' type='text/css'>
+</head>
+<body onload='Init()'><span id=I2295>Schema File <b class=SF>TasksNonFormalized.asn</b></span><section class='asn1 notinteractive'><p
+><a class=MN id=I1517 href='./summary.html#I2296'><b>TasksNonFormalized</b></a> <span class=K>DEFINITIONS IMPLICIT TAGS </span><span class=D>::=</span><p
+><span class=K>BEGIN</span><p
+> <p
+><span class=K>EXPORTS</span><p
+>     <a class=EN href=#I1515>EntityId</a><span class=D>, </span><a class=EN href=#I2126>NonFormalizedTaskRequest</a><span class=D>, </span><span class=E3 title='Error: Invalid reference for symbol &quot;NonFormalizedTaskResponse&quot;: Invalid reference definition.'><a class=EN id=I2297 href=#I2128>NonFormalizedTaskResponse</a></span><span class=D>, </span><a class=EN href=#I1516>NonFormalizedEntityAttributeData</a><span class=D>;</span><p
+> <p
+><span class=K>IMPORTS</span><p
+>     <a class=EN id=I2298 href='./Dictionaries.asn.html#I259'><b>TelcoList</b></a><p
+>          <span class=K>FROM </span><a class=MN href='./Dictionaries.asn.html#I256'>Dictionaries</a><p
+>     <a class=EN id=I2299 href='./Sorm.asn.html#I1669'><b>FindRange</b></a><span class=D>, </span><a class=EN href='./Sorm.asn.html#I931'><b>MessageID</b></a><span class=D>, </span><a class=EN href='./Sorm.asn.html#I264'><b>DateAndTime</b></a><p
+>          <span class=K>FROM </span><a class=MN href='./Sorm.asn.html#I265'>Sorm</a><p
+>     <a class=EN id=I2300 href='./Locations.asn.html#I648'><b>Location</b></a><p
+>          <span class=K>FROM </span><a class=MN href='./Locations.asn.html#I279'>Locations</a><p
+>     <a class=EN id=I2301 href='./Tasks.asn.html#I2102'><b>LogicalOperation</b></a><span class=D>, </span><a class=EN href='./Tasks.asn.html#I2103'><b>CreateTaskResponse</b></a><p
+>          <span class=K>FROM </span><a class=MN href='./Tasks.asn.html#I934'>Tasks</a><span class=D>;</span><p
+> <p
+><span class=C>-- TaskID,</span><p
+><span class=C>-- LogicalOperation;</span><p
+><a class=EN id=I2126 href='./summary.html#I2302'><b>NonFormalizedTaskRequest</b></a> <span class=D>::=            </span><span class=K>CHOICE </span><span class=D>{</span><p
+>   <b class=CI id=I2303>get-entities</b>                            <span class=D>[</span><span class=N>0</span><span class=D>] </span><a class=EN href=#I2304>GetEntities</a><span class=D>,  </span><span class=C>--- тип сообщения "запрос получения списка типов сущностей"</span><p
+>   <b class=CI id=I2305>get-attributes</b>                          <span class=D>[</span><span class=N>1</span><span class=D>] </span><a class=EN href=#I2306>GetEntityAtttibutes</a><span class=D>,</span><p
+>                                                          <span class=C>--- тип сообщения "запрос получения списка атрибутов сущности"</span><p
+>   <b class=CI id=I2307>validate-task</b>                           <span class=D>[</span><span class=N>2</span><span class=D>] </span><a class=EN href=#I2308>ValidateNonFormalizedTask</a><span class=D>,</span><p
+>                                                              <span class=C>--- тип сообщения "задача поиска неформализованных данных"</span><p
+>   <b class=CI id=I2309>validate-presense</b>                       <span class=D>[</span><span class=N>3</span><span class=D>] </span><a class=EN href=#I2310>NonFormalizedPresenseTask</a><p
+>                                   <span class=C>--- тип сообщения "задача предоставления сведений о наличии неформализованных данных"</span><p
+><span class=D>}</span><p
+> <p
+><span class=E3 title='Error: Invalid type assignment for type &quot;NonFormalizedTaskResponse&quot;: Invalid assignment.'><a class=EN id=I2128 href='./summary.html#I2311'><b>NonFormalizedTaskResponse</b></a></span> <span class=D>::=           </span><span class=K>CHOICE </span><span class=D>{</span><p
+>   <b class=CI id=I2312>entities</b>                                <span class=D>[</span><span class=N>0</span><span class=D>] </span><a class=EN href=#I2313>GetEntitiesResponse</a><span class=D>, </span><span class=C>--- ответ на запрос получения списка типов сущностей</span><p
+>   <b class=CI id=I2314>entity-attributes</b>                       <span class=D>[</span><span class=N>1</span><span class=D>] </span><span class=E3 title='Error: Invalid reference error for &apos;GetEntityAtttibutesResponse&apos;: Reference not found.'><span class=EN id=I2315>GetEntityAtttibutesResponse</span></span><span class=D>,</span><p
+>                                                                 <span class=C>--- ответ на запрос получения списка атрибутов сущности</span><p
+>   <b class=CI id=I2316>validate-task</b>                           <span class=D>[</span><span class=N>2</span><span class=D>] </span><a class=EN href=#I2317>ValidateNonFormalizedTaskResponse</a><span class=D>,</span><p
+>                                                            <span class=C>---  ответ  на запрос задачи поиска неформализованных данных</span><p
+>   <b class=CI id=I2318>validate-presense</b>                       <span class=D>[</span><span class=N>3</span><span class=D>] </span><a class=EN href=#I2319>NonFormalizedPresenseTaskResponse</a><p
+>                                    <span class=C>--- ответ на запрос задач предоставления сведений о наличии неформализованных данных</span><p
+><span class=D>}</span><p
+> <p
+><span class=C>--- тип сообщения "запрос получения списка типов сущностей"</span><p
+><a class=EN id=I2304 href='./summary.html#I2320'><b>GetEntities</b></a> <span class=D>::=                         </span><span class=K>NULL</span><p
+> <p
+><span class=C>--- тип сообщения "запрос получения списка атрибутов сущности"</span><p
+><a class=EN id=I2306 href='./summary.html#I2321'><b>GetEntityAtttibutes</b></a> <span class=D>::=                 </span><a class=EN href=#I1515>EntityId</a><p
+> <p
+><span class=C>--- тип сообщения "задача поиск неформализованных данных"</span><p
+><a class=EN id=I2308 href='./summary.html#I2322'><b>ValidateNonFormalizedTask</b></a> <span class=D>::=           </span><span class=K>SEQUENCE </span><span class=D>{</span><p
+>   <b class=CI id=I2323>entity-id</b>                               <a class=EN href=#I1515>EntityId</a><span class=D>,                 </span><span class=C>--- сущность для поиска по неформализованным данным</span><p
+>   <b class=CI id=I2324>parameters</b>                              <a class=EN href=#I2325>NonFormalizedParameters</a><span class=D>,      </span><span class=C>--- критерии поиска по неформализованным данным</span><p
+>   <b class=CI id=I2326>range</b>                                   <a class=EN href='./Sorm.asn.html#I1669'>FindRange</a>                               <span class=K>OPTIONAL</span><span class=D>,</span><p
+>                                                                                           <span class=C>--- временной диапазон поиска</span><p
+>   <b class=CI id=I2327>report-limit</b>                            <span class=K>INTEGER </span><span class=D>(</span><span class=N>1</span><span class=D>..</span><span class=N>10000000</span><span class=D>)                   </span><span class=K>OPTIONAL</span><p
+>                                                         <span class=C>--- ограничение на максимальное количество возвращаемых записей</span><p
+><span class=D>}</span><p
+> <p
+><span class=C>--- тип сообщения "задача предоставления сведений о наличии неформализованных данных"</span><p
+><a class=EN id=I2310 href='./summary.html#I2328'><b>NonFormalizedPresenseTask</b></a> <span class=D>::=           </span><a class=EN href=#I1515>EntityId</a><p
+> <p
+><a class=EN id=I2325 href='./summary.html#I2329'><b>NonFormalizedParameters</b></a> <span class=D>::=             </span><span class=K>SEQUENCE OF </span><a class=EN id=I2330 href=#I2331>NonFormalizedParameter</a><p
+> <p
+><a class=EN id=I2331 href='./summary.html#I2332'><b>NonFormalizedParameter</b></a> <span class=D>::=              </span><span class=K>CHOICE </span><span class=D>{</span><p
+>   <b class=CI id=I2333>separator</b>                               <span class=D>[</span><span class=N>0</span><span class=D>] </span><a class=EN href='./Tasks.asn.html#I2102'>LogicalOperation</a><span class=D>,                   </span><span class=C>--- логическая операция</span><p
+>   <b class=CI id=I2334>find-mask</b>                               <span class=D>[</span><span class=N>1</span><span class=D>] </span><a class=EN href=#I2335>NonFormalizedEntityCondition</a>        <span class=C>--- условие</span><p
+><span class=D>}</span><p
+> <p
+><a class=EN id=I2335 href='./summary.html#I2336'><b>NonFormalizedEntityCondition</b></a> <span class=D>::=        </span><span class=K>SEQUENCE </span><span class=D>{</span><p
+>   <b class=CI id=I2337>attribute</b>                               <a class=EN href=#I2338>NonFormalizedEntityAttribute</a><span class=D>,                </span><span class=C>--- атрибут сущности</span><p
+>   <b class=CI id=I2339>operation</b>                               <a class=EN href=#I2340>MathOperation</a><span class=D>,                               </span><span class=C>--- операция</span><p
+>   <b class=CI id=I2341>attribute-value</b>                         <a class=EN href=#I1516>NonFormalizedEntityAttributeData</a>             <span class=C>--- значение атрибута</span><p
+><span class=D>}</span><p
+> <p
+><a class=EN id=I2338 href='./summary.html#I2342'><b>NonFormalizedEntityAttribute</b></a> <span class=D>::=        </span><span class=K>SEQUENCE </span><span class=D>{</span><p
+>   <b class=CI id=I2343>attribute-name</b>                          <span class=K>UTF8String </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>1</span><span class=D>..</span><span class=N>256</span><span class=D>)),      </span><span class=C>--- текстовое наименование атрибута сущности</span><p
+>   <b class=CI id=I2344>attribute-type</b>                          <a class=EN href=#I2345>AttributeType</a>                                <span class=C>--- тип данных атрибута</span><p
+><span class=D>}</span><p
+> <p
+><a class=EN id=I1516 href='./summary.html#I2346'><b>NonFormalizedEntityAttributeData</b></a> <span class=D>::=    </span><span class=K>CHOICE </span><span class=D>{</span><p
+>   <b class=CI id=I2347>datetime</b>                                <span class=D>[</span><span class=N>0</span><span class=D>] </span><a class=EN href='./Sorm.asn.html#I264'>DateAndTime</a><span class=D>,                       </span><span class=C>--- дата и время с точностью до секунд</span><p
+>   <b class=CI id=I2348>integer</b>                                 <span class=D>[</span><span class=N>1</span><span class=D>] </span><span class=K>INTEGER</span><span class=D>,                            </span><span class=C>--- целочисленный</span><p
+>   <b class=CI id=I2349>string</b>                                  <span class=D>[</span><span class=N>2</span><span class=D>] </span><span class=K>UTF8String</span><span class=D>,                         </span><span class=C>--- строковый</span><p
+>   <b class=CI id=I2350>boolean</b>                                 <span class=D>[</span><span class=N>3</span><span class=D>] </span><span class=K>BOOLEAN</span><span class=D>,                            </span><span class=C>--- булевый</span><p
+>   <b class=CI id=I2351>float</b>                                   <span class=D>[</span><span class=N>4</span><span class=D>] </span><span class=K>REAL</span><span class=D>,                               </span><span class=C>--- с плавающей запятой</span><p
+>   <b class=CI id=I2352>location</b>                                <span class=D>[</span><span class=N>5</span><span class=D>] </span><a class=EN href='./Locations.asn.html#I648'>Location</a><span class=D>,                           </span><span class=C>--- местоположение</span><p
+>   <b class=CI id=I2353>empty</b>                                   <span class=D>[</span><span class=N>6</span><span class=D>] </span><span class=K>NULL                                </span><span class=C>--- пустое значение (null)</span><p
+><span class=D>}</span><p
+> <p
+><span class=C>--- математические операции сравнения</span><p
+><a class=EN id=I2340 href='./summary.html#I2354'><b>MathOperation</b></a> <span class=D>::=                       </span><span class=K>ENUMERATED </span><span class=D>{</span><p
+>                                           <b class=II id=I2355>equal</b> <span class=D>(</span><span class=N>0</span><span class=D>), </span><span class=C>--- равно</span><p
+>                                           <b class=II id=I2356>less</b> <span class=D>(</span><span class=N>1</span><span class=D>), </span><span class=C>--- меньше</span><p
+>                                           <b class=II id=I2357>greater</b> <span class=D>(</span><span class=N>2</span><span class=D>), </span><span class=C>--- больше</span><p
+>                                           <b class=II id=I2358>not-equal</b> <span class=D>(</span><span class=N>3</span><span class=D>), </span><span class=C>--- не равно</span><p
+>                                           <b class=II id=I2359>less-or-equal</b> <span class=D>(</span><span class=N>4</span><span class=D>), </span><span class=C>--- меньше или равно</span><p
+>                                           <b class=II id=I2360>greater-or-equal</b> <span class=D>(</span><span class=N>5</span><span class=D>) </span><span class=C>--- больше или равно</span><p
+>                                        <span class=D>}</span><p
+> <p
+><span class=C>-----------------------------------------------------------</span><p
+><a class=EN id=I2313 href='./summary.html#I2361'><b>GetEntitiesResponse</b></a> <span class=D>::=                 </span><span class=K>SEQUENCE OF </span><a class=EN id=I2362 href=#I2363>NonFormalizedEntity</a><p
+> <p
+><a class=EN id=I2363 href='./summary.html#I2364'><b>NonFormalizedEntity</b></a> <span class=D>::=                 </span><span class=K>SEQUENCE </span><span class=D>{</span><p
+>   <b class=CI id=I2365>entity-id</b>                               <a class=EN href=#I1515>EntityId</a><span class=D>,                               </span><span class=C>--- уникальный идентификатор сущности</span><p
+>   <b class=CI id=I2366>entity-name</b>                             <span class=K>UTF8String </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>1</span><span class=D>..</span><span class=N>256</span><span class=D>))                </span><span class=C>--- текстовое наименование сущности</span><p
+><span class=D>}</span><p
+> <p
+><a class=EN id=I2367 href='./summary.html#I2368'><b>GetEntityAttributesResponse</b></a> <span class=D>::=         </span><span class=K>SEQUENCE </span><span class=D>{</span><p
+>   <b class=CI id=I2369>entity-id</b>                               <a class=EN href=#I1515>EntityId</a><span class=D>,                               </span><span class=C>--- уникальный идентификатор сущности</span><p
+>   <b class=CI id=I2370>entity-attributes</b>                       <span class=K>SEQUENCE OF </span><a class=EN id=I2371 href=#I2338>NonFormalizedEntityAttribute</a>     <span class=C>--- атрибуты сущности</span><p
+><span class=D>}</span><p
+> <p
+><a class=EN id=I2317 href='./summary.html#I2372'><b>ValidateNonFormalizedTaskResponse</b></a> <span class=D>::=   </span><a class=EN href='./Tasks.asn.html#I2103'>CreateTaskResponse</a><p
+> <p
+><a class=EN id=I2319 href='./summary.html#I2373'><b>NonFormalizedPresenseTaskResponse</b></a> <span class=D>::=   </span><a class=EN href='./Tasks.asn.html#I2103'>CreateTaskResponse</a><p
+> <p
+><span class=C>-----------------------------------------------------------</span><p
+><span class=C>--- типы данных атрибутов</span><p
+><a class=EN id=I2345 href='./summary.html#I2374'><b>AttributeType</b></a> <span class=D>::=                       </span><span class=K>ENUMERATED </span><span class=D>{</span><p
+>                                           <b class=II id=I2375>date-time</b> <span class=D>(</span><span class=N>0</span><span class=D>), </span><span class=C>--- дата и время с точностью до секунд</span><p
+>                                           <b class=II id=I2376>integer</b> <span class=D>(</span><span class=N>1</span><span class=D>), </span><span class=C>--- целочисленный</span><p
+>                                           <b class=II id=I2377>string</b> <span class=D>(</span><span class=N>2</span><span class=D>), </span><span class=C>--- строковый</span><p
+>                                           <b class=II id=I2378>boolean</b> <span class=D>(</span><span class=N>3</span><span class=D>), </span><span class=C>--- булевый</span><p
+>                                           <b class=II id=I2379>float</b> <span class=D>(</span><span class=N>4</span><span class=D>), </span><span class=C>--- с плавающей запятой</span><p
+>                                           <b class=II id=I2380>location</b> <span class=D>(</span><span class=N>5</span><span class=D>), </span><span class=C>--- местоположение</span><p
+>                                           <b class=II id=I2381>empty</b> <span class=D>(</span><span class=N>6</span><span class=D>) </span><span class=C>--- пустое значение</span><p
+>                                        <span class=D>}</span><p
+> <p
+><span class=C>--- Идентификатор сущности</span><p
+><a class=EN id=I1515 href='./summary.html#I2382'><b>EntityId</b></a> <span class=D>::=                            </span><span class=K>INTEGER </span><span class=D>(</span><span class=N>0</span><span class=D>..</span><span class=N>4294967296</span><span class=D>)</span><p
+> <p
+><span class=K>END</span></section><div class=footer>HTML generated by OSS Nokalva's ASN1Doc utility</div>
+</body>
+</html>

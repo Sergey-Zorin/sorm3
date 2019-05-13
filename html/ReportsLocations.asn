@@ -1,0 +1,27 @@
+ReportsLocations DEFINITIONS IMPLICIT TAGS ::=
+BEGIN
+
+EXPORTS LocationReport;
+
+IMPORTS DateAndTime
+    FROM Sorm
+
+       TelcoID
+    FROM Dictionaries
+
+       Location
+    FROM Locations
+
+       ReportedIdentifier
+    FROM ReportedIdentifiers;
+
+LocationReport ::= SEQUENCE OF ValidateLocationRecord
+
+ValidateLocationRecord ::= SEQUENCE {
+ telco-id            TelcoID,            --- идентификатор оператора связи структурного подразделения
+ connection-time     DateAndTime,        --- время определения местоположения
+ ident               ReportedIdentifier, --- идентификатор мобильного абонента
+ connection-location Location            --- местоположение мобильного абонента
+}
+
+END

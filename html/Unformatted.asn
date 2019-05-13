@@ -1,0 +1,101 @@
+Unformatted DEFINITIONS IMPLICIT TAGS ::=
+
+BEGIN
+
+EXPORTS unformattedMessage;
+
+IMPORTS TAGGED,
+      sorm-message-unformatted
+  FROM Classification
+
+      TelcoList
+  FROM Dictionaries
+
+      Acknowledgement
+  FROM Reports
+
+      CallsRecords
+  FROM ReportsConnections
+
+      DateAndTime,
+      MessageID
+  FROM Sorm;
+
+unformattedMessage TAGGED ::= {
+  OID { sorm-message-unformatted }
+  DATA CHOICE {
+       request [0]    RawRequest,
+       response [1]   RawResponse,
+       report [2]     RawReport,
+       report-ack [3] RawAcknowledgement
+  }
+}
+
+RawRequest ::= SEQUENCE {
+ telcos          TelcoList,      --- список операторов связи
+ raw-task        RawRequestTask  --- запрос получения неформатированных данных
+}
+
+RawRequestTask ::= CHOICE {
+ data-types-request [0] DataTypesRequest, --- запрос проверки наличия вида неформатированных данных в ИС СОРМ
+ data-start-request [1] DataStartRequest, --- запрос на начало передачи неформатированных данных
+ data-stop-request [2]  DataStopRequest   --- запрос на остановку передачи неформатированных данных
+}
+
+--- типы данных, передаваемых ИС СОРМ
+RawDataType ::= ENUMERATED {
+ data-reports (0),      --- записи о соединениях в формате сообщений кпд2
+ raw-cdr (1)            --- "сырые" CDR-файлы
+}
+
+ControlCommandType ::= ENUMERATED {
+ start (0),             --- команда начала передачи ИС СОРМ данных
+ stop (1)               --- команда прерывания передачи ИС СОРМ данных
+}
+
+DataTypesRequest ::= RawDataType
+
+DataStartRequest ::=  SEQUENCE {
+ time-from         DateAndTime,  --- начало временного периода в буфере, с которого необходимо получить данные
+ time-to           DateAndTime,  --- конец временного периода в буфере, с которого необходимо получить данные
+ raw-type          RawDataType   --- тип неформатированных данных передачи
+}
+
+DataStopRequest ::= NULL
+
+RawResponse ::= CHOICE {
+ data-types-response [0] DataTypesResponse, --- ответ на запрос проверки наличия неформатированных вида данных в ИС СОРМ
+ data-start-response [1] DataStartResponse, --- ответ на запрос начала передачи неформатированных данных
+ data-stop-response [2]  DataStopResponse   --- ответ на запрос остановки передачи неформатированных данных
+}
+
+DataTypesResponse ::= SEQUENCE {
+ successful     BOOLEAN,       --- признак наличия в ИС СОРМ запрошенного вида неформатированных данных
+ selected-type  RawDataType,   --- выбранный вид данных для передачи
+ time-from      DateAndTime,   --- начало временного периода в буфере, начиная с которого накоплены данные
+ time-to        DateAndTime    --- конец временного периода в буфере, по которому накоплены данные
+}
+
+DataStartResponse::= BOOLEAN            --- признак успешности выполнения команды
+DataStopResponse ::= BOOLEAN            --- признак успешности выполнения команды
+
+RawReport ::= SEQUENCE {
+ request-id            MessageID,                        --- идентификатор запроса
+ stream-id             UTF8String (SIZE (1..256)),       --- идентификатор потока в сессии
+ total-blocks-number   INTEGER (0..999999999999),        --- общее количество блоков в отчете
+ block-number          INTEGER (1..1000000000000),       --- порядковый номер текущего блока
+ report-block          RawDataBlock                      --- блок данных отчета
+}
+
+RawDataBlock ::= CHOICE {
+ reports [0]     CallsRecords,                           --- записи отчетов о соединениях в формате КПД
+ raw-cdr [1]     RawBytesBlock
+}
+
+RawBytesBlock::= SEQUENCE OF RawBytes
+RawBytes ::= OCTET STRING (SIZE (1..4096))
+
+RawAcknowledgement ::= Acknowledgement
+
+END
+

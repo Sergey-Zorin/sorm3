@@ -1,0 +1,251 @@
+Classification DEFINITIONS IMPLICIT TAGS ::=
+BEGIN
+EXPORTS TAGGED,
+      sorm-message-session,
+      sorm-message-trap,
+      sorm-message-task,
+      sorm-message-report,
+      sorm-message-management,
+      sorm-message-unformatted,
+      sorm-message-filter,
+
+      sorm-request-identifier-pager,
+      sorm-request-identifier-pstn,
+      sorm-request-identifier-gsm,
+      sorm-request-identifier-cdma,
+      sorm-request-identifier-data-network,
+      sorm-request-identifier-voip,
+
+      sorm-report-identifier-pager,
+      sorm-report-identifier-pstn,
+      sorm-report-identifier-gsm,
+      sorm-report-identifier-cdma,
+      sorm-report-identifier-data-network,
+      sorm-report-identifier-voip,
+
+      sorm-request-payment-bank-transaction,
+      sorm-request-payment-express-pays,
+      sorm-request-payment-terminal-pays,
+      sorm-request-payment-service-center,
+      sorm-request-payment-cross-account,
+      sorm-request-payment-telephone-card,
+      sorm-request-payment-balance-fillups,
+      sorm-request-payment-bank-division-transfer,
+      sorm-request-payment-bank-card-transfer,
+      sorm-request-payment-bank-account-transfer,
+
+      sorm-report-payment-bank-transaction,
+      sorm-report-payment-express-pays,
+      sorm-report-payment-terminal-pays,
+      sorm-report-payment-service-center,
+      sorm-report-payment-cross-account,
+      sorm-report-payment-telephone-card,
+      sorm-report-payment-balance-fillups,
+      sorm-report-payment-bank-division-transfer,
+      sorm-report-payment-bank-card-transfer,
+      sorm-report-payment-bank-account-transfer,
+
+      sorm-request-connection-pager,
+      sorm-request-connection-pstn,
+      sorm-request-connection-mobile,
+      sorm-request-connection-aaa-login,
+      sorm-request-connection-resource,
+      sorm-request-connection-email,
+      sorm-request-connection-im,
+      sorm-request-connection-voip,
+      sorm-request-connection-file-transfer,
+      sorm-request-connection-term-access,
+      sorm-request-connection-raw-flows,
+      sorm-request-connection-entrance,
+      sorm-request-connection-address-translations,
+
+      sorm-report-connection-pager,
+      sorm-report-connection-pstn,
+      sorm-report-connection-mobile,
+      sorm-report-connection-ipdr-header,
+      sorm-report-connection-aaa-login,
+      sorm-report-connection-resource,
+      sorm-report-connection-email,
+      sorm-report-connection-im,
+      sorm-report-connection-voip,
+      sorm-report-connection-file-transfer,
+      sorm-report-connection-term-access,
+      sorm-report-connection-raw-flows,
+      sorm-report-connection-address-translations,
+
+      sorm-request-dictionaries,
+      sorm-report-dictionary-bunches,
+      sorm-report-dictionary-basic-stations,
+      sorm-report-dictionary-roaming-partners,
+      sorm-report-dictionary-switches,
+      sorm-report-dictionary-gates,
+      sorm-report-dictionary-call-types,
+      sorm-report-dictionary-supplement-services,
+      sorm-report-dictionary-pay-types,
+      sorm-report-dictionary-termination-causes,
+      sorm-report-dictionary-ip-numbering-plan,
+      sorm-report-dictionary-phone-numbering-plan,
+      sorm-report-dictionary-doc-types,
+      sorm-report-dictionary-telcos,
+      sorm-report-dictionary-ip-data-points,
+      sorm-report-dictionary-special-numbers,
+      sorm-report-dictionary-bunches-map,
+      sorm-report-dictionary-mobile-subscriber-identity-plan,
+      sorm-report-dictionary-signal-point-codes,
+      sorm-request-presense,
+      sorm-report-presense-abonents,
+      sorm-report-presense-connections,
+      sorm-report-presense-payments,
+      sorm-report-presense-dictionaries,
+      sorm-report-presense-locations,
+
+      sorm-request-abonent-person,
+      sorm-request-abonent-organization,
+
+      sorm-report-abonent-abonent,
+      sorm-report-abonent-service,
+      sorm-report-abonent-person,
+      sorm-report-abonent-organization,
+
+    sorm-report-data-content-raw;
+
+TAGGED ::= CLASS{
+  &id ObjectDescriptor UNIQUE,
+  &Data
+}
+WITH SYNTAX{
+  OID &id
+  DATA &Data
+}
+
+--- Классификация
+
+OID ::=  ObjectDescriptor
+
+-- Подструктура сообщений
+sorm-message-session OID ::= "280"
+sorm-message-trap OID ::= "281"
+sorm-message-task OID ::= "282"
+sorm-message-report OID ::= "283"
+sorm-message-management OID ::= "284"
+sorm-message-unformatted OID ::= "285"
+sorm-message-filter OID ::= "286"
+
+-- Идентификаторы
+sorm-request-identifier-pager OID ::= "140"
+sorm-request-identifier-pstn OID ::= "141"
+sorm-request-identifier-gsm OID ::= "142"
+sorm-request-identifier-cdma OID ::= "143"
+sorm-request-identifier-data-network OID ::= "144"
+sorm-request-identifier-voip OID ::= "145"
+
+sorm-report-identifier-pager OID ::= "1"
+sorm-report-identifier-pstn OID ::= "2"
+sorm-report-identifier-gsm OID ::= "3"
+sorm-report-identifier-cdma OID ::= "4"
+sorm-report-identifier-data-network OID ::= "5"
+sorm-report-identifier-voip OID ::= "6"
+
+-- Параметры соединений
+sorm-request-connection-pager OID ::= "160"
+sorm-request-connection-pstn OID ::= "161"
+sorm-request-connection-mobile OID ::= "162"
+sorm-request-connection-aaa-login OID ::= "164"
+sorm-request-connection-resource OID ::= "165"
+sorm-request-connection-email OID ::= "166"
+sorm-request-connection-im OID ::= "167"
+sorm-request-connection-voip OID ::= "168"
+sorm-request-connection-file-transfer OID ::= "169"
+sorm-request-connection-term-access OID ::= "170"
+sorm-request-connection-raw-flows OID ::= "171"
+sorm-request-connection-entrance OID ::= "172"
+sorm-request-connection-address-translations OID ::= "173"
+
+sorm-report-connection-pager OID ::= "20"
+sorm-report-connection-pstn OID ::= "21"
+sorm-report-connection-mobile OID ::= "22"
+sorm-report-connection-ipdr-header OID ::= "23"
+sorm-report-connection-aaa-login OID ::= "24"
+sorm-report-connection-resource OID ::= "25"
+sorm-report-connection-email OID ::= "26"
+sorm-report-connection-im OID ::= "27"
+sorm-report-connection-voip OID ::= "28"
+sorm-report-connection-file-transfer OID ::= "29"
+sorm-report-connection-term-access OID ::= "30"
+sorm-report-connection-raw-flows OID ::= "31"
+sorm-report-connection-address-translations OID ::= "32"
+
+-- Абоненты
+sorm-request-abonent-person OID ::= "180"
+sorm-request-abonent-organization OID ::= "181"
+
+sorm-report-abonent-abonent OID ::= "40"
+sorm-report-abonent-service OID ::= "41"
+sorm-report-abonent-person OID ::= "42"
+sorm-report-abonent-organization OID ::= "43"
+
+-- Местоположение
+sorm-request-location OID ::= "200"
+
+sorm-report-location-mobile OID ::= "60"
+sorm-report-location-wireless OID ::= "61"
+sorm-report-location-geo OID ::= "62"
+
+-- Платежи
+sorm-request-payment-bank-transaction OID ::= "220"
+sorm-request-payment-express-pays OID ::= "221"
+sorm-request-payment-terminal-pays OID ::= "222"
+sorm-request-payment-service-center OID ::= "223"
+sorm-request-payment-cross-account OID ::= "224"
+sorm-request-payment-telephone-card OID ::= "225"
+sorm-request-payment-balance-fillups OID ::= "226"
+sorm-request-payment-bank-division-transfer OID ::= "227"
+sorm-request-payment-bank-card-transfer OID ::= "228"
+sorm-request-payment-bank-account-transfer OID ::= "229"
+
+sorm-report-payment-bank-transaction OID ::= "80"
+sorm-report-payment-express-pays OID ::= "81"
+sorm-report-payment-terminal-pays OID ::= "82"
+sorm-report-payment-service-center OID ::= "83"
+sorm-report-payment-cross-account OID ::= "84"
+sorm-report-payment-telephone-card OID ::= "85"
+sorm-report-payment-balance-fillups OID ::= "86"
+sorm-report-payment-bank-division-transfer OID ::= "87"
+sorm-report-payment-bank-card-transfer OID ::= "88"
+sorm-report-payment-bank-account-transfer OID ::= "89"
+
+-- Справочники
+sorm-request-dictionaries OID ::= "240"
+
+sorm-report-dictionary-bunches OID ::= "100"
+sorm-report-dictionary-basic-stations OID ::= "101"
+sorm-report-dictionary-roaming-partners OID ::= "102"
+sorm-report-dictionary-switches OID ::= "103"
+sorm-report-dictionary-gates OID ::= "104"
+sorm-report-dictionary-call-types OID ::= "105"
+sorm-report-dictionary-supplement-services OID ::= "106"
+sorm-report-dictionary-pay-types OID ::= "107"
+sorm-report-dictionary-termination-causes OID ::= "108"
+sorm-report-dictionary-ip-numbering-plan OID ::= "109"
+sorm-report-dictionary-phone-numbering-plan OID ::= "110"
+sorm-report-dictionary-doc-types OID ::= "111"
+sorm-report-dictionary-telcos OID ::= "112"
+sorm-report-dictionary-ip-data-points OID ::= "113"
+sorm-report-dictionary-special-numbers OID ::= "114"
+sorm-report-dictionary-bunches-map OID ::= "115"
+sorm-report-dictionary-mobile-subscriber-identity-plan OID ::= "116"
+sorm-report-dictionary-signal-point-codes OID::= "132"
+
+-- Запрос о наличии данных
+sorm-request-presense OID ::= "260"
+
+sorm-report-presense-abonents OID ::= "120"
+sorm-report-presense-connections OID ::= "121"
+sorm-report-presense-payments OID ::= "122"
+sorm-report-presense-dictionaries OID ::= "123"
+sorm-report-presense-locations OID ::= "124"
+
+-- Запрос о содержимом потоков
+sorm-report-data-content-raw OID ::= "50"
+
+END

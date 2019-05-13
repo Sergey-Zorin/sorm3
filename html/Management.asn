@@ -1,0 +1,148 @@
+Management DEFINITIONS IMPLICIT TAGS ::=
+BEGIN
+
+EXPORTS managementMessage;
+
+IMPORTS TAGGED,
+    sorm-message-management
+    FROM Classification;
+
+managementMessage TAGGED ::= {
+  OID { sorm-message-management }
+  DATA CHOICE {
+   request [0]  ManagementRequest,
+   response [1] ManagementResponse
+  }
+}
+
+--- тип сообщения "команда управления ИС СОРМ"
+ManagementRequest ::= CHOICE {
+ get-structure [0]     GetStructureRequest,     --- запрос на получение структуры ИС СОРМ - КТС и модулей СПО
+ get-module-config [1] GetModuleConfigRequest,  --- запрос на получение конфигурации КТС/модуля СПО
+ set-module-config [2] SetModuleConfigRequest,  --- запрос на изменение конфигурации КТС/модуля СПО
+ check-module [3]      CheckModuleRequest,      --- запрос на получение состояния модуля
+ get-module-types [4]  GetModuleTypesRequest    --- запрос на получение типов модулей КТС и СПО
+}
+
+--- запрос на получение структуры ИС СОРМ - КТС и модулей СПО
+GetStructureRequest ::= NULL
+
+--- запрос на получение конфигурации КТС/модуля СПО
+GetModuleConfigRequest::= CHOICE {
+ hw-modules-list [0]   RequestedHardwareModules,     --- перечень идентификаторов узлов КТС ИС СОРМ
+ sw-modules-list [1]   RequestedSoftwareModules      --- перечень идентификаторов модулей СПО ИС СОРМ
+}
+
+RequestedHardwareModules ::= SEQUENCE OF ModuleId --- перечень идентификаторов узлов КТС ИС СОРМ
+RequestedSoftwareModules ::= SEQUENCE OF ModuleId --- перечень идентификаторов модулей СПО ИС СОРМ
+
+--- запрос на изменение конфигурации КТС/модуля СПО
+SetModuleConfigRequest::= SEQUENCE {
+ module-id     ModuleId,                          --- идентификатор конфигурируемого модуля
+ module-config ConfiguratedModule                 --- устанавливаемая в модуль конфигурация
+}
+
+ConfiguratedModule ::= CHOICE {
+ sw-module [0] SormSoftwareModule,                --- для узла КТС
+ hw-module [1] SormHardwareModule                 --- для узла СПО
+}
+
+--- запрос на получение состояния модуля
+CheckModuleRequest::= RequestedModulesList
+
+RequestedModulesList ::= CHOICE {
+ hw-modules [0] RequestedHardwareModules, --- идентификаторы узлов КТС, для которых запрашивается состояние
+ sw-modules [1] RequestedSoftwareModules --- идентификаторы модулей ИС СОРМ, для которых запрашивается состояние
+}
+
+--- запрос на получение типов модулей КТС и СПО
+GetModuleTypesRequest ::= NULL
+
+--- уникальный идентификатор КТС/модуля СПО ИС СОРМ
+ModuleId ::= OCTET STRING (SIZE (8))
+
+--- параметр модуля
+ModuleParameter ::= SEQUENCE {
+ parameter-name UTF8String (SIZE (1 .. 256)),     --- наименование параметра
+ read-only      BOOLEAN,                          --- контролируемый или измеряемый параметр
+ parameter-value ParameterValue                   --- значение параметра
+}
+
+--- варианты значений параметров
+ParameterValue ::= CHOICE {
+ string [0]      UTF8String (SIZE (1 .. 256)),
+ integer [1]     INTEGER (0 .. 999999999),
+ boolean [2]     BOOLEAN
+}
+
+ModuleParameters ::= SEQUENCE OF ModuleParameter
+
+SormSoftwareModule ::= SEQUENCE {
+ module-id             ModuleId,          --- уникальный идентификатор данного модуля
+ hardware-module-id    ModuleId,          --- идентификатор КТС, на котором работает данный блок модуля СПО
+ block-name            INTEGER (0 .. 1024),          --- номер блока СПО модуля
+ module-name           UTF8String (SIZE (1 .. 512)), --- наименование модуля
+ module-type           INTEGER (1 .. 512),           --- идентификатор типа модуля
+ module-parameters     ModuleParameters,             --- список параметров модуля
+ sub-modules-list      SubmodulesList OPTIONAL       --- субмодули
+}
+
+SubmodulesList ::= SEQUENCE OF SormSoftwareModule
+
+SormHardwareModule ::= SEQUENCE {
+ module-id             ModuleId,                     --- уникальный идентификатор данного модуля
+ block-name            INTEGER (0 .. 1024),          --- номер блока КТС
+ module-name           UTF8String (SIZE (1 .. 512)), --- наименование модуля
+ module-parameters     HwParameterGroups             --- значение группы параметров КТС
+}
+
+HwParameterGroup ::= SEQUENCE {
+ group-name            UTF8String (SIZE (1 .. 512)), --- наименование группы параметров для КТС
+ module-parameters     ModuleParameters              --- перечень параметров для КТС
+}
+
+HwParameterGroups ::= SEQUENCE OF HwParameterGroup
+
+SormSoftwareModules ::= SEQUENCE OF SormSoftwareModule
+
+SormHardwareModules ::= SEQUENCE OF SormHardwareModule
+
+--- тип сообщения "ответ на команду управления ИС СОРМ"
+ManagementResponse ::= CHOICE {
+ get-structure [0]     GetStructureResponse,         --- ответ на запрос получения структуры ИС СОРМ - КТС и модулей СПО
+ get-module-config [1] GetModuleConfigResponse,      --- ответ на запрос получения конфигурации КТС/модуля СПО
+ set-module-config [2] SetModuleConfigResponse,      --- ответ на запрос изменения конфигурации КТС/модуля СПО
+ check-module [3]      CheckModuleResponse,          --- ответ на запрос получения состояния модуля
+ get-module-types [4]  GetModuleTypesResponse        --- ответ на запрос получения типов модулей КТС и СПО
+}
+
+--- ответ на запрос получения структуры ИС СОРМ - КТС и модулей СПО
+GetStructureResponse ::= SEQUENCE {
+ sw-modules     SormHardwareModules,                 --- перечень всех узлов КТС
+ hw-modules     SormSoftwareModules                  --- перечень всех модулей СПО ИС СОРМ
+}
+
+--- ответ на запрос получения конфигурации КТС/модуля СПО
+GetModuleConfigResponse ::= SEQUENCE {
+ hw-modules        SormHardwareModules,              --- конфигурации запрошенных узлов КТС
+ sw-modules        SormSoftwareModules               --- конфигурации запрошенных модулей СПО ИС СОРМ
+}
+
+--- отчет на запрос изменения конфигурации КТС/модуля СПО
+SetModuleConfigResponse::= ConfiguratedModule        --- установленная в модуль конфигурация
+
+--- ответ на запрос получения состояния модуля
+CheckModuleResponse ::= CHOICE {
+ hw-modules [0] SormHardwareModules,                 --- текущее состояние запрошенных модулей СПО ИС СОРМ
+ sw-modules [1] SormSoftwareModules                  --- текущее состояние запрошенных узлов КТС
+}
+
+--- ответ на запрос получения типов модулей КТС и СПО
+GetModuleTypesResponse ::= SEQUENCE OF ModuleType
+
+ModuleType ::= SEQUENCE {
+ module-type      INTEGER (1 .. 512),                --- идентификатор типа модуля
+ type-description UTF8String ( SIZE (1 .. 128))      --- расшифровка типа модуля
+}
+
+END

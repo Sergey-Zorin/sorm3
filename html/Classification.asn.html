@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+<meta charset='utf-8'>
+<title>Classification.asn</title>
+<link rel=stylesheet href='Asn1doc.css' type='text/css'>
+</head>
+<body onload='Init()'><span id=I44>Schema File <b class=SF>Classification.asn</b></span><section class='asn1 notinteractive'><p
+><a class=MN id=I45 href='./summary.html#I46'><b>Classification</b></a> <span class=K>DEFINITIONS IMPLICIT TAGS </span><span class=D>::=</span><p
+><span class=K>BEGIN</span><p
+> <p
+><span class=K>EXPORTS</span><p
+>     <a class=EN href=#I47>TAGGED</a><span class=D>, </span><a class=EN href=#I48>sorm-message-session</a><span class=D>, </span><a class=EN href=#I49>sorm-message-trap</a><span class=D>, </span><a class=EN href=#I50>sorm-message-task</a><span class=D>, </span><a class=EN href=#I51>sorm-message-report</a><span class=D>, </span><a class=EN href=#I52>sorm-message-management</a><span class=D>,</span><p
+>     <a class=EN href=#I53>sorm-message-unformatted</a><span class=D>, </span><a class=EN href=#I54>sorm-message-filter</a><span class=D>, </span><a class=EN href=#I55>sorm-request-identifier-pager</a><span class=D>, </span><a class=EN href=#I56>sorm-request-identifier-pstn</a><span class=D>,</span><p
+>     <a class=EN href=#I57>sorm-request-identifier-gsm</a><span class=D>, </span><a class=EN href=#I58>sorm-request-identifier-cdma</a><span class=D>, </span><a class=EN href=#I59>sorm-request-identifier-data-network</a><span class=D>,</span><p
+>     <a class=EN href=#I60>sorm-request-identifier-voip</a><span class=D>, </span><a class=EN href=#I61>sorm-report-identifier-pager</a><span class=D>, </span><a class=EN href=#I62>sorm-report-identifier-pstn</a><span class=D>,</span><p
+>     <a class=EN href=#I63>sorm-report-identifier-gsm</a><span class=D>, </span><a class=EN href=#I64>sorm-report-identifier-cdma</a><span class=D>, </span><a class=EN href=#I65>sorm-report-identifier-data-network</a><span class=D>,</span><p
+>     <a class=EN href=#I66>sorm-report-identifier-voip</a><span class=D>, </span><a class=EN href=#I67>sorm-request-payment-bank-transaction</a><span class=D>, </span><a class=EN href=#I68>sorm-request-payment-express-pays</a><span class=D>,</span><p
+>     <a class=EN href=#I69>sorm-request-payment-terminal-pays</a><span class=D>, </span><a class=EN href=#I70>sorm-request-payment-service-center</a><span class=D>, </span><a class=EN href=#I71>sorm-request-payment-cross-account</a><span class=D>,</span><p
+>     <a class=EN href=#I72>sorm-request-payment-telephone-card</a><span class=D>, </span><a class=EN href=#I73>sorm-request-payment-balance-fillups</a><span class=D>,</span><p
+>     <a class=EN href=#I74>sorm-request-payment-bank-division-transfer</a><span class=D>, </span><a class=EN href=#I75>sorm-request-payment-bank-card-transfer</a><span class=D>,</span><p
+>     <a class=EN href=#I76>sorm-request-payment-bank-account-transfer</a><span class=D>, </span><a class=EN href=#I77>sorm-report-payment-bank-transaction</a><span class=D>, </span><a class=EN href=#I78>sorm-report-payment-express-pays</a><span class=D>,</span><p
+>     <a class=EN href=#I79>sorm-report-payment-terminal-pays</a><span class=D>, </span><a class=EN href=#I80>sorm-report-payment-service-center</a><span class=D>, </span><a class=EN href=#I81>sorm-report-payment-cross-account</a><span class=D>,</span><p
+>     <a class=EN href=#I82>sorm-report-payment-telephone-card</a><span class=D>, </span><a class=EN href=#I83>sorm-report-payment-balance-fillups</a><span class=D>,</span><p
+>     <a class=EN href=#I84>sorm-report-payment-bank-division-transfer</a><span class=D>, </span><a class=EN href=#I85>sorm-report-payment-bank-card-transfer</a><span class=D>,</span><p
+>     <a class=EN href=#I86>sorm-report-payment-bank-account-transfer</a><span class=D>, </span><a class=EN href=#I87>sorm-request-connection-pager</a><span class=D>, </span><a class=EN href=#I88>sorm-request-connection-pstn</a><span class=D>,</span><p
+>     <a class=EN href=#I89>sorm-request-connection-mobile</a><span class=D>, </span><a class=EN href=#I90>sorm-request-connection-aaa-login</a><span class=D>, </span><a class=EN href=#I91>sorm-request-connection-resource</a><span class=D>,</span><p
+>     <a class=EN href=#I92>sorm-request-connection-email</a><span class=D>, </span><a class=EN href=#I93>sorm-request-connection-im</a><span class=D>, </span><a class=EN href=#I94>sorm-request-connection-voip</a><span class=D>,</span><p
+>     <a class=EN href=#I95>sorm-request-connection-file-transfer</a><span class=D>, </span><a class=EN href=#I96>sorm-request-connection-term-access</a><span class=D>, </span><a class=EN href=#I97>sorm-request-connection-raw-flows</a><span class=D>,</span><p
+>     <a class=EN href=#I98>sorm-request-connection-entrance</a><span class=D>, </span><a class=EN href=#I99>sorm-request-connection-address-translations</a><span class=D>, </span><a class=EN href=#I100>sorm-report-connection-pager</a><span class=D>,</span><p
+>     <a class=EN href=#I101>sorm-report-connection-pstn</a><span class=D>, </span><a class=EN href=#I102>sorm-report-connection-mobile</a><span class=D>, </span><a class=EN href=#I103>sorm-report-connection-ipdr-header</a><span class=D>,</span><p
+>     <a class=EN href=#I104>sorm-report-connection-aaa-login</a><span class=D>, </span><a class=EN href=#I105>sorm-report-connection-resource</a><span class=D>, </span><a class=EN href=#I106>sorm-report-connection-email</a><span class=D>,</span><p
+>     <a class=EN href=#I107>sorm-report-connection-im</a><span class=D>, </span><a class=EN href=#I108>sorm-report-connection-voip</a><span class=D>, </span><a class=EN href=#I109>sorm-report-connection-file-transfer</a><span class=D>,</span><p
+>     <a class=EN href=#I110>sorm-report-connection-term-access</a><span class=D>, </span><a class=EN href=#I111>sorm-report-connection-raw-flows</a><span class=D>, </span><a class=EN href=#I112>sorm-report-connection-address-translations</a><span class=D>,</span><p
+>     <a class=EN href=#I113>sorm-request-dictionaries</a><span class=D>, </span><a class=EN href=#I114>sorm-report-dictionary-bunches</a><span class=D>, </span><a class=EN href=#I115>sorm-report-dictionary-basic-stations</a><span class=D>,</span><p
+>     <a class=EN href=#I116>sorm-report-dictionary-roaming-partners</a><span class=D>, </span><a class=EN href=#I117>sorm-report-dictionary-switches</a><span class=D>, </span><a class=EN href=#I118>sorm-report-dictionary-gates</a><span class=D>,</span><p
+>     <a class=EN href=#I119>sorm-report-dictionary-call-types</a><span class=D>, </span><a class=EN href=#I120>sorm-report-dictionary-supplement-services</a><span class=D>, </span><a class=EN href=#I121>sorm-report-dictionary-pay-types</a><span class=D>,</span><p
+>     <a class=EN href=#I122>sorm-report-dictionary-termination-causes</a><span class=D>, </span><a class=EN href=#I123>sorm-report-dictionary-ip-numbering-plan</a><span class=D>,</span><p
+>     <a class=EN href=#I124>sorm-report-dictionary-phone-numbering-plan</a><span class=D>, </span><a class=EN href=#I125>sorm-report-dictionary-doc-types</a><span class=D>, </span><a class=EN href=#I126>sorm-report-dictionary-telcos</a><span class=D>,</span><p
+>     <a class=EN href=#I127>sorm-report-dictionary-ip-data-points</a><span class=D>, </span><a class=EN href=#I128>sorm-report-dictionary-special-numbers</a><span class=D>, </span><a class=EN href=#I129>sorm-report-dictionary-bunches-map</a><span class=D>,</span><p
+>     <a class=EN href=#I130>sorm-report-dictionary-mobile-subscriber-identity-plan</a><span class=D>, </span><a class=EN href=#I131>sorm-report-dictionary-signal-point-codes</a><span class=D>,</span><p
+>     <a class=EN href=#I132>sorm-request-presense</a><span class=D>, </span><a class=EN href=#I133>sorm-report-presense-abonents</a><span class=D>, </span><a class=EN href=#I134>sorm-report-presense-connections</a><span class=D>,</span><p
+>     <a class=EN href=#I135>sorm-report-presense-payments</a><span class=D>, </span><a class=EN href=#I136>sorm-report-presense-dictionaries</a><span class=D>, </span><a class=EN href=#I137>sorm-report-presense-locations</a><span class=D>,</span><p
+>     <a class=EN href=#I138>sorm-request-abonent-person</a><span class=D>, </span><a class=EN href=#I139>sorm-request-abonent-organization</a><span class=D>, </span><a class=EN href=#I140>sorm-report-abonent-abonent</a><span class=D>,</span><p
+>     <a class=EN href=#I141>sorm-report-abonent-service</a><span class=D>, </span><a class=EN href=#I142>sorm-report-abonent-person</a><span class=D>, </span><a class=EN href=#I143>sorm-report-abonent-organization</a><span class=D>,</span><p
+>     <a class=EN href=#I144>sorm-report-data-content-raw</a><span class=D>;</span><p
+> <p
+><a class=EN id=I47 href='./summary.html#I145'><b>TAGGED</b></a> <span class=D>::=                              </span><span class=K>CLASS </span><span class=D>{</span><p
+>   <b class=FN id=I146>&amp;id</b>                                     <span class=K>ObjectDescriptor UNIQUE</span><span class=D>,</span><p
+>   <b class=FN id=I147>&amp;Data</b><p
+><span class=D>}</span><p
+><span class=K>WITH SYNTAX </span><span class=D>{</span><p
+>   <span class=W>OID </span><a class=FN href=#I146>&amp;id</a> <span class=W>DATA </span><a class=FN href=#I147>&amp;Data</a><p
+><span class=D>}</span><p
+> <p
+><span class=C>--- Классификация</span><p
+><a class=EN id=I148 href='./summary.html#I149'><b>OID</b></a> <span class=D>::=                                 </span><span class=K>ObjectDescriptor</span><p
+> <p
+><span class=C>-- Подструктура сообщений</span><p
+><a class=EN id=I48 href='./summary.html#I150'><b>sorm-message-session</b></a>                    <a class=EN href=#I148>OID</a> <span class=D>::= </span><span class=S>"280"</span><p
+> <p
+><a class=EN id=I49 href='./summary.html#I151'><b>sorm-message-trap</b></a>                       <a class=EN href=#I148>OID</a> <span class=D>::= </span><span class=S>"281"</span><p
+> <p
+><a class=EN id=I50 href='./summary.html#I152'><b>sorm-message-task</b></a>                       <a class=EN href=#I148>OID</a> <span class=D>::= </span><span class=S>"282"</span><p
+> <p
+><a class=EN id=I51 href='./summary.html#I153'><b>sorm-message-report</b></a>                     <a class=EN href=#I148>OID</a> <span class=D>::= </span><span class=S>"283"</span><p
+> <p
+><a class=EN id=I52 href='./summary.html#I154'><b>sorm-message-management</b></a>                 <a class=EN href=#I148>OID</a> <span class=D>::= </span><span class=S>"284"</span><p
+> <p
+><a class=EN id=I53 href='./summary.html#I155'><b>sorm-message-unformatted</b></a>                <a class=EN href=#I148>OID</a> <span class=D>::= </span><span class=S>"285"</span><p
+> <p
+><a class=EN id=I54 href='./summary.html#I156'><b>sorm-message-filter</b></a>                     <a class=EN href=#I148>OID</a> <span class=D>::= </span><span class=S>"286"</span><p
+> <p
+><span class=C>-- Идентификаторы</span><p
+><a class=EN id=I55 href='./summary.html#I157'><b>sorm-request-identifier-pager</b></a>           <a class=EN href=#I148>OID</a> <span class=D>::= </span><span class=S>"140"</span><p
+> <p
+><a class=EN id=I56 href='./summary.html#I158'><b>sorm-request-identifier-pstn</b></a>            <a class=EN href=#I148>OID</a> <span class=D>::= </span><span class=S>"141"</span><p
+> <p
+><a class=EN id=I57 href='./summary.html#I159'><b>sorm-request-identifier-gsm</b></a>             <a class=EN href=#I148>OID</a> <span class=D>::= </span><span class=S>"142"</span><p
+> <p
+><a class=EN id=I58 href='./summary.html#I160'><b>sorm-request-identifier-cdma</b></a>            <a class=EN href=#I148>OID</a> <span class=D>::= </span><span class=S>"143"</span><p
+> <p
+><a class=EN id=I59 href='./summary.html#I161'><b>sorm-request-identifier-data-network</b></a>    <a class=EN href=#I148>OID</a> <span class=D>::= </span><span class=S>"144"</span><p
+> <p
+><a class=EN id=I60 href='./summary.html#I162'><b>sorm-request-identifier-voip</b></a>            <a class=EN href=#I148>OID</a> <span class=D>::= </span><span class=S>"145"</span><p
+> <p
+><a class=EN id=I61 href='./summary.html#I163'><b>sorm-report-identifier-pager</b></a>            <a class=EN href=#I148>OID</a> <span class=D>::= </span><span class=S>"1"</span><p
+> <p
+><a class=EN id=I62 href='./summary.html#I164'><b>sorm-report-identifier-pstn</b></a>             <a class=EN href=#I148>OID</a> <span class=D>::= </span><span class=S>"2"</span><p
+> <p
+><a class=EN id=I63 href='./summary.html#I165'><b>sorm-report-identifier-gsm</b></a>              <a class=EN href=#I148>OID</a> <span class=D>::= </span><span class=S>"3"</span><p
+> <p
+><a class=EN id=I64 href='./summary.html#I166'><b>sorm-report-identifier-cdma</b></a>             <a class=EN href=#I148>OID</a> <span class=D>::= </span><span class=S>"4"</span><p
+> <p
+><a class=EN id=I65 href='./summary.html#I167'><b>sorm-report-identifier-data-network</b></a>     <a class=EN href=#I148>OID</a> <span class=D>::= </span><span class=S>"5"</span><p
+> <p
+><a class=EN id=I66 href='./summary.html#I168'><b>sorm-report-identifier-voip</b></a>             <a class=EN href=#I148>OID</a> <span class=D>::= </span><span class=S>"6"</span><p
+> <p
+><span class=C>-- Параметры соединений</span><p
+><a class=EN id=I87 href='./summary.html#I169'><b>sorm-request-connection-pager</b></a>           <a class=EN href=#I148>OID</a> <span class=D>::= </span><span class=S>"160"</span><p
+> <p
+><a class=EN id=I88 href='./summary.html#I170'><b>sorm-request-connection-pstn</b></a>            <a class=EN href=#I148>OID</a> <span class=D>::= </span><span class=S>"161"</span><p
+> <p
+><a class=EN id=I89 href='./summary.html#I171'><b>sorm-request-connection-mobile</b></a>          <a class=EN href=#I148>OID</a> <span class=D>::= </span><span class=S>"162"</span><p
+> <p
+><a class=EN id=I90 href='./summary.html#I172'><b>sorm-request-connection-aaa-login</b></a>       <a class=EN href=#I148>OID</a> <span class=D>::= </span><span class=S>"164"</span><p
+> <p
+><a class=EN id=I91 href='./summary.html#I173'><b>sorm-request-connection-resource</b></a>        <a class=EN href=#I148>OID</a> <span class=D>::= </span><span class=S>"165"</span><p
+> <p
+><a class=EN id=I92 href='./summary.html#I174'><b>sorm-request-connection-email</b></a>           <a class=EN href=#I148>OID</a> <span class=D>::= </span><span class=S>"166"</span><p
+> <p
+><a class=EN id=I93 href='./summary.html#I175'><b>sorm-request-connection-im</b></a>              <a class=EN href=#I148>OID</a> <span class=D>::= </span><span class=S>"167"</span><p
+> <p
+><a class=EN id=I94 href='./summary.html#I176'><b>sorm-request-connection-voip</b></a>            <a class=EN href=#I148>OID</a> <span class=D>::= </span><span class=S>"168"</span><p
+> <p
+><a class=EN id=I95 href='./summary.html#I177'><b>sorm-request-connection-file-transfer</b></a>   <a class=EN href=#I148>OID</a> <span class=D>::= </span><span class=S>"169"</span><p
+> <p
+><a class=EN id=I96 href='./summary.html#I178'><b>sorm-request-connection-term-access</b></a>     <a class=EN href=#I148>OID</a> <span class=D>::= </span><span class=S>"170"</span><p
+> <p
+><a class=EN id=I97 href='./summary.html#I179'><b>sorm-request-connection-raw-flows</b></a>       <a class=EN href=#I148>OID</a> <span class=D>::= </span><span class=S>"171"</span><p
+> <p
+><a class=EN id=I98 href='./summary.html#I180'><b>sorm-request-connection-entrance</b></a>        <a class=EN href=#I148>OID</a> <span class=D>::= </span><span class=S>"172"</span><p
+> <p
+><a class=EN id=I99 href='./summary.html#I181'><b>sorm-request-connection-address-translations</b></a> <a class=EN href=#I148>OID</a> <span class=D>::= </span><span class=S>"173"</span><p
+> <p
+><a class=EN id=I100 href='./summary.html#I182'><b>sorm-report-connection-pager</b></a>            <a class=EN href=#I148>OID</a> <span class=D>::= </span><span class=S>"20"</span><p
+> <p
+><a class=EN id=I101 href='./summary.html#I183'><b>sorm-report-connection-pstn</b></a>             <a class=EN href=#I148>OID</a> <span class=D>::= </span><span class=S>"21"</span><p
+> <p
+><a class=EN id=I102 href='./summary.html#I184'><b>sorm-report-connection-mobile</b></a>           <a class=EN href=#I148>OID</a> <span class=D>::= </span><span class=S>"22"</span><p
+> <p
+><a class=EN id=I103 href='./summary.html#I185'><b>sorm-report-connection-ipdr-header</b></a>      <a class=EN href=#I148>OID</a> <span class=D>::= </span><span class=S>"23"</span><p
+> <p
+><a class=EN id=I104 href='./summary.html#I186'><b>sorm-report-connection-aaa-login</b></a>        <a class=EN href=#I148>OID</a> <span class=D>::= </span><span class=S>"24"</span><p
+> <p
+><a class=EN id=I105 href='./summary.html#I187'><b>sorm-report-connection-resource</b></a>         <a class=EN href=#I148>OID</a> <span class=D>::= </span><span class=S>"25"</span><p
+> <p
+><a class=EN id=I106 href='./summary.html#I188'><b>sorm-report-connection-email</b></a>            <a class=EN href=#I148>OID</a> <span class=D>::= </span><span class=S>"26"</span><p
+> <p
+><a class=EN id=I107 href='./summary.html#I189'><b>sorm-report-connection-im</b></a>               <a class=EN href=#I148>OID</a> <span class=D>::= </span><span class=S>"27"</span><p
+> <p
+><a class=EN id=I108 href='./summary.html#I190'><b>sorm-report-connection-voip</b></a>             <a class=EN href=#I148>OID</a> <span class=D>::= </span><span class=S>"28"</span><p
+> <p
+><a class=EN id=I109 href='./summary.html#I191'><b>sorm-report-connection-file-transfer</b></a>    <a class=EN href=#I148>OID</a> <span class=D>::= </span><span class=S>"29"</span><p
+> <p
+><a class=EN id=I110 href='./summary.html#I192'><b>sorm-report-connection-term-access</b></a>      <a class=EN href=#I148>OID</a> <span class=D>::= </span><span class=S>"30"</span><p
+> <p
+><a class=EN id=I111 href='./summary.html#I193'><b>sorm-report-connection-raw-flows</b></a>        <a class=EN href=#I148>OID</a> <span class=D>::= </span><span class=S>"31"</span><p
+> <p
+><a class=EN id=I112 href='./summary.html#I194'><b>sorm-report-connection-address-translations</b></a> <a class=EN href=#I148>OID</a> <span class=D>::= </span><span class=S>"32"</span><p
+> <p
+><span class=C>-- Абоненты</span><p
+><a class=EN id=I138 href='./summary.html#I195'><b>sorm-request-abonent-person</b></a>             <a class=EN href=#I148>OID</a> <span class=D>::= </span><span class=S>"180"</span><p
+> <p
+><a class=EN id=I139 href='./summary.html#I196'><b>sorm-request-abonent-organization</b></a>       <a class=EN href=#I148>OID</a> <span class=D>::= </span><span class=S>"181"</span><p
+> <p
+><a class=EN id=I140 href='./summary.html#I197'><b>sorm-report-abonent-abonent</b></a>             <a class=EN href=#I148>OID</a> <span class=D>::= </span><span class=S>"40"</span><p
+> <p
+><a class=EN id=I141 href='./summary.html#I198'><b>sorm-report-abonent-service</b></a>             <a class=EN href=#I148>OID</a> <span class=D>::= </span><span class=S>"41"</span><p
+> <p
+><a class=EN id=I142 href='./summary.html#I199'><b>sorm-report-abonent-person</b></a>              <a class=EN href=#I148>OID</a> <span class=D>::= </span><span class=S>"42"</span><p
+> <p
+><a class=EN id=I143 href='./summary.html#I200'><b>sorm-report-abonent-organization</b></a>        <a class=EN href=#I148>OID</a> <span class=D>::= </span><span class=S>"43"</span><p
+> <p
+><span class=C>-- Местоположение</span><p
+><a class=EN id=I201 href='./summary.html#I202'><b>sorm-request-location</b></a>                   <a class=EN href=#I148>OID</a> <span class=D>::= </span><span class=S>"200"</span><p
+> <p
+><a class=EN id=I203 href='./summary.html#I204'><b>sorm-report-location-mobile</b></a>             <a class=EN href=#I148>OID</a> <span class=D>::= </span><span class=S>"60"</span><p
+> <p
+><a class=EN id=I205 href='./summary.html#I206'><b>sorm-report-location-wireless</b></a>           <a class=EN href=#I148>OID</a> <span class=D>::= </span><span class=S>"61"</span><p
+> <p
+><a class=EN id=I207 href='./summary.html#I208'><b>sorm-report-location-geo</b></a>                <a class=EN href=#I148>OID</a> <span class=D>::= </span><span class=S>"62"</span><p
+> <p
+><span class=C>-- Платежи</span><p
+><a class=EN id=I67 href='./summary.html#I209'><b>sorm-request-payment-bank-transaction</b></a>   <a class=EN href=#I148>OID</a> <span class=D>::= </span><span class=S>"220"</span><p
+> <p
+><a class=EN id=I68 href='./summary.html#I210'><b>sorm-request-payment-express-pays</b></a>       <a class=EN href=#I148>OID</a> <span class=D>::= </span><span class=S>"221"</span><p
+> <p
+><a class=EN id=I69 href='./summary.html#I211'><b>sorm-request-payment-terminal-pays</b></a>      <a class=EN href=#I148>OID</a> <span class=D>::= </span><span class=S>"222"</span><p
+> <p
+><a class=EN id=I70 href='./summary.html#I212'><b>sorm-request-payment-service-center</b></a>     <a class=EN href=#I148>OID</a> <span class=D>::= </span><span class=S>"223"</span><p
+> <p
+><a class=EN id=I71 href='./summary.html#I213'><b>sorm-request-payment-cross-account</b></a>      <a class=EN href=#I148>OID</a> <span class=D>::= </span><span class=S>"224"</span><p
+> <p
+><a class=EN id=I72 href='./summary.html#I214'><b>sorm-request-payment-telephone-card</b></a>     <a class=EN href=#I148>OID</a> <span class=D>::= </span><span class=S>"225"</span><p
+> <p
+><a class=EN id=I73 href='./summary.html#I215'><b>sorm-request-payment-balance-fillups</b></a>    <a class=EN href=#I148>OID</a> <span class=D>::= </span><span class=S>"226"</span><p
+> <p
+><a class=EN id=I74 href='./summary.html#I216'><b>sorm-request-payment-bank-division-transfer</b></a> <a class=EN href=#I148>OID</a> <span class=D>::= </span><span class=S>"227"</span><p
+> <p
+><a class=EN id=I75 href='./summary.html#I217'><b>sorm-request-payment-bank-card-transfer</b></a> <a class=EN href=#I148>OID</a> <span class=D>::= </span><span class=S>"228"</span><p
+> <p
+><a class=EN id=I76 href='./summary.html#I218'><b>sorm-request-payment-bank-account-transfer</b></a> <a class=EN href=#I148>OID</a> <span class=D>::= </span><span class=S>"229"</span><p
+> <p
+><a class=EN id=I77 href='./summary.html#I219'><b>sorm-report-payment-bank-transaction</b></a>    <a class=EN href=#I148>OID</a> <span class=D>::= </span><span class=S>"80"</span><p
+> <p
+><a class=EN id=I78 href='./summary.html#I220'><b>sorm-report-payment-express-pays</b></a>        <a class=EN href=#I148>OID</a> <span class=D>::= </span><span class=S>"81"</span><p
+> <p
+><a class=EN id=I79 href='./summary.html#I221'><b>sorm-report-payment-terminal-pays</b></a>       <a class=EN href=#I148>OID</a> <span class=D>::= </span><span class=S>"82"</span><p
+> <p
+><a class=EN id=I80 href='./summary.html#I222'><b>sorm-report-payment-service-center</b></a>      <a class=EN href=#I148>OID</a> <span class=D>::= </span><span class=S>"83"</span><p
+> <p
+><a class=EN id=I81 href='./summary.html#I223'><b>sorm-report-payment-cross-account</b></a>       <a class=EN href=#I148>OID</a> <span class=D>::= </span><span class=S>"84"</span><p
+> <p
+><a class=EN id=I82 href='./summary.html#I224'><b>sorm-report-payment-telephone-card</b></a>      <a class=EN href=#I148>OID</a> <span class=D>::= </span><span class=S>"85"</span><p
+> <p
+><a class=EN id=I83 href='./summary.html#I225'><b>sorm-report-payment-balance-fillups</b></a>     <a class=EN href=#I148>OID</a> <span class=D>::= </span><span class=S>"86"</span><p
+> <p
+><a class=EN id=I84 href='./summary.html#I226'><b>sorm-report-payment-bank-division-transfer</b></a> <a class=EN href=#I148>OID</a> <span class=D>::= </span><span class=S>"87"</span><p
+> <p
+><a class=EN id=I85 href='./summary.html#I227'><b>sorm-report-payment-bank-card-transfer</b></a>  <a class=EN href=#I148>OID</a> <span class=D>::= </span><span class=S>"88"</span><p
+> <p
+><a class=EN id=I86 href='./summary.html#I228'><b>sorm-report-payment-bank-account-transfer</b></a> <a class=EN href=#I148>OID</a> <span class=D>::= </span><span class=S>"89"</span><p
+> <p
+><span class=C>-- Справочники</span><p
+><a class=EN id=I113 href='./summary.html#I229'><b>sorm-request-dictionaries</b></a>               <a class=EN href=#I148>OID</a> <span class=D>::= </span><span class=S>"240"</span><p
+> <p
+><a class=EN id=I114 href='./summary.html#I230'><b>sorm-report-dictionary-bunches</b></a>          <a class=EN href=#I148>OID</a> <span class=D>::= </span><span class=S>"100"</span><p
+> <p
+><a class=EN id=I115 href='./summary.html#I231'><b>sorm-report-dictionary-basic-stations</b></a>   <a class=EN href=#I148>OID</a> <span class=D>::= </span><span class=S>"101"</span><p
+> <p
+><a class=EN id=I116 href='./summary.html#I232'><b>sorm-report-dictionary-roaming-partners</b></a> <a class=EN href=#I148>OID</a> <span class=D>::= </span><span class=S>"102"</span><p
+> <p
+><a class=EN id=I117 href='./summary.html#I233'><b>sorm-report-dictionary-switches</b></a>         <a class=EN href=#I148>OID</a> <span class=D>::= </span><span class=S>"103"</span><p
+> <p
+><a class=EN id=I118 href='./summary.html#I234'><b>sorm-report-dictionary-gates</b></a>            <a class=EN href=#I148>OID</a> <span class=D>::= </span><span class=S>"104"</span><p
+> <p
+><a class=EN id=I119 href='./summary.html#I235'><b>sorm-report-dictionary-call-types</b></a>       <a class=EN href=#I148>OID</a> <span class=D>::= </span><span class=S>"105"</span><p
+> <p
+><a class=EN id=I120 href='./summary.html#I236'><b>sorm-report-dictionary-supplement-services</b></a> <a class=EN href=#I148>OID</a> <span class=D>::= </span><span class=S>"106"</span><p
+> <p
+><a class=EN id=I121 href='./summary.html#I237'><b>sorm-report-dictionary-pay-types</b></a>        <a class=EN href=#I148>OID</a> <span class=D>::= </span><span class=S>"107"</span><p
+> <p
+><a class=EN id=I122 href='./summary.html#I238'><b>sorm-report-dictionary-termination-causes</b></a> <a class=EN href=#I148>OID</a> <span class=D>::= </span><span class=S>"108"</span><p
+> <p
+><a class=EN id=I123 href='./summary.html#I239'><b>sorm-report-dictionary-ip-numbering-plan</b></a> <a class=EN href=#I148>OID</a> <span class=D>::= </span><span class=S>"109"</span><p
+> <p
+><a class=EN id=I124 href='./summary.html#I240'><b>sorm-report-dictionary-phone-numbering-plan</b></a> <a class=EN href=#I148>OID</a> <span class=D>::= </span><span class=S>"110"</span><p
+> <p
+><a class=EN id=I125 href='./summary.html#I241'><b>sorm-report-dictionary-doc-types</b></a>        <a class=EN href=#I148>OID</a> <span class=D>::= </span><span class=S>"111"</span><p
+> <p
+><a class=EN id=I126 href='./summary.html#I242'><b>sorm-report-dictionary-telcos</b></a>           <a class=EN href=#I148>OID</a> <span class=D>::= </span><span class=S>"112"</span><p
+> <p
+><a class=EN id=I127 href='./summary.html#I243'><b>sorm-report-dictionary-ip-data-points</b></a>   <a class=EN href=#I148>OID</a> <span class=D>::= </span><span class=S>"113"</span><p
+> <p
+><a class=EN id=I128 href='./summary.html#I244'><b>sorm-report-dictionary-special-numbers</b></a>  <a class=EN href=#I148>OID</a> <span class=D>::= </span><span class=S>"114"</span><p
+> <p
+><a class=EN id=I129 href='./summary.html#I245'><b>sorm-report-dictionary-bunches-map</b></a>      <a class=EN href=#I148>OID</a> <span class=D>::= </span><span class=S>"115"</span><p
+> <p
+><a class=EN id=I130 href='./summary.html#I246'><b>sorm-report-dictionary-mobile-subscriber-identity-plan</b></a> <a class=EN href=#I148>OID</a> <span class=D>::= </span><span class=S>"116"</span><p
+> <p
+><a class=EN id=I131 href='./summary.html#I247'><b>sorm-report-dictionary-signal-point-codes</b></a> <a class=EN href=#I148>OID</a> <span class=D>::= </span><span class=S>"132"</span><p
+> <p
+><span class=C>-- Запрос о наличии данных</span><p
+><a class=EN id=I132 href='./summary.html#I248'><b>sorm-request-presense</b></a>                   <a class=EN href=#I148>OID</a> <span class=D>::= </span><span class=S>"260"</span><p
+> <p
+><a class=EN id=I133 href='./summary.html#I249'><b>sorm-report-presense-abonents</b></a>           <a class=EN href=#I148>OID</a> <span class=D>::= </span><span class=S>"120"</span><p
+> <p
+><a class=EN id=I134 href='./summary.html#I250'><b>sorm-report-presense-connections</b></a>        <a class=EN href=#I148>OID</a> <span class=D>::= </span><span class=S>"121"</span><p
+> <p
+><a class=EN id=I135 href='./summary.html#I251'><b>sorm-report-presense-payments</b></a>           <a class=EN href=#I148>OID</a> <span class=D>::= </span><span class=S>"122"</span><p
+> <p
+><a class=EN id=I136 href='./summary.html#I252'><b>sorm-report-presense-dictionaries</b></a>       <a class=EN href=#I148>OID</a> <span class=D>::= </span><span class=S>"123"</span><p
+> <p
+><a class=EN id=I137 href='./summary.html#I253'><b>sorm-report-presense-locations</b></a>          <a class=EN href=#I148>OID</a> <span class=D>::= </span><span class=S>"124"</span><p
+> <p
+><span class=C>-- Запрос о содержимом потоков</span><p
+><a class=EN id=I144 href='./summary.html#I254'><b>sorm-report-data-content-raw</b></a>            <a class=EN href=#I148>OID</a> <span class=D>::= </span><span class=S>"50"</span><p
+> <p
+><span class=K>END</span></section><div class=footer>HTML generated by OSS Nokalva's ASN1Doc utility</div>
+</body>
+</html>

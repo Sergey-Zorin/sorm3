@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+<meta charset='utf-8'>
+<title>Dictionaries.asn</title>
+<link rel=stylesheet href='Asn1doc.css' type='text/css'>
+</head>
+<body onload='Init()'><span id=I255>Schema File <b class=SF>Dictionaries.asn</b></span><section class='asn1 notinteractive'><p
+><a class=MN id=I256 href='./summary.html#I257'><b>Dictionaries</b></a> <span class=K>DEFINITIONS IMPLICIT TAGS </span><span class=D>::=</span><p
+><span class=K>BEGIN</span><p
+> <p
+><span class=K>EXPORTS</span><p
+>     <a class=EN href=#I258>TelcoID</a><span class=D>, </span><a class=EN href=#I259>TelcoList</a><span class=D>, </span><a class=EN href=#I260>DictionaryTask</a><span class=D>, </span><a class=EN href=#I261>DictionaryReport</a><span class=D>, </span><a class=EN href=#I262>PhoneAbonentType</a><span class=D>;</span><p
+> <p
+><span class=K>IMPORTS</span><p
+>     <a class=EN id=I263 href='./Sorm.asn.html#I264'><b>DateAndTime</b></a><p
+>          <span class=K>FROM </span><a class=MN href='./Sorm.asn.html#I265'>Sorm</a><p
+>     <a class=EN id=I266 href='./Classification.asn.html#I47'><b>TAGGED</b></a><span class=D>, </span><a class=EN href='./Classification.asn.html#I113'><b>sorm-request-dictionaries</b></a><span class=D>, </span><a class=EN href='./Classification.asn.html#I126'><b>sorm-report-dictionary-telcos</b></a><span class=D>, </span><a class=EN href='./Classification.asn.html#I114'><b>sorm-report-dictionary-bunches</b></a><span class=D>,</span><p
+>     <a class=EN href='./Classification.asn.html#I115'><b>sorm-report-dictionary-basic-stations</b></a><span class=D>, </span><a class=EN href='./Classification.asn.html#I116'><b>sorm-report-dictionary-roaming-partners</b></a><span class=D>, </span><a class=EN href='./Classification.asn.html#I117'><b>sorm-report-dictionary-switches</b></a><span class=D>,</span><p
+>     <a class=EN href='./Classification.asn.html#I118'><b>sorm-report-dictionary-gates</b></a><span class=D>, </span><a class=EN href='./Classification.asn.html#I119'><b>sorm-report-dictionary-call-types</b></a><span class=D>, </span><a class=EN href='./Classification.asn.html#I120'><b>sorm-report-dictionary-supplement-services</b></a><span class=D>,</span><p
+>     <a class=EN href='./Classification.asn.html#I121'><b>sorm-report-dictionary-pay-types</b></a><span class=D>, </span><a class=EN href='./Classification.asn.html#I122'><b>sorm-report-dictionary-termination-causes</b></a><span class=D>,</span><p
+>     <a class=EN href='./Classification.asn.html#I123'><b>sorm-report-dictionary-ip-numbering-plan</b></a><span class=D>, </span><a class=EN href='./Classification.asn.html#I124'><b>sorm-report-dictionary-phone-numbering-plan</b></a><span class=D>,</span><p
+>     <a class=EN href='./Classification.asn.html#I125'><b>sorm-report-dictionary-doc-types</b></a><span class=D>, </span><a class=EN href='./Classification.asn.html#I127'><b>sorm-report-dictionary-ip-data-points</b></a><span class=D>, </span><a class=EN href='./Classification.asn.html#I128'><b>sorm-report-dictionary-special-numbers</b></a><span class=D>,</span><p
+>     <a class=EN href='./Classification.asn.html#I129'><b>sorm-report-dictionary-bunches-map</b></a><span class=D>, </span><a class=EN href='./Classification.asn.html#I130'><b>sorm-report-dictionary-mobile-subscriber-identity-plan</b></a><span class=D>,</span><p
+>     <a class=EN href='./Classification.asn.html#I131'><b>sorm-report-dictionary-signal-point-codes</b></a><p
+>          <span class=K>FROM </span><a class=MN href='./Classification.asn.html#I45'>Classification</a><p
+>     <a class=EN id=I267 href='./Addresses.asn.html#I6'><b>ReportedAddress</b></a><p
+>          <span class=K>FROM </span><a class=MN href='./Addresses.asn.html#I2'>Addresses</a><p
+>     <a class=EN id=I268 href='./NetworkIdentifiers.asn.html#I269'><b>Bunch</b></a><span class=D>, </span><a class=EN href='./NetworkIdentifiers.asn.html#I270'><b>DataNetworkEquipment</b></a><span class=D>, </span><a class=EN href='./NetworkIdentifiers.asn.html#I271'><b>IPAddress</b></a><span class=D>, </span><a class=EN href='./NetworkIdentifiers.asn.html#I272'><b>IPPort</b></a><span class=D>, </span><a class=EN href='./NetworkIdentifiers.asn.html#I273'><b>IPMask</b></a><span class=D>, </span><a class=EN href='./NetworkIdentifiers.asn.html#I274'><b>NetworkPeerInfo</b></a><span class=D>, </span><a class=EN href='./NetworkIdentifiers.asn.html#I275'><b>NetworkType</b></a><p
+>          <span class=K>FROM </span><a class=MN href='./NetworkIdentifiers.asn.html#I276'>NetworkIdentifiers</a><p
+>     <a class=EN id=I277 href='./Locations.asn.html#I278'><b>GeoLocation</b></a><p
+>          <span class=K>FROM </span><a class=MN href='./Locations.asn.html#I279'>Locations</a><span class=D>;</span><p
+> <p
+><span class=C>-- Идентификатор оператора связи или структурного подразделения</span><p
+><a class=EN id=I258 href='./summary.html#I280'><b>TelcoID</b></a> <span class=D>::=                             </span><span class=K>INTEGER </span><span class=D>(</span><span class=N>0</span><span class=D>..</span><span class=N>65535</span><span class=D>)</span><p
+> <p
+><span class=C>--- список идентификаторов операторов связи или структурного подразделения</span><p
+><a class=EN id=I259 href='./summary.html#I281'><b>TelcoList</b></a> <span class=D>::=                           </span><span class=K>SEQUENCE OF </span><a class=EN id=I282 href=#I258>TelcoID</a><p
+> <p
+><span class=C>-- Запрос</span><p
+><span class=E3 title='Error: Invalid type assignment for type &quot;DictionaryTask&quot;: Invalid assignment.'><a class=EN id=I260 href='./summary.html#I283'><b>DictionaryTask</b></a></span> <span class=D>::=                      </span><span class=K>SEQUENCE </span><span class=D>{</span><p
+>   <b class=CI id=I284>id</b>                                      <a class=EN href='./Classification.asn.html#I47'>TAGGED</a><span class=D>.</span><a class=FN href='./Classification.asn.html#I146'>&amp;id</a> <span class=D>({</span><a class=EN href=#I285>DictionaryTaskVariants</a><span class=D>}),</span><p
+>   <b class=CI id=I286>data</b>                                    <a class=EN href='./Classification.asn.html#I47'>TAGGED</a><span class=D>.</span><a class=FN href='./Classification.asn.html#I147'>&amp;Data</a> <span class=D>({</span><a class=EN href=#I285>DictionaryTaskVariants</a><span class=D>} {@</span><a class=CI href=#I284>id</a><span class=D>})</span><p
+><span class=D>}</span><p
+> <p
+><span class=E3 title='Error: Invalid object set assignment for object set &quot;DictionaryTaskVariants&quot;: Invalid assignment.'><a class=EN id=I285 href='./summary.html#I287'><b>DictionaryTaskVariants</b></a></span>                  <a class=EN href='./Classification.asn.html#I47'>TAGGED</a> <span class=D>::= {</span><a class=EN href=#I288>dictionaryTask</a><span class=D>}</span><p
+> <p
+><span class=E3 title='Error: Invalid object assignment for object &quot;dictionaryTask&quot;: Invalid assignment.'><a class=EN id=I288 href='./summary.html#I289'><b>dictionaryTask</b></a></span>                          <a class=EN href='./Classification.asn.html#I47'>TAGGED</a> <span class=D>::= {</span><p
+>   <span class=W>OID </span><span class=E3 title='Error: Invalid value: The type of the value is incompatible with its context.'><span class=D id=I290>{</span></span><span class=E>sorm-request-dictionaries</span><span class=D>} </span><span class=W>DATA </span><span class=K>ObjectDescriptor </span><span class=C>-- тип запрашиваемого справочника (идентификатор отчета)</span><p
+><span class=D>}</span><p
+> <p
+><span class=C>-- ObjectDescriptor принимает значение одно из:</span><p
+><span class=C>-- sorm-report-dictionary-telcos</span><p
+><span class=C>-- sorm-report-dictionary-bunches</span><p
+><span class=C>-- sorm-report-dictionary-basic-stations</span><p
+><span class=C>-- sorm-report-dictionary-roaming-partners</span><p
+><span class=C>-- sorm-report-dictionary-switches</span><p
+><span class=C>-- sorm-report-dictionary-gates</span><p
+><span class=C>-- sorm-report-dictionary-call-types</span><p
+><span class=C>-- sorm-report-dictionary-supplement-services</span><p
+><span class=C>-- sorm-report-dictionary-pay-types</span><p
+><span class=C>-- sorm-report-dictionary-termination-causes</span><p
+><span class=C>-- sorm-report-dictionary-ip-numbering-plan</span><p
+><span class=C>-- sorm-report-dictionary-phone-numbering-plan</span><p
+><span class=C>-- sorm-report-dictionary-doc-types</span><p
+><span class=C>-- sorm-report-dictionary-ip-data-points</span><p
+><span class=C>-- sorm-report-dictionary-special-numbers</span><p
+><span class=C>-- sorm-report-dictionary-bunches-map,</span><p
+><span class=C>-- sorm-report-dictionary-mobile-subscriber-identity-plan</span><p
+><span class=C>-- sorm-report-dictionary-signal-point-codes</span><p
+><span class=C>-- Отчет</span><p
+><span class=E3 title='Error: Invalid type assignment for type &quot;DictionaryReport&quot;: Invalid assignment.'><a class=EN id=I261 href='./summary.html#I291'><b>DictionaryReport</b></a></span> <span class=D>::=                    </span><span class=K>SEQUENCE </span><span class=D>{</span><p
+>   <b class=CI id=I292>id</b>                                      <a class=EN href='./Classification.asn.html#I47'>TAGGED</a><span class=D>.</span><a class=FN href='./Classification.asn.html#I146'>&amp;id</a> <span class=D>({</span><a class=EN href=#I293>DictionaryRecordsVariants</a><span class=D>}), </span><span class=C>--- идентификтор записи справочника</span><p
+>   <b class=CI id=I294>data</b>                                    <a class=EN href='./Classification.asn.html#I47'>TAGGED</a><span class=D>.</span><a class=FN href='./Classification.asn.html#I147'>&amp;Data</a> <span class=D>({</span><a class=EN href=#I293>DictionaryRecordsVariants</a><span class=D>} {@</span><a class=CI href=#I292>id</a><span class=D>})</span><p
+>                                                                                           <span class=C>--- данные записи справочника</span><p
+><span class=D>}</span><p
+> <p
+><span class=E3 title='Error: Invalid object set assignment for object set &quot;DictionaryRecordsVariants&quot;: Invalid assignment.'><a class=EN id=I293 href='./summary.html#I295'><b>DictionaryRecordsVariants</b></a></span>               <a class=EN href='./Classification.asn.html#I47'>TAGGED</a> <span class=D>::= {</span><p
+>   <a class=EN href=#I296>telcosRecords</a> <span class=C>--- операторы связи, обслуживаемые ИС СОРМ</span><p
+>   <span class=D>|</span><p
+>   <a class=EN href=#I297>bunchesRecords</a> <span class=C>--- пучки соединительных линий</span><p
+>   <span class=D>|</span><p
+>   <a class=EN href=#I298>basicStationsSectorRecords</a> <span class=C>--- базовые станции</span><p
+>   <span class=D>|</span><p
+>   <a class=EN href=#I299>roamingPartnersRecords</a> <span class=C>--- роуминговые партнеры</span><p
+>   <span class=D>|</span><p
+>   <a class=EN href=#I300>switchesRecords</a> <span class=C>--- коммутаторы</span><p
+>   <span class=D>|</span><p
+>   <a class=EN href=#I301>gatesRecords</a> <span class=C>--- IP шлюзы</span><p
+>   <span class=D>|</span><p
+>   <a class=EN href=#I302>callTypesRecords</a> <span class=C>--- типы вызовов</span><p
+>   <span class=D>|</span><p
+>   <a class=EN href=#I303>supplementServicesRecords</a> <span class=C>--- список дополнительных видов обслуживания (далее - ДВО)</span><p
+>   <span class=D>|</span><p
+>   <a class=EN href=#I304>payTypesRecords</a> <span class=C>--- способы оплаты (пополнения баланса)</span><p
+>   <span class=D>|</span><p
+>   <a class=EN href=#I305>terminationCausesRecords</a> <span class=C>--- причины завершения соединения</span><p
+>   <span class=D>|</span><p
+>   <a class=EN href=#I306>ipNumberingPlanRecords</a> <span class=C>--- IP-план адресации</span><p
+>   <span class=D>|</span><p
+>   <a class=EN href=#I307>telephoneNumberingPlanRecords</a> <span class=C>--- план телефонной номерной емкости</span><p
+>   <span class=D>|</span><p
+>   <a class=EN href=#I308>docTypesRecords</a> <span class=C>--- типы документов, удостоверяющих личность</span><p
+>   <span class=D>|</span><p
+>   <a class=EN href=#I309>ipDataPointsRecords</a><p
+>        <span class=C>--- идентификаторы  точек  подключения  к сети передачи данных, с которых получены записи о соединениях</span><p
+>   <span class=D>|</span><p
+>   <a class=EN href=#I310>specialNumbersRecords</a> <span class=C>--- специальные номера оператора (SMS-центры, ТМС, сервисы)</span><p
+>   <span class=D>|</span><p
+>   <a class=EN href=#I311>bunchesMapRecords</a> <span class=C>--- карта связей пучков соединительных линий</span><p
+>   <span class=D>|</span><p
+>   <a class=EN href=#I312>mobileSubscriberIdenityPlanRecords</a> <span class=C>--- план нумерации идентификаторов мобильных телефонных абонентов</span><p
+>   <span class=D>|</span><p
+>   <a class=EN href=#I313>signalPointCodes</a> <span class=C>--- коды сигнальных точек OPC/DPC</span><p
+><span class=D>}</span><p
+> <p
+><span class=C>--- операторы связи, обслуживаемые ИС СОРМ</span><p
+><span class=E3 title='Error: Invalid object assignment for object &quot;telcosRecords&quot;: Invalid assignment.'><a class=EN id=I296 href='./summary.html#I314'><b>telcosRecords</b></a></span>                           <a class=EN href='./Classification.asn.html#I47'>TAGGED</a> <span class=D>::= {</span><span class=W>OID </span><span class=E3 title='Error: Invalid value: The type of the value is incompatible with its context.'><span class=D id=I315>{</span></span><span class=E>sorm-report-dictionary-telcos</span><span class=D>} </span><span class=W>DATA </span><span class=K>SEQUENCE OF </span><a class=EN id=I316 href=#I317>TelcosRecord</a><span class=D>}</span><p
+> <p
+><a class=EN id=I317 href='./summary.html#I318'><b>TelcosRecord</b></a> <span class=D>::=                        </span><span class=K>SEQUENCE </span><span class=D>{</span><p
+>   <b class=CI id=I319>telco-id</b>                                <a class=EN href=#I258>TelcoID</a><span class=D>,             </span><span class=C>--- номер структурного подразделения или оператора связи</span><p
+>   <b class=CI id=I320>begin-time</b>                              <a class=EN href='./Sorm.asn.html#I264'>DateAndTime</a><span class=D>,                                 </span><span class=C>--- время начала действия</span><p
+>   <b class=CI id=I321>end-time</b>                                <a class=EN href='./Sorm.asn.html#I264'>DateAndTime</a>                             <span class=K>OPTIONAL</span><span class=D>, </span><span class=C>--- время конца действия</span><p
+>   <b class=CI id=I322>description</b>                             <span class=K>UTF8String </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>1</span><span class=D>..</span><span class=N>256</span><span class=D>)),</span><p
+>                                              <span class=C>--- описание (наименование) оператора связи или структурного подразделения</span><p
+>   <b class=CI id=I323>mcc</b>                                     <span class=D>[</span><span class=N>0</span><span class=D>] </span><span class=K>NumericString </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>3</span><span class=D>))            </span><span class=K>OPTIONAL</span><span class=D>, </span><span class=C>--- код страны</span><p
+>   <b class=CI id=I324>mnc</b>                                     <span class=D>[</span><span class=N>1</span><span class=D>] </span><span class=K>NumericString </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>3</span><span class=D>))            </span><span class=K>OPTIONAL  </span><span class=C>--- код оператора связи</span><p
+><span class=D>}</span><p
+> <p
+><span class=C>--- пучки соединительных линий</span><p
+><span class=E3 title='Error: Invalid object assignment for object &quot;bunchesRecords&quot;: Invalid assignment.'><a class=EN id=I297 href='./summary.html#I325'><b>bunchesRecords</b></a></span>                          <a class=EN href='./Classification.asn.html#I47'>TAGGED</a> <span class=D>::= {</span><span class=W>OID </span><span class=E3 title='Error: Invalid value: The type of the value is incompatible with its context.'><span class=D id=I326>{</span></span><span class=E>sorm-report-dictionary-bunches</span><span class=D>} </span><span class=W>DATA </span><span class=K>SEQUENCE OF </span><a class=EN id=I327 href=#I328>BunchRecord</a><span class=D>}</span><p
+> <p
+><a class=EN id=I328 href='./summary.html#I329'><b>BunchRecord</b></a> <span class=D>::=                         </span><span class=K>SEQUENCE </span><span class=D>{</span><p
+>   <b class=CI id=I330>telco-id</b>                                <a class=EN href=#I258>TelcoID</a><span class=D>,     </span><span class=C>--- идентификатор оператора связи или структурного подразделения</span><p
+>   <b class=CI id=I331>bunch-id</b>                                <a class=EN href='./NetworkIdentifiers.asn.html#I269'>Bunch</a><span class=D>,                                       </span><span class=C>--- идентификатор пучка</span><p
+>   <b class=CI id=I332>switch-id</b>                               <span class=K>UTF8String </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>1</span><span class=D>..</span><span class=N>128</span><span class=D>)),                  </span><span class=C>--- идентификатор коммутатора</span><p
+>   <b class=CI id=I333>bunch-type</b>                              <span class=K>ENUMERATED </span><span class=D>{ </span><span class=C>--- тип - входящий/исходящий</span><p
+>                                              <b class=II id=I334>inbound</b> <span class=D>(</span><span class=N>0</span><span class=D>), </span><b class=II id=I335>outbound</b> <span class=D>(</span><span class=N>1</span><span class=D>), </span><b class=II id=I336>bidirectional</b> <span class=D>(</span><span class=N>3</span><span class=D>)</span><p
+>                                           <span class=D>},</span><p
+>   <b class=CI id=I337>begin-time</b>                              <a class=EN href='./Sorm.asn.html#I264'>DateAndTime</a><span class=D>,                                </span><span class=C>--- время начала назначения пучка</span><p
+>   <b class=CI id=I338>end-time</b>                                <a class=EN href='./Sorm.asn.html#I264'>DateAndTime</a>                             <span class=K>OPTIONAL</span><span class=D>,</span><p
+>                                                                                        <span class=C>--- время конца назначения пучка</span><p
+>   <b class=CI id=I339>description</b>                             <span class=K>UTF8String </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>1</span><span class=D>..</span><span class=N>256</span><span class=D>))                   </span><span class=C>--- расшифровка пучка</span><p
+><span class=D>}</span><p
+> <p
+><span class=C>--- базовые станции</span><p
+><span class=E3 title='Error: Invalid object assignment for object &quot;basicStationsSectorRecords&quot;: Invalid assignment.'><a class=EN id=I298 href='./summary.html#I340'><b>basicStationsSectorRecords</b></a></span>              <a class=EN href='./Classification.asn.html#I47'>TAGGED</a> <span class=D>::= {</span><span class=W>OID </span><span class=E3 title='Error: Invalid value: The type of the value is incompatible with its context.'><span class=D id=I341>{</span></span><span class=E>sorm-report-dictionary-basic-stations</span><span class=D>} </span><span class=W>DATA </span><span class=K>SEQUENCE OF</span><p
+>                                             <a class=EN id=I342 href=#I343>BasicStationSectorRecord</a><span class=D>}</span><p
+> <p
+><a class=EN id=I343 href='./summary.html#I344'><b>BasicStationSectorRecord</b></a> <span class=D>::=            </span><span class=K>SEQUENCE </span><span class=D>{</span><p
+>   <b class=CI id=I345>telco-id</b>                                <a class=EN href=#I258>TelcoID</a><span class=D>,     </span><span class=C>--- идентификатор оператора связи или структурного подразделения</span><p
+>   <b class=CI id=I346>begin-time</b>                              <a class=EN href='./Sorm.asn.html#I264'>DateAndTime</a><span class=D>,                        </span><span class=C>--- время начала действия базовой станции</span><p
+>   <b class=CI id=I347>end-time</b>                                <a class=EN href='./Sorm.asn.html#I264'>DateAndTime</a><span class=D>,                         </span><span class=C>--- время конца действия базовой станции</span><p
+>   <b class=CI id=I348>address</b>                                 <span class=K>UTF8String </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>1</span><span class=D>..</span><span class=N>256</span><span class=D>)),</span><p
+>                                                       <span class=C>--- произвольное текстовое описание адреса или места расположения</span><p
+>   <b class=CI id=I349>sector-identifiers</b>                      <a class=EN href=#I350>BasicStationIdentifiers</a><span class=D>,                     </span><span class=C>--- идентификаторы сектора</span><p
+>   <b class=CI id=I351>antenna-configuration</b>                   <a class=EN href=#I352>BasicStationAntenna</a><span class=D>,                         </span><span class=C>---  параметры  антенной системы</span><p
+>   <b class=CI id=I353>station-type</b>                            <a class=EN href=#I354>BasicStationType</a><span class=D>,                            </span><span class=C>--- тип сети базовой станции</span><p
+>   <b class=CI id=I355>structured-address</b>                      <span class=D>[</span><span class=N>0</span><span class=D>] </span><a class=EN href='./Addresses.asn.html#I6'>ReportedAddress</a>                     <span class=K>OPTIONAL</span><span class=D>,</span><p
+>                                                                               <span class=C>--- адрес места установки базовой станции</span><p
+>   <b class=CI id=I356>location</b>                                <span class=D>[</span><span class=N>1</span><span class=D>] </span><a class=EN href='./Locations.asn.html#I278'>GeoLocation</a>                         <span class=K>OPTIONAL</span><p
+>                                                                                       <span class=C>--- географическое местоположение</span><p
+><span class=D>}</span><p
+> <p
+><span class=C>--- идентификаторы сектора</span><p
+><a class=EN id=I350 href='./summary.html#I357'><b>BasicStationIdentifiers</b></a> <span class=D>::=             </span><span class=K>CHOICE </span><span class=D>{</span><p
+>   <b class=CI id=I358>telepone</b>                                <span class=D>[</span><span class=N>0</span><span class=D>] </span><a class=EN href=#I359>TelephoneIdentifiers</a><span class=D>,      </span><span class=C>--- идентификаторы сектора для телефонной сети</span><p
+>   <b class=CI id=I360>wireless</b>                                <span class=D>[</span><span class=N>1</span><span class=D>] </span><span class=K>SEQUENCE OF </span><a class=EN id=I361 href=#I362>WirelessIdentifiers</a><p
+>                                                                     <span class=C>--- идентификаторы сектора для сети передачи данных</span><p
+><span class=D>}</span><p
+> <p
+><span class=C>--- идентификаторы сектора для телефонной сети</span><p
+><a class=EN id=I359 href='./summary.html#I363'><b>TelephoneIdentifiers</b></a> <span class=D>::=                </span><span class=K>SEQUENCE </span><span class=D>{</span><p
+>   <b class=CI id=I364>lac</b>                                     <span class=K>INTEGER </span><span class=D>(</span><span class=N>0</span><span class=D>..</span><span class=N>65535</span><span class=D>),                          </span><span class=C>--- код зоны</span><p
+>   <b class=CI id=I365>cell</b>                                    <span class=K>INTEGER </span><span class=D>(</span><span class=N>0</span><span class=D>..</span><span class=N>4294967295</span><span class=D>),</span><p
+>                                      <span class=C>--- идентификатор сектора базовой станции (идентификатор базовой станции и сектор)</span><p
+>   <b class=CI id=I366>cell-sign</b>                               <span class=K>UTF8String </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>1</span><span class=D>..</span><span class=N>18</span><span class=D>))               </span><span class=K>OPTIONAL</span><p
+>                                                                                       <span class=C>--- телефонный идентификатор соты</span><p
+><span class=D>}</span><p
+> <p
+><span class=C>--- идентификаторы сектора для сети передачи данных</span><p
+><a class=EN id=I362 href='./summary.html#I367'><b>WirelessIdentifiers</b></a> <span class=D>::=                 </span><span class=K>SEQUENCE </span><span class=D>{</span><p
+>   <b class=CI id=I368>cell</b>                                    <span class=K>UTF8String </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>1</span><span class=D>..</span><span class=N>64</span><span class=D>)),                   </span><span class=C>--- идентификатор сектора</span><p
+>   <b class=CI id=I369>ip-list</b>                                 <a class=EN href=#I370>IPList</a>                                  <span class=K>OPTIONAL</span><span class=D>,</span><p
+>                                                                      <span class=C>--- перечень назначенных сектору IP-адресов/портов</span><p
+>   <b class=CI id=I371>mac</b>                                     <span class=K>OCTET STRING </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>6</span><span class=D>))                 </span><span class=K>OPTIONAL</span><p
+>                                                                           <span class=C>---  MAC-адрес  сетевого оборудования сектора</span><p
+><span class=D>}</span><p
+> <p
+><a class=EN id=I370 href='./summary.html#I372'><b>IPList</b></a> <span class=D>::=                              </span><span class=K>SEQUENCE OF </span><a class=EN id=I373 href='./NetworkIdentifiers.asn.html#I274'>NetworkPeerInfo</a><p
+> <p
+><span class=C>--- параметры антенной системы</span><p
+><a class=EN id=I352 href='./summary.html#I374'><b>BasicStationAntenna</b></a> <span class=D>::=                 </span><span class=K>CHOICE </span><span class=D>{</span><p
+>   <b class=CI id=I375>gsm-antenna</b>                             <span class=D>[</span><span class=N>0</span><span class=D>] </span><a class=EN href=#I376>GsmAntenna</a><span class=D>,                    </span><span class=C>--- параметры антенной системы GSM-сектора</span><p
+>   <b class=CI id=I377>cdma-antenna</b>                            <span class=D>[</span><span class=N>1</span><span class=D>] </span><span class=K>SEQUENCE OF </span><a class=EN id=I378 href=#I379>CdmaAntenna</a><span class=D>,      </span><span class=C>--- параметры антенной системы CDMA-сектора</span><p
+>   <b class=CI id=I380>wireless-antenna</b>                        <span class=D>[</span><span class=N>2</span><span class=D>] </span><span class=K>SEQUENCE OF </span><a class=EN id=I381 href=#I382>WirelessAntenna</a><p
+>                                                                       <span class=C>--- параметры антенной системы WiFi/WiMAX-сектора</span><p
+><span class=D>}</span><p
+> <p
+><span class=C>--- параметры антенной системы</span><p
+><a class=EN id=I376 href='./summary.html#I383'><b>GsmAntenna</b></a> <span class=D>::=                          </span><span class=K>SEQUENCE </span><span class=D>{</span><p
+>   <b class=CI id=I384>azimut</b>                                  <span class=K>INTEGER </span><span class=D>(-</span><span class=N>1</span><span class=D>..</span><span class=N>359</span><span class=D>),</span><p
+>                                <span class=C>--- азимут относительно направления на север, в градусах, если -1, то нет направленности</span><p
+>   <b class=CI id=I385>width</b>                                   <span class=K>INTEGER </span><span class=D>(</span><span class=N>0</span><span class=D>..</span><span class=N>359</span><span class=D>),                            </span><span class=C>--- ширина растра в градусах</span><p
+>   <b class=CI id=I386>horizon-angle</b>                           <span class=K>INTEGER </span><span class=D>(</span><span class=N>0</span><span class=D>..</span><span class=N>359</span><span class=D>),                        </span><span class=C>--- угол наклона сектора к горизонту</span><p
+>   <b class=CI id=I387>power</b>                                   <span class=D>[</span><span class=N>0</span><span class=D>] </span><span class=K>INTEGER </span><span class=D>(</span><span class=N>0</span><span class=D>..</span><span class=N>25000</span><span class=D>)                  </span><span class=K>OPTIONAL</span><span class=D>,</span><p
+>                                                                                          <span class=C>--- мощность в ваттах (сектор)</span><p
+>   <b class=CI id=I388>frequency</b>                               <span class=D>[</span><span class=N>1</span><span class=D>] </span><span class=K>INTEGER </span><span class=D>(</span><span class=N>0</span><span class=D>..</span><span class=N>10000000000</span><span class=D>)            </span><span class=K>OPTIONAL</span><span class=D>,</span><p
+>                                                                                          <span class=C>--- частота излучения (сектор)</span><p
+>   <b class=CI id=I389>vertical-lift</b>                           <span class=D>[</span><span class=N>2</span><span class=D>] </span><span class=K>INTEGER </span><span class=D>(</span><span class=N>0</span><span class=D>..</span><span class=N>100</span><span class=D>)                    </span><span class=K>OPTIONAL</span><span class=D>, </span><span class=C>---  высота подвеса сектора</span><p
+>   <b class=CI id=I390>gain-factor</b>                             <span class=D>[</span><span class=N>3</span><span class=D>] </span><span class=K>INTEGER </span><span class=D>(-</span><span class=N>100</span><span class=D>..</span><span class=N>100</span><span class=D>)                 </span><span class=K>OPTIONAL</span><span class=D>,</span><p
+>                                                                                   <span class=C>--- коэффициент усиления антенны (Дб)</span><p
+>   <b class=CI id=I391>polarization</b>                            <span class=D>[</span><span class=N>4</span><span class=D>] </span><span class=K>INTEGER </span><span class=D>(-</span><span class=N>45</span><span class=D>..</span><span class=N>45</span><span class=D>)                   </span><span class=K>OPTIONAL</span><span class=D>,</span><p
+>                                                                                        <span class=C>--- поляризация антенной системы</span><p
+>   <b class=CI id=I392>setting</b>                                 <span class=D>[</span><span class=N>5</span><span class=D>] </span><a class=EN href=#I393>BsSetting</a>                           <span class=K>OPTIONAL</span><span class=D>, </span><span class=C>--- тип расположения БС</span><p
+>   <b class=CI id=I394>thickness</b>                               <span class=D>[</span><span class=N>6</span><span class=D>] </span><span class=K>INTEGER </span><span class=D>(</span><span class=N>0</span><span class=D>..</span><span class=N>359</span><span class=D>)                    </span><span class=K>OPTIONAL</span><span class=D>,</span><p
+>                             <span class=C>--- ширина диаграммы направленности основного лепестка сектора БС по вертикали (в градусах)</span><p
+>   <b class=CI id=I395>generation</b>                              <span class=D>[</span><span class=N>7</span><span class=D>] </span><a class=EN href=#I396>BsGeneration</a>                        <span class=K>OPTIONAL</span><span class=D>, </span><span class=C>--- поколение</span><p
+>   <b class=CI id=I397>controller-num</b>                          <span class=D>[</span><span class=N>8</span><span class=D>] </span><span class=K>UTF8String </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>1</span><span class=D>..</span><span class=N>128</span><span class=D>))          </span><span class=K>OPTIONAL</span><span class=D>, </span><span class=C>--- номер контроллера БС</span><p
+>   <b class=CI id=I398>bcc-ncc</b>                                 <span class=D>[</span><span class=N>9</span><span class=D>] </span><span class=K>UTF8String </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>1</span><span class=D>..</span><span class=N>128</span><span class=D>))          </span><span class=K>OPTIONAL</span><span class=D>,</span><p
+>                                                                       <span class=C>--- код идентификации базовой станции (BCC + NCC)</span><p
+>   <b class=CI id=I399>cell-type</b>                               <span class=D>[</span><span class=N>10</span><span class=D>] </span><a class=EN href=#I400>BsCellType</a>                         <span class=K>OPTIONAL</span><span class=D>,</span><p
+>                                                                         <span class=C>--- тип БС соты (макро-, микро-, пико-, фемто-)</span><p
+>   <b class=CI id=I401>radiation-class</b>                         <span class=D>[</span><span class=N>11</span><span class=D>] </span><span class=K>UTF8String </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>1</span><span class=D>..</span><span class=N>32</span><span class=D>))          </span><span class=K>OPTIONAL</span><span class=D>,</span><p
+>                                                                                 <span class=C>--- класс излучения (например: 200KG7D)</span><p
+>   <b class=CI id=I402>name</b>                                    <span class=D>[</span><span class=N>12</span><span class=D>] </span><span class=K>UTF8String </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>1</span><span class=D>..</span><span class=N>32</span><span class=D>))          </span><span class=K>OPTIONAL</span><span class=D>,</span><p
+>                                                           <span class=C>--- наименование базовой станции (номер БС в базах оператора)</span><p
+>   <b class=CI id=I403>channel</b>                                 <span class=D>[</span><span class=N>13</span><span class=D>] </span><span class=K>UTF8String </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>1</span><span class=D>..</span><span class=N>32</span><span class=D>))          </span><span class=K>OPTIONAL</span><p
+>                                                              <span class=C>--- десятичный номер канала (в соответствии со стандартом)</span><p
+><span class=D>}</span><p
+> <p
+><span class=C>-- тип БС соты (макро-, микро-, пико-, фемто-)</span><p
+><a class=EN id=I400 href='./summary.html#I404'><b>BsCellType</b></a> <span class=D>::=                          </span><span class=K>ENUMERATED </span><span class=D>{</span><b class=II id=I405>macro</b> <span class=D>(</span><span class=N>0</span><span class=D>), </span><b class=II id=I406>micro</b> <span class=D>(</span><span class=N>1</span><span class=D>), </span><b class=II id=I407>pico</b> <span class=D>(</span><span class=N>2</span><span class=D>), </span><b class=II id=I408>femto</b> <span class=D>(</span><span class=N>3</span><span class=D>)}</span><p
+> <p
+><span class=C>-- поколение БС</span><p
+><a class=EN id=I396 href='./summary.html#I409'><b>BsGeneration</b></a> <span class=D>::=                        </span><span class=K>ENUMERATED </span><span class=D>{</span><b class=II id=I410>g2</b> <span class=D>(</span><span class=N>0</span><span class=D>), </span><b class=II id=I411>g3</b> <span class=D>(</span><span class=N>1</span><span class=D>), </span><b class=II id=I412>g4</b> <span class=D>(</span><span class=N>2</span><span class=D>), </span><b class=II id=I413>g5</b> <span class=D>(</span><span class=N>3</span><span class=D>)}</span><p
+> <p
+><span class=C>-- тип расположения БС</span><p
+><a class=EN id=I393 href='./summary.html#I414'><b>BsSetting</b></a> <span class=D>::=                           </span><span class=K>ENUMERATED </span><span class=D>{</span><b class=II id=I415>indoor</b> <span class=D>(</span><span class=N>0</span><span class=D>), </span><b class=II id=I416>outdoor</b> <span class=D>(</span><span class=N>1</span><span class=D>), </span><b class=II id=I417>underground</b> <span class=D>(</span><span class=N>2</span><span class=D>)}</span><p
+> <p
+><a class=EN id=I379 href='./summary.html#I418'><b>CdmaAntenna</b></a> <span class=D>::=                         </span><a class=EN href=#I419>BroadbandWirelessParameters</a>         <span class=C>---  параметры антенной системы CDMA-сектора</span><p
+> <p
+><a class=EN id=I382 href='./summary.html#I420'><b>WirelessAntenna</b></a> <span class=D>::=                     </span><a class=EN href=#I419>BroadbandWirelessParameters</a>    <span class=C>--- параметры антенной системы WiFi/WiMAX-сектора</span><p
+> <p
+><a class=EN id=I419 href='./summary.html#I421'><b>BroadbandWirelessParameters</b></a> <span class=D>::=         </span><span class=K>SEQUENCE </span><span class=D>{</span><p
+>   <b class=CI id=I422>azimuth</b>                                 <span class=K>INTEGER </span><span class=D>(-</span><span class=N>1</span><span class=D>..</span><span class=N>359</span><span class=D>),</span><p
+>                               <span class=C>---  азимут относительно направления на север  в градусах, если -1, то нет направленности</span><p
+>   <b class=CI id=I423>width</b>                                   <span class=K>INTEGER </span><span class=D>(</span><span class=N>0</span><span class=D>..</span><span class=N>359</span><span class=D>),                            </span><span class=C>--- ширина растра в градусах</span><p
+>   <b class=CI id=I424>horizon-angle</b>                           <span class=K>INTEGER </span><span class=D>(</span><span class=N>0</span><span class=D>..</span><span class=N>359</span><span class=D>),                        </span><span class=C>--- угол наклона сектора к горизонту</span><p
+>   <b class=CI id=I425>power</b>                                   <span class=D>[</span><span class=N>0</span><span class=D>] </span><span class=K>INTEGER </span><span class=D>(</span><span class=N>0</span><span class=D>..</span><span class=N>25000</span><span class=D>)                  </span><span class=K>OPTIONAL</span><span class=D>,</span><p
+>                                                                                          <span class=C>--- мощность в ваттах (сектор)</span><p
+>   <b class=CI id=I426>frequency-start</b>                         <span class=D>[</span><span class=N>1</span><span class=D>] </span><span class=K>INTEGER </span><span class=D>(</span><span class=N>0</span><span class=D>..</span><span class=N>10000000000</span><span class=D>)            </span><span class=K>OPTIONAL</span><span class=D>,</span><p
+>                                                                         <span class=C>--- нижняя частота излучения диапазона (сектор)</span><p
+>   <b class=CI id=I427>frequency-stop</b>                          <span class=D>[</span><span class=N>2</span><span class=D>] </span><span class=K>INTEGER </span><span class=D>(</span><span class=N>0</span><span class=D>..</span><span class=N>10000000000</span><span class=D>)            </span><span class=K>OPTIONAL</span><span class=D>,</span><p
+>                                                                        <span class=C>--- верхняя частота излучения диапазона (сектор)</span><p
+>   <b class=CI id=I428>leaf-level</b>                              <span class=D>[</span><span class=N>3</span><span class=D>] </span><span class=K>INTEGER </span><span class=D>(-</span><span class=N>45</span><span class=D>..</span><span class=N>45</span><span class=D>)                   </span><span class=K>OPTIONAL</span><span class=D>,</span><p
+>                                                                                         <span class=C>---  уровень  боковых лепестков</span><p
+>   <b class=CI id=I429>vertical-lift</b>                           <span class=D>[</span><span class=N>4</span><span class=D>] </span><span class=K>INTEGER </span><span class=D>(</span><span class=N>0</span><span class=D>..</span><span class=N>100</span><span class=D>)                    </span><span class=K>OPTIONAL</span><span class=D>, </span><span class=C>---  высота подвеса сектора</span><p
+>   <b class=CI id=I430>gain-factor</b>                             <span class=D>[</span><span class=N>5</span><span class=D>] </span><span class=K>INTEGER </span><span class=D>(-</span><span class=N>100</span><span class=D>..</span><span class=N>100</span><span class=D>)                 </span><span class=K>OPTIONAL</span><span class=D>,</span><p
+>                                                                                   <span class=C>--- коэффициент усиления антенны (Дб)</span><p
+>   <b class=CI id=I431>polarization</b>                            <span class=D>[</span><span class=N>6</span><span class=D>] </span><span class=K>INTEGER </span><span class=D>(-</span><span class=N>45</span><span class=D>..</span><span class=N>45</span><span class=D>)                   </span><span class=K>OPTIONAL</span><p
+>                                                                                        <span class=C>--- поляризация антенной системы</span><p
+><span class=D>}</span><p
+> <p
+><span class=C>--- виды базовых станций</span><p
+><a class=EN id=I354 href='./summary.html#I432'><b>BasicStationType</b></a> <span class=D>::=                    </span><span class=K>ENUMERATED </span><span class=D>{</span><b class=II id=I433>gsm</b> <span class=D>(</span><span class=N>0</span><span class=D>), </span><b class=II id=I434>cdma</b> <span class=D>(</span><span class=N>1</span><span class=D>), </span><b class=II id=I435>umts</b> <span class=D>(</span><span class=N>2</span><span class=D>), </span><b class=II id=I436>wifi</b> <span class=D>(</span><span class=N>3</span><span class=D>), </span><b class=II id=I437>wimax</b> <span class=D>(</span><span class=N>4</span><span class=D>)}</span><p
+> <p
+><span class=E3 title='Error: Invalid object assignment for object &quot;roamingPartnersRecords&quot;: Invalid assignment.'><a class=EN id=I299 href='./summary.html#I438'><b>roamingPartnersRecords</b></a></span>                  <a class=EN href='./Classification.asn.html#I47'>TAGGED</a> <span class=D>::= {</span><span class=W>OID </span><span class=E3 title='Error: Invalid value: The type of the value is incompatible with its context.'><span class=D id=I439>{</span></span><span class=E>sorm-report-dictionary-roaming-partners</span><span class=D>} </span><span class=W>DATA </span><span class=K>SEQUENCE OF</span><p
+>                                             <a class=EN id=I440 href=#I441>RoamingPartnerRecord</a><span class=D>}</span><p
+> <p
+><a class=EN id=I441 href='./summary.html#I442'><b>RoamingPartnerRecord</b></a> <span class=D>::=                </span><span class=K>SEQUENCE </span><span class=D>{</span><p
+>   <b class=CI id=I443>telco-id</b>                                <a class=EN href=#I258>TelcoID</a><span class=D>,     </span><span class=C>--- идентификатор оператора связи или структурного подразделения</span><p
+>   <b class=CI id=I444>roaming-id</b>                              <span class=K>INTEGER </span><span class=D>(</span><span class=N>0</span><span class=D>..</span><span class=N>4294967295</span><span class=D>),              </span><span class=C>--- идентификатор роумингового партнера</span><p
+>   <b class=CI id=I445>begin-time</b>                              <a class=EN href='./Sorm.asn.html#I264'>DateAndTime</a><span class=D>,                               </span><span class=C>--- время начала действия роуминга</span><p
+>   <b class=CI id=I446>end-time</b>                                <a class=EN href='./Sorm.asn.html#I264'>DateAndTime</a>                             <span class=K>OPTIONAL</span><span class=D>,</span><p
+>                                                                                       <span class=C>--- время конца действия роуминга</span><p
+>   <b class=CI id=I447>description</b>                             <span class=K>UTF8String </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>1</span><span class=D>..</span><span class=N>256</span><span class=D>))                   </span><span class=C>--- описание</span><p
+><span class=D>}</span><p
+> <p
+><span class=E3 title='Error: Invalid object assignment for object &quot;switchesRecords&quot;: Invalid assignment.'><a class=EN id=I300 href='./summary.html#I448'><b>switchesRecords</b></a></span>                         <a class=EN href='./Classification.asn.html#I47'>TAGGED</a> <span class=D>::= {</span><span class=W>OID </span><span class=E3 title='Error: Invalid value: The type of the value is incompatible with its context.'><span class=D id=I449>{</span></span><span class=E>sorm-report-dictionary-switches</span><span class=D>} </span><span class=W>DATA </span><span class=K>SEQUENCE OF</span><p
+>                                             <a class=EN id=I450 href=#I451>SwitchesRecord</a><span class=D>}</span><p
+> <p
+><a class=EN id=I451 href='./summary.html#I452'><b>SwitchesRecord</b></a> <span class=D>::=                      </span><span class=K>SEQUENCE </span><span class=D>{</span><p
+>   <b class=CI id=I453>telco-id</b>                                <a class=EN href=#I258>TelcoID</a><span class=D>,     </span><span class=C>--- идентификатор оператора связи или структурного подразделения</span><p
+>   <b class=CI id=I454>switch-id</b>                               <span class=K>UTF8String </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>1</span><span class=D>..</span><span class=N>128</span><span class=D>)),                  </span><span class=C>--- идентификатор коммутатора</span><p
+>   <b class=CI id=I455>begin-time</b>                              <a class=EN href='./Sorm.asn.html#I264'>DateAndTime</a><span class=D>,                            </span><span class=C>--- время начала действия коммутатора</span><p
+>   <b class=CI id=I456>end-time</b>                                <a class=EN href='./Sorm.asn.html#I264'>DateAndTime</a>                             <span class=K>OPTIONAL</span><span class=D>,</span><p
+>                                                                                    <span class=C>--- время конца действия коммутатора</span><p
+>   <b class=CI id=I457>description</b>                             <span class=K>UTF8String </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>1</span><span class=D>..</span><span class=N>256</span><span class=D>)),                  </span><span class=C>--- описание</span><p
+>   <b class=CI id=I458>network-type</b>                            <a class=EN href='./NetworkIdentifiers.asn.html#I275'>NetworkType</a><span class=D>,                                 </span><span class=C>--- тип сети связи</span><p
+>   <b class=CI id=I459>address</b>                                 <a class=EN href='./Addresses.asn.html#I6'>ReportedAddress</a><span class=D>,                        </span><span class=C>--- адрес места установки коммутатора</span><p
+>   <b class=CI id=I460>switch-sign</b>                             <span class=K>NumericString </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>1</span><span class=D>..</span><span class=N>18</span><span class=D>))            </span><span class=K>OPTIONAL</span><span class=D>,</span><p
+>                                                                                <span class=C>--- телефонный идентификатор коммутатора</span><p
+>   <b class=CI id=I461>switch-type</b>                             <span class=K>ENUMERATED </span><span class=D>{</span><p
+>                                              <b class=II id=I462>internal</b> <span class=D>(</span><span class=N>0</span><span class=D>), </span><span class=C>--- внутренний</span><p
+>                                              <b class=II id=I463>border</b> <span class=D>(</span><span class=N>1</span><span class=D>) </span><span class=C>--- пограничный</span><p
+>                                           <span class=D>}</span><p
+><span class=D>}</span><p
+> <p
+><span class=E3 title='Error: Invalid object assignment for object &quot;gatesRecords&quot;: Invalid assignment.'><a class=EN id=I301 href='./summary.html#I464'><b>gatesRecords</b></a></span>                            <a class=EN href='./Classification.asn.html#I47'>TAGGED</a> <span class=D>::= {</span><span class=W>OID </span><span class=E3 title='Error: Invalid value: The type of the value is incompatible with its context.'><span class=D id=I465>{</span></span><span class=E>sorm-report-dictionary-gates</span><span class=D>} </span><span class=W>DATA </span><span class=K>SEQUENCE OF </span><a class=EN id=I466 href=#I467>GatesRecord</a><span class=D>}</span><p
+> <p
+><a class=EN id=I467 href='./summary.html#I468'><b>GatesRecord</b></a> <span class=D>::=                         </span><span class=K>SEQUENCE </span><span class=D>{</span><p
+>   <b class=CI id=I469>telco-id</b>                                <a class=EN href=#I258>TelcoID</a><span class=D>,     </span><span class=C>--- идентификатор оператора связи или структурного подразделения</span><p
+>   <b class=CI id=I470>gate-id</b>                                 <span class=K>INTEGER </span><span class=D>(</span><span class=N>0</span><span class=D>..</span><span class=N>4294967295</span><span class=D>),                     </span><span class=C>--- идентификатор шлюза</span><p
+>   <b class=CI id=I471>ip-list</b>                                 <a class=EN href=#I370>IPList</a><span class=D>,                                      </span><span class=C>--- IP адрес шлюза</span><p
+>   <b class=CI id=I472>begin-time</b>                              <a class=EN href='./Sorm.asn.html#I264'>DateAndTime</a><span class=D>,                                 </span><span class=C>--- время начала действия шлюза</span><p
+>   <b class=CI id=I473>end-time</b>                                <a class=EN href='./Sorm.asn.html#I264'>DateAndTime</a>                             <span class=K>OPTIONAL</span><span class=D>,</span><p
+>                                                                                          <span class=C>--- время конца действия шлюза</span><p
+>   <b class=CI id=I474>description</b>                             <span class=K>UTF8String </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>1</span><span class=D>..</span><span class=N>256</span><span class=D>)),                  </span><span class=C>--- описание</span><p
+>   <b class=CI id=I475>address</b>                                 <a class=EN href='./Addresses.asn.html#I6'>ReportedAddress</a><span class=D>,                             </span><span class=C>--- адрес места установки шлюза</span><p
+>   <b class=CI id=I476>gate-type</b>                               <span class=K>ENUMERATED </span><span class=D>{ </span><span class=C>--- тип IP-шлюза</span><p
+>                                              <b class=II id=I477>sgsn</b> <span class=D>(</span><span class=N>0</span><span class=D>), </span><b class=II id=I478>ggsn</b> <span class=D>(</span><span class=N>1</span><span class=D>), </span><b class=II id=I479>smsc</b> <span class=D>(</span><span class=N>2</span><span class=D>), </span><b class=II id=I480>gmsc</b> <span class=D>(</span><span class=N>3</span><span class=D>), </span><b class=II id=I481>hss</b> <span class=D>(</span><span class=N>4</span><span class=D>), </span><b class=II id=I482>pstn</b> <span class=D>(</span><span class=N>5</span><span class=D>), </span><b class=II id=I483>voip-gw</b> <span class=D>(</span><span class=N>6</span><span class=D>),</span><p
+>                                              <b class=II id=I484>aaa</b> <span class=D>(</span><span class=N>7</span><span class=D>), </span><b class=II id=I485>nat</b> <span class=D>(</span><span class=N>8</span><span class=D>)</span><p
+>                                           <span class=D>}</span><p
+><span class=D>}</span><p
+> <p
+><span class=E3 title='Error: Invalid object assignment for object &quot;callTypesRecords&quot;: Invalid assignment.'><a class=EN id=I302 href='./summary.html#I486'><b>callTypesRecords</b></a></span>                        <a class=EN href='./Classification.asn.html#I47'>TAGGED</a> <span class=D>::= {</span><span class=W>OID </span><span class=E3 title='Error: Invalid value: The type of the value is incompatible with its context.'><span class=D id=I487>{</span></span><span class=E>sorm-report-dictionary-call-types</span><span class=D>} </span><span class=W>DATA </span><span class=K>SEQUENCE OF</span><p
+>                                             <a class=EN id=I488 href=#I489>CallsTypesRecord</a><span class=D>}</span><p
+> <p
+><a class=EN id=I489 href='./summary.html#I490'><b>CallsTypesRecord</b></a> <span class=D>::=                    </span><span class=K>SEQUENCE </span><span class=D>{</span><p
+>   <b class=CI id=I491>telco-id</b>                                <a class=EN href=#I258>TelcoID</a><span class=D>,      </span><span class=C>--- идентификатор оператора связи илиструктурного подразделения</span><p
+>   <b class=CI id=I492>call-type-id</b>                            <span class=K>INTEGER </span><span class=D>(</span><span class=N>0</span><span class=D>..</span><span class=N>4294967295</span><span class=D>),                     </span><span class=C>--- идентификатор типа вызова</span><p
+>   <b class=CI id=I493>begin-time</b>                              <a class=EN href='./Sorm.asn.html#I264'>DateAndTime</a><span class=D>,                                 </span><span class=C>--- время начала действия</span><p
+>   <b class=CI id=I494>end-time</b>                                <a class=EN href='./Sorm.asn.html#I264'>DateAndTime</a>                             <span class=K>OPTIONAL</span><span class=D>, </span><span class=C>--- время конца действия</span><p
+>   <b class=CI id=I495>description</b>                             <span class=K>UTF8String </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>1</span><span class=D>..</span><span class=N>256</span><span class=D>))                   </span><span class=C>--- описание</span><p
+><span class=D>}</span><p
+> <p
+><span class=E3 title='Error: Invalid object assignment for object &quot;supplementServicesRecords&quot;: Invalid assignment.'><a class=EN id=I303 href='./summary.html#I496'><b>supplementServicesRecords</b></a></span>               <a class=EN href='./Classification.asn.html#I47'>TAGGED</a> <span class=D>::= {</span><span class=W>OID </span><span class=E3 title='Error: Invalid value: The type of the value is incompatible with its context.'><span class=D id=I497>{</span></span><span class=E>sorm-report-dictionary-supplement-services</span><span class=D>} </span><span class=W>DATA </span><span class=K>SEQUENCE OF</span><p
+>                                             <a class=EN id=I498 href=#I499>SupplementServicesRecord</a><span class=D>}</span><p
+> <p
+><a class=EN id=I499 href='./summary.html#I500'><b>SupplementServicesRecord</b></a> <span class=D>::=            </span><span class=K>SEQUENCE </span><span class=D>{</span><p
+>   <b class=CI id=I501>telco-id</b>                                <a class=EN href=#I258>TelcoID</a><span class=D>,     </span><span class=C>--- идентификатор оператора связи или структурного подразделения</span><p
+>   <b class=CI id=I502>service-id</b>                              <span class=K>INTEGER </span><span class=D>(</span><span class=N>0</span><span class=D>..</span><span class=N>4294967295</span><span class=D>),                     </span><span class=C>--- идентификатор сервиса</span><p
+>   <b class=CI id=I503>mnemonic</b>                                <span class=K>UTF8String </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>1</span><span class=D>..</span><span class=N>64</span><span class=D>)),                   </span><span class=C>--- мнемоническое обозначение</span><p
+>   <b class=CI id=I504>begin-time</b>                              <a class=EN href='./Sorm.asn.html#I264'>DateAndTime</a><span class=D>,                                 </span><span class=C>--- время начала действия</span><p
+>   <b class=CI id=I505>end-time</b>                                <a class=EN href='./Sorm.asn.html#I264'>DateAndTime</a>                             <span class=K>OPTIONAL</span><span class=D>, </span><span class=C>--- время конца действия</span><p
+>   <b class=CI id=I506>description</b>                             <span class=K>UTF8String </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>1</span><span class=D>..</span><span class=N>256</span><span class=D>))                   </span><span class=C>--- описание</span><p
+><span class=D>}</span><p
+> <p
+><span class=E3 title='Error: Invalid object assignment for object &quot;payTypesRecords&quot;: Invalid assignment.'><a class=EN id=I304 href='./summary.html#I507'><b>payTypesRecords</b></a></span>                         <a class=EN href='./Classification.asn.html#I47'>TAGGED</a> <span class=D>::= {</span><span class=W>OID </span><span class=E3 title='Error: Invalid value: The type of the value is incompatible with its context.'><span class=D id=I508>{</span></span><span class=E>sorm-report-dictionary-pay-types</span><span class=D>} </span><span class=W>DATA </span><span class=K>SEQUENCE OF</span><p
+>                                             <a class=EN id=I509 href=#I510>PayTypesRecord</a><span class=D>}</span><p
+> <p
+><a class=EN id=I510 href='./summary.html#I511'><b>PayTypesRecord</b></a> <span class=D>::=                      </span><span class=K>SEQUENCE </span><span class=D>{</span><p
+>   <b class=CI id=I512>telco-id</b>                                <a class=EN href=#I258>TelcoID</a><span class=D>,     </span><span class=C>--- идентификатор оператора связи или структурного подразделения</span><p
+>   <b class=CI id=I513>pay-type-id</b>                             <span class=K>INTEGER </span><span class=D>(</span><span class=N>0</span><span class=D>..</span><span class=N>4294967295</span><span class=D>),                     </span><span class=C>--- идентификатор типа оплаты</span><p
+>   <b class=CI id=I514>begin-time</b>                              <a class=EN href='./Sorm.asn.html#I264'>DateAndTime</a><span class=D>,                                 </span><span class=C>--- время начала действия</span><p
+>   <b class=CI id=I515>end-time</b>                                <a class=EN href='./Sorm.asn.html#I264'>DateAndTime</a>                             <span class=K>OPTIONAL</span><span class=D>, </span><span class=C>--- время конца действия</span><p
+>   <b class=CI id=I516>description</b>                             <span class=K>UTF8String </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>1</span><span class=D>..</span><span class=N>256</span><span class=D>))                   </span><span class=C>--- описание</span><p
+><span class=D>}</span><p
+> <p
+><span class=E3 title='Error: Invalid object assignment for object &quot;terminationCausesRecords&quot;: Invalid assignment.'><a class=EN id=I305 href='./summary.html#I517'><b>terminationCausesRecords</b></a></span>                <a class=EN href='./Classification.asn.html#I47'>TAGGED</a> <span class=D>::= {</span><span class=W>OID </span><span class=E3 title='Error: Invalid value: The type of the value is incompatible with its context.'><span class=D id=I518>{</span></span><span class=E>sorm-report-dictionary-termination-causes</span><span class=D>} </span><span class=W>DATA </span><span class=K>SEQUENCE OF</span><p
+>                                             <a class=EN id=I519 href=#I520>TerminationCausesRecord</a><span class=D>}</span><p
+> <p
+><a class=EN id=I520 href='./summary.html#I521'><b>TerminationCausesRecord</b></a> <span class=D>::=             </span><span class=K>SEQUENCE </span><span class=D>{</span><p
+>   <b class=CI id=I522>telco-id</b>                                <a class=EN href=#I258>TelcoID</a><span class=D>,     </span><span class=C>--- идентификатор оператора связи или структурного подразделения</span><p
+>   <b class=CI id=I523>termination-cause-id</b>                    <span class=K>INTEGER </span><span class=D>(</span><span class=N>0</span><span class=D>..</span><span class=N>16384</span><span class=D>),                          </span><span class=C>--- код причины</span><p
+>   <b class=CI id=I524>begin-time</b>                              <a class=EN href='./Sorm.asn.html#I264'>DateAndTime</a><span class=D>,                                 </span><span class=C>--- время начала действия</span><p
+>   <b class=CI id=I525>end-time</b>                                <a class=EN href='./Sorm.asn.html#I264'>DateAndTime</a>                             <span class=K>OPTIONAL</span><span class=D>, </span><span class=C>--- время конца действия</span><p
+>   <b class=CI id=I526>description</b>                             <span class=K>UTF8String </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>1</span><span class=D>..</span><span class=N>256</span><span class=D>)),                  </span><span class=C>--- описание</span><p
+>   <b class=CI id=I527>network-type</b>                            <a class=EN href='./NetworkIdentifiers.asn.html#I275'>NetworkType</a>                                  <span class=C>--- тип сети связи</span><p
+><span class=D>}</span><p
+> <p
+><span class=E3 title='Error: Invalid object assignment for object &quot;ipNumberingPlanRecords&quot;: Invalid assignment.'><a class=EN id=I306 href='./summary.html#I528'><b>ipNumberingPlanRecords</b></a></span>                  <a class=EN href='./Classification.asn.html#I47'>TAGGED</a> <span class=D>::= {</span><span class=W>OID </span><span class=E3 title='Error: Invalid value: The type of the value is incompatible with its context.'><span class=D id=I529>{</span></span><span class=E>sorm-report-dictionary-ip-numbering-plan</span><span class=D>} </span><span class=W>DATA </span><span class=K>SEQUENCE OF</span><p
+>                                             <a class=EN id=I530 href=#I531>IpNumberingPlanRecord</a><span class=D>}</span><p
+> <p
+><a class=EN id=I531 href='./summary.html#I532'><b>IpNumberingPlanRecord</b></a> <span class=D>::=               </span><span class=K>SEQUENCE </span><span class=D>{</span><p
+>   <b class=CI id=I533>telco-id</b>                                <a class=EN href=#I258>TelcoID</a><span class=D>,                        </span><span class=C>--- идентификатор оператора связи или филиала</span><p
+>   <b class=CI id=I534>description</b>                             <span class=K>UTF8String </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>1</span><span class=D>..</span><span class=N>256</span><span class=D>)),                 </span><span class=C>--- описание назначения диапазона</span><p
+>   <b class=CI id=I535>network-address</b>                         <a class=EN href='./NetworkIdentifiers.asn.html#I271'>IPAddress</a><span class=D>,                                   </span><span class=C>--- подсеть</span><p
+>   <b class=CI id=I536>network-mask</b>                            <a class=EN href='./NetworkIdentifiers.asn.html#I273'>IPMask</a><span class=D>,                                      </span><span class=C>--- маска подсети</span><p
+>   <b class=CI id=I537>begin-time</b>                              <a class=EN href='./Sorm.asn.html#I264'>DateAndTime</a><span class=D>,                                 </span><span class=C>--- время начала действия</span><p
+>   <b class=CI id=I538>end-time</b>                                <a class=EN href='./Sorm.asn.html#I264'>DateAndTime</a>                             <span class=K>OPTIONAL  </span><span class=C>--- время конца действия</span><p
+><span class=D>}</span><p
+> <p
+><span class=E3 title='Error: Invalid object assignment for object &quot;telephoneNumberingPlanRecords&quot;: Invalid assignment.'><a class=EN id=I307 href='./summary.html#I539'><b>telephoneNumberingPlanRecords</b></a></span>           <a class=EN href='./Classification.asn.html#I47'>TAGGED</a> <span class=D>::= {</span><span class=W>OID </span><span class=E3 title='Error: Invalid value: The type of the value is incompatible with its context.'><span class=D id=I540>{</span></span><span class=E>sorm-report-dictionary-phone-numbering-plan</span><span class=D>} </span><span class=W>DATA </span><span class=K>SEQUENCE OF</span><p
+>                                             <a class=EN id=I541 href=#I542>TelephoneNumberingPlanRecord</a><span class=D>}</span><p
+> <p
+><a class=EN id=I542 href='./summary.html#I543'><b>TelephoneNumberingPlanRecord</b></a> <span class=D>::=        </span><span class=K>SEQUENCE </span><span class=D>{</span><p
+>   <b class=CI id=I544>telco-id</b>                                <a class=EN href=#I258>TelcoID</a><span class=D>,     </span><span class=C>--- идентификатор оператора связи или структурного подразделения</span><p
+>   <b class=CI id=I545>iso-3166-alpha-2</b>                        <span class=K>UTF8String </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>2</span><span class=D>)),                 </span><span class=C>--- 2-х символьная аббревиатура страны</span><p
+>   <b class=CI id=I546>iso-3166-alpha-3</b>                        <span class=K>UTF8String </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>3</span><span class=D>)),                 </span><span class=C>--- 3-х символьная аббревиатура страны</span><p
+>   <b class=CI id=I547>country-code</b>                            <span class=K>UTF8String </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>3</span><span class=D>)),                       </span><span class=C>--- международный код страны</span><p
+>   <b class=CI id=I548>national-significant-number</b>             <span class=K>UTF8String </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>14</span><span class=D>)),</span><p
+>                                                       <span class=C>--- номерной телефонный префикс оператора связи, включая код зоны</span><p
+>   <b class=CI id=I549>area-code-length</b>                        <span class=K>INTEGER </span><span class=D>(</span><span class=N>0</span><span class=D>..</span><span class=N>6</span><span class=D>),     </span><span class=C>--- длина кода зоны в телефонном префиксе оператора связи</span><p
+>   <b class=CI id=I550>min-subscr-nr-length</b>                    <span class=K>INTEGER </span><span class=D>(</span><span class=N>1</span><span class=D>..</span><span class=N>15</span><span class=D>),</span><p
+>                          <span class=C>--- минимальная длина абонентского номера, символов (national-significant-number + min-subscr)</span><p
+>   <b class=CI id=I551>max-subscr-nr-length</b>                    <span class=K>INTEGER </span><span class=D>(</span><span class=N>1</span><span class=D>..</span><span class=N>15</span><span class=D>),</span><p
+>                         <span class=C>--- максимальная длина абонентского номера, символов (national-significant-number + max-subscr)</span><p
+>   <b class=CI id=I552>utc-min</b>                                 <span class=K>INTEGER </span><span class=D>(-</span><span class=N>12</span><span class=D>..</span><span class=N>12</span><span class=D>),                           </span><span class=C>--- минимальный часовой пояс</span><p
+>   <b class=CI id=I553>utc-max</b>                                 <span class=K>INTEGER </span><span class=D>(-</span><span class=N>12</span><span class=D>..</span><span class=N>12</span><span class=D>),                           </span><span class=C>--- максимальный часовой пояс</span><p
+>   <b class=CI id=I554>destination</b>                             <span class=K>UTF8String </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>2</span><span class=D>..</span><span class=N>256</span><span class=D>)),                  </span><span class=C>--- страна</span><p
+>   <b class=CI id=I555>operator-type-id</b>                        <a class=EN href='./NetworkIdentifiers.asn.html#I275'>NetworkType</a><span class=D>,                                 </span><span class=C>--- тип сети связи оператора</span><p
+>   <b class=CI id=I556>capacity-from</b>                           <span class=K>NumericString </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>1</span><span class=D>..</span><span class=N>15</span><span class=D>)),</span><p
+>                                                                      <span class=C>--- нижняя граница диапазона выданных номеров (от)</span><p
+>   <b class=CI id=I557>capacity-to</b>                             <span class=K>NumericString </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>1</span><span class=D>..</span><span class=N>15</span><span class=D>)),</span><p
+>                                                                     <span class=C>--- верхняя граница диапазона выданных номеров (до)</span><p
+>   <b class=CI id=I558>capacity-size</b>                           <span class=K>INTEGER </span><span class=D>(</span><span class=N>1</span><span class=D>..</span><span class=N>1000000</span><span class=D>), </span><span class=C>--- количество выделенных номеров в диапазоне (емкость)</span><p
+>   <b class=CI id=I559>location</b>                                <span class=K>UTF8String </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>0</span><span class=D>..</span><span class=N>256</span><span class=D>)),</span><p
+>                                                                   <span class=C>--- текстовое описание местоположения оператора связи</span><p
+>   <b class=CI id=I560>registrar</b>                               <span class=K>UTF8String </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>0</span><span class=D>..</span><span class=N>256</span><span class=D>)),                  </span><span class=C>--- наименование оператора связи</span><p
+>   <b class=CI id=I561>range-activation</b>                        <a class=EN href='./Sorm.asn.html#I264'>DateAndTime</a><span class=D>,                </span><span class=C>--- дата и время начала действия номерной емкости</span><p
+>   <b class=CI id=I562>mobile-country-code</b>                     <span class=K>NumericString </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>3</span><span class=D>)),                    </span><span class=C>--- MCC</span><p
+>   <b class=CI id=I563>mobile-network-code</b>                     <span class=K>NumericString </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>3</span><span class=D>)),                    </span><span class=C>--- MNC</span><p
+>   <b class=CI id=I564>range-deactivation</b>                      <span class=D>[</span><span class=N>0</span><span class=D>] </span><a class=EN href='./Sorm.asn.html#I264'>DateAndTime</a>                         <span class=K>OPTIONAL</span><span class=D>,</span><p
+>                                                                   <span class=C>--- дата и время завершения действия номерной емкости</span><p
+>   <b class=CI id=I565>range-status</b>                            <span class=D>[</span><span class=N>1</span><span class=D>] </span><span class=K>UTF8String </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>2</span><span class=D>..</span><span class=N>128</span><span class=D>))          </span><span class=K>OPTIONAL</span><span class=D>,</span><p
+>                                                                                  <span class=C>--- текущее состояние номерной емкости</span><p
+>   <b class=CI id=I566>description</b>                             <span class=D>[</span><span class=N>2</span><span class=D>] </span><span class=K>UTF8String </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>2</span><span class=D>..</span><span class=N>256</span><span class=D>))          </span><span class=K>OPTIONAL</span><span class=D>,</span><p
+>                                                             <span class=C>--- расшифровка оказываемых услуг связи по номерной емкости</span><p
+>   <b class=CI id=I567>operating-company-number</b>                <span class=D>[</span><span class=N>3</span><span class=D>] </span><span class=K>UTF8String </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>0</span><span class=D>..</span><span class=N>4</span><span class=D>))            </span><span class=K>OPTIONAL</span><p
+>                                                                         <span class=C>--- международный идентификатор оператора связи</span><p
+><span class=D>}</span><p
+> <p
+><span class=E3 title='Error: Invalid object assignment for object &quot;docTypesRecords&quot;: Invalid assignment.'><a class=EN id=I308 href='./summary.html#I568'><b>docTypesRecords</b></a></span>                         <a class=EN href='./Classification.asn.html#I47'>TAGGED</a> <span class=D>::= {</span><span class=W>OID </span><span class=E3 title='Error: Invalid value: The type of the value is incompatible with its context.'><span class=D id=I569>{</span></span><span class=E>sorm-report-dictionary-doc-types</span><span class=D>} </span><span class=W>DATA </span><span class=K>SEQUENCE OF</span><p
+>                                             <a class=EN id=I570 href=#I571>DocTypesRecord</a><span class=D>}</span><p
+> <p
+><a class=EN id=I571 href='./summary.html#I572'><b>DocTypesRecord</b></a> <span class=D>::=                      </span><span class=K>SEQUENCE </span><span class=D>{</span><p
+>   <b class=CI id=I573>telco-id</b>                                <a class=EN href=#I258>TelcoID</a><span class=D>,     </span><span class=C>--- идентификатор оператора связи или структурного подразделения</span><p
+>   <b class=CI id=I574>doc-type-id</b>                             <span class=K>INTEGER </span><span class=D>(</span><span class=N>0</span><span class=D>..</span><span class=N>65535</span><span class=D>),                          </span><span class=C>--- идентификатор типа документа</span><p
+>   <b class=CI id=I575>begin-time</b>                              <a class=EN href='./Sorm.asn.html#I264'>DateAndTime</a><span class=D>,                                 </span><span class=C>--- время начала действия</span><p
+>   <b class=CI id=I576>end-time</b>                                <a class=EN href='./Sorm.asn.html#I264'>DateAndTime</a>                             <span class=K>OPTIONAL</span><span class=D>, </span><span class=C>--- время конца действия</span><p
+>   <b class=CI id=I577>description</b>                             <span class=K>UTF8String </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>1</span><span class=D>..</span><span class=N>256</span><span class=D>))                   </span><span class=C>--- описание (наименование)</span><p
+><span class=D>}</span><p
+> <p
+><span class=E3 title='Error: Invalid object assignment for object &quot;ipDataPointsRecords&quot;: Invalid assignment.'><a class=EN id=I309 href='./summary.html#I578'><b>ipDataPointsRecords</b></a></span>                     <a class=EN href='./Classification.asn.html#I47'>TAGGED</a> <span class=D>::= {</span><span class=W>OID </span><span class=E3 title='Error: Invalid value: The type of the value is incompatible with its context.'><span class=D id=I579>{</span></span><span class=E>sorm-report-dictionary-ip-data-points</span><span class=D>} </span><span class=W>DATA </span><span class=K>SEQUENCE OF</span><p
+>                                             <a class=EN id=I580 href=#I581>IpDataPointRecord</a><span class=D>}</span><p
+> <p
+><a class=EN id=I581 href='./summary.html#I582'><b>IpDataPointRecord</b></a> <span class=D>::=                   </span><span class=K>SEQUENCE </span><span class=D>{</span><p
+>   <b class=CI id=I583>telco-id</b>                                <a class=EN href=#I258>TelcoID</a><span class=D>,     </span><span class=C>--- идентификатор оператора связи или структурного подразделения</span><p
+>   <b class=CI id=I584>point-id</b>                                <span class=K>INTEGER </span><span class=D>(</span><span class=N>0</span><span class=D>..</span><span class=N>1000</span><span class=D>),                        </span><span class=C>--- идентификатор точки подключения</span><p
+>   <b class=CI id=I585>description</b>                             <span class=K>UTF8String </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>1</span><span class=D>..</span><span class=N>256</span><span class=D>)),     </span><span class=C>--- описание (наименование) точки подключения</span><p
+>   <b class=CI id=I586>begin-time</b>                              <a class=EN href='./Sorm.asn.html#I264'>DateAndTime</a><span class=D>,                                 </span><span class=C>--- время начала действия</span><p
+>   <b class=CI id=I587>end-time</b>                                <a class=EN href='./Sorm.asn.html#I264'>DateAndTime</a>                             <span class=K>OPTIONAL  </span><span class=C>--- время конца действия</span><p
+><span class=D>}</span><p
+> <p
+><span class=E3 title='Error: Invalid object assignment for object &quot;specialNumbersRecords&quot;: Invalid assignment.'><a class=EN id=I310 href='./summary.html#I588'><b>specialNumbersRecords</b></a></span>                   <a class=EN href='./Classification.asn.html#I47'>TAGGED</a> <span class=D>::= {</span><span class=W>OID </span><span class=E3 title='Error: Invalid value: The type of the value is incompatible with its context.'><span class=D id=I589>{</span></span><span class=E>sorm-report-dictionary-special-numbers</span><span class=D>} </span><span class=W>DATA </span><span class=K>SEQUENCE OF</span><p
+>                                             <a class=EN id=I590 href=#I591>SpecialNumberRecord</a><span class=D>}</span><p
+> <p
+><a class=EN id=I591 href='./summary.html#I592'><b>SpecialNumberRecord</b></a> <span class=D>::=                 </span><span class=K>SEQUENCE </span><span class=D>{</span><p
+>   <b class=CI id=I593>telco-id</b>                                <a class=EN href=#I258>TelcoID</a><span class=D>,     </span><span class=C>--- идентификатор оператора связи или структурного подразделения</span><p
+>   <b class=CI id=I594>directory-number</b>                        <span class=K>UTF8String </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>2</span><span class=D>..</span><span class=N>32</span><span class=D>)),                   </span><span class=C>--- специальный номер</span><p
+>   <b class=CI id=I595>description</b>                             <span class=K>UTF8String </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>1</span><span class=D>..</span><span class=N>256</span><span class=D>)),</span><p
+>                                                             <span class=C>--- описание (наименование, назначение) специального номера</span><p
+>   <b class=CI id=I596>begin-time</b>                              <a class=EN href='./Sorm.asn.html#I264'>DateAndTime</a><span class=D>,                                 </span><span class=C>--- время начала действия</span><p
+>   <b class=CI id=I597>end-time</b>                                <a class=EN href='./Sorm.asn.html#I264'>DateAndTime</a>                             <span class=K>OPTIONAL</span><span class=D>, </span><span class=C>--- время конца действия</span><p
+>   <b class=CI id=I598>network-address</b>                         <a class=EN href='./NetworkIdentifiers.asn.html#I271'>IPAddress</a>                               <span class=K>OPTIONAL</span><p
+>                                                                                        <span class=C>--- адрес в сети передачи данных</span><p
+><span class=D>}</span><p
+> <p
+><span class=E3 title='Error: Invalid object assignment for object &quot;bunchesMapRecords&quot;: Invalid assignment.'><a class=EN id=I311 href='./summary.html#I599'><b>bunchesMapRecords</b></a></span>                       <a class=EN href='./Classification.asn.html#I47'>TAGGED</a> <span class=D>::= {</span><span class=W>OID </span><span class=E3 title='Error: Invalid value: The type of the value is incompatible with its context.'><span class=D id=I600>{</span></span><span class=E>sorm-report-dictionary-bunches-map</span><span class=D>} </span><span class=W>DATA </span><span class=K>SEQUENCE OF</span><p
+>                                             <a class=EN id=I601 href=#I602>BunchesMapRecord</a><span class=D>}</span><p
+> <p
+><a class=EN id=I602 href='./summary.html#I603'><b>BunchesMapRecord</b></a> <span class=D>::=                    </span><span class=K>SEQUENCE </span><span class=D>{</span><p
+>   <b class=CI id=I604>a-bunch</b>                                 <a class=EN href=#I605>BunchMapPoint</a><span class=D>,                              </span><span class=C>--- пара коммутатор/пучок в связи</span><p
+>   <b class=CI id=I606>b-bunch</b>                                 <a class=EN href=#I605>BunchMapPoint</a><span class=D>,                              </span><span class=C>--- пара коммутатор/пучок в связи</span><p
+>   <b class=CI id=I607>begin-time</b>                              <a class=EN href='./Sorm.asn.html#I264'>DateAndTime</a><span class=D>,                                 </span><span class=C>--- время начала действия связи</span><p
+>   <b class=CI id=I608>end-time</b>                                <a class=EN href='./Sorm.asn.html#I264'>DateAndTime</a>                             <span class=K>OPTIONAL</span><p
+>                                                                                          <span class=C>--- время конца действия связи</span><p
+><span class=D>}</span><p
+> <p
+><a class=EN id=I605 href='./summary.html#I609'><b>BunchMapPoint</b></a> <span class=D>::=                       </span><span class=K>SEQUENCE </span><span class=D>{</span><p
+>   <b class=CI id=I610>telco-id</b>                                <a class=EN href=#I258>TelcoID</a><span class=D>,                        </span><span class=C>--- идентификатор оператора связи или филиала</span><p
+>   <b class=CI id=I611>switch-id</b>                               <span class=K>UTF8String </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>1</span><span class=D>..</span><span class=N>128</span><span class=D>)),                  </span><span class=C>--- идентификатор коммутатора</span><p
+>   <b class=CI id=I612>bunch-id</b>                                <a class=EN href='./NetworkIdentifiers.asn.html#I269'>Bunch</a>                                     <span class=C>--- идентификатор пучка коммутатора</span><p
+><span class=D>}</span><p
+> <p
+><span class=E3 title='Error: Invalid object assignment for object &quot;mobileSubscriberIdenityPlanRecords&quot;: Invalid assignment.'><a class=EN id=I312 href='./summary.html#I613'><b>mobileSubscriberIdenityPlanRecords</b></a></span>      <a class=EN href='./Classification.asn.html#I47'>TAGGED</a> <span class=D>::= {</span><span class=W>OID </span><span class=E3 title='Error: Invalid value: The type of the value is incompatible with its context.'><span class=D id=I614>{</span></span><span class=E>sorm-report-dictionary-mobile-subscriber-identity-plan</span><span class=D>} </span><span class=W>DATA</span><p
+>                                             <span class=K>SEQUENCE OF </span><a class=EN id=I615 href=#I616>MobileSubscriberIdenityPlanRecord</a><span class=D>}</span><p
+> <p
+><a class=EN id=I616 href='./summary.html#I617'><b>MobileSubscriberIdenityPlanRecord</b></a> <span class=D>::=   </span><span class=K>SEQUENCE </span><span class=D>{</span><p
+>   <b class=CI id=I618>telco-id</b>                                <a class=EN href=#I258>TelcoID</a><span class=D>,     </span><span class=C>--- идентификатор оператора связи или структурного подразделения</span><p
+>   <b class=CI id=I619>mcc</b>                                     <span class=K>NumericString </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>3</span><span class=D>)),                    </span><span class=C>--- код страны</span><p
+>   <b class=CI id=I620>mnc</b>                                     <span class=K>NumericString </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>3</span><span class=D>)),                    </span><span class=C>--- код оператора связи</span><p
+>   <b class=CI id=I621>area-code</b>                               <span class=K>NumericString </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>3</span><span class=D>..</span><span class=N>10</span><span class=D>)),                </span><span class=C>--- код зоны/региона</span><p
+>   <b class=CI id=I622>capacity-from</b>                           <span class=K>NumericString </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>0</span><span class=D>..</span><span class=N>7</span><span class=D>)),                </span><span class=C>--- нижняя граница диапазона (от)</span><p
+>   <b class=CI id=I623>capacity-to</b>                             <span class=K>NumericString </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>0</span><span class=D>..</span><span class=N>7</span><span class=D>)),               </span><span class=C>--- верхняя граница диапазона (до)</span><p
+>   <b class=CI id=I624>capacity-size</b>                           <span class=K>INTEGER </span><span class=D>(</span><span class=N>1</span><span class=D>..</span><span class=N>1000000</span><span class=D>),         </span><span class=C>--- количество выделенных в диапазоне (емкость)</span><p
+>   <b class=CI id=I625>description</b>                             <span class=K>UTF8String </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>2</span><span class=D>..</span><span class=N>255</span><span class=D>)),                  </span><span class=C>--- описание, назначение</span><p
+>   <b class=CI id=I626>region</b>                                  <span class=K>UTF8String </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>1</span><span class=D>..</span><span class=N>128</span><span class=D>)),                  </span><span class=C>--- область</span><p
+>   <b class=CI id=I627>city</b>                                    <span class=K>UTF8String </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>1</span><span class=D>..</span><span class=N>128</span><span class=D>)),                  </span><span class=C>--- город, поселок, деревня</span><p
+>   <b class=CI id=I628>range-activation</b>                        <a class=EN href='./Sorm.asn.html#I264'>DateAndTime</a><span class=D>,                </span><span class=C>--- дата и время начала действия номерной емкости</span><p
+>   <b class=CI id=I629>range-deactivation</b>                      <span class=D>[</span><span class=N>0</span><span class=D>] </span><a class=EN href='./Sorm.asn.html#I264'>DateAndTime</a>                         <span class=K>OPTIONAL</span><span class=D>,</span><p
+>                                                                   <span class=C>--- дата и время завершения действия номерной емкости</span><p
+>   <b class=CI id=I630>range-status</b>                            <span class=D>[</span><span class=N>1</span><span class=D>] </span><span class=K>UTF8String </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>2</span><span class=D>..</span><span class=N>128</span><span class=D>))          </span><span class=K>OPTIONAL</span><p
+>                                                                                  <span class=C>--- текущее состояние номерной емкости</span><p
+><span class=D>}</span><p
+> <p
+><span class=C>-- Тип абонента</span><p
+><a class=EN id=I262 href='./summary.html#I631'><b>PhoneAbonentType</b></a> <span class=D>::=                    </span><span class=K>ENUMERATED </span><span class=D>{</span><p
+>                                           <b class=II id=I632>local</b> <span class=D>(</span><span class=N>0</span><span class=D>), </span><span class=C>-- абонент данного коммутатора</span><p
+>                                           <b class=II id=I633>network</b> <span class=D>(</span><span class=N>1</span><span class=D>), </span><span class=C>-- абонент сети связи</span><p
+>                                           <b class=II id=I634>roamer</b> <span class=D>(</span><span class=N>2</span><span class=D>),</span><p
+>                 <span class=C>-- Абонент сети подвижной радиосвязи, получающий услуги связи за пределами региона регистрации (роумер)</span><p
+>                                           <b class=II id=I635>undefined</b> <span class=D>(</span><span class=N>3</span><span class=D>)</span><p
+>                                        <span class=D>}</span><p
+> <p
+><span class=C>--- коды сигнальных точек OPC/DPC</span><p
+><span class=E3 title='Error: Invalid object assignment for object &quot;signalPointCodes&quot;: Invalid assignment.'><a class=EN id=I313 href='./summary.html#I636'><b>signalPointCodes</b></a></span>                        <a class=EN href='./Classification.asn.html#I47'>TAGGED</a> <span class=D>::= {</span><span class=W>OID </span><span class=E3 title='Error: Invalid value: The type of the value is incompatible with its context.'><span class=D id=I637>{</span></span><span class=E>sorm-report-dictionary-signal-point-codes</span><span class=D>} </span><span class=W>DATA </span><span class=K>SEQUENCE OF</span><p
+>                                             <a class=EN id=I638 href=#I639>SignalPointCodesRecord</a><span class=D>}</span><p
+> <p
+><a class=EN id=I639 href='./summary.html#I640'><b>SignalPointCodesRecord</b></a> <span class=D>::=              </span><span class=K>SEQUENCE </span><span class=D>{</span><p
+>   <b class=CI id=I641>ss7-point-code</b>                          <span class=K>UTF8String </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>1</span><span class=D>..</span><span class=N>32</span><span class=D>)),       </span><span class=C>--- идентификатор сигнальной точки (OPC/DPC)</span><p
+>   <b class=CI id=I642>switch-id</b>                               <span class=K>UTF8String </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>1</span><span class=D>..</span><span class=N>128</span><span class=D>)),                  </span><span class=C>--- идентификатор коммутатора</span><p
+>   <b class=CI id=I643>begin-time</b>                              <a class=EN href='./Sorm.asn.html#I264'>DateAndTime</a><span class=D>,                                </span><span class=C>--- время начала назначения пучка</span><p
+>   <b class=CI id=I644>end-time</b>                                <a class=EN href='./Sorm.asn.html#I264'>DateAndTime</a>                             <span class=K>OPTIONAL</span><span class=D>,</span><p
+>                                                                                        <span class=C>--- время конца назначения пучка</span><p
+>   <b class=CI id=I645>description</b>                             <span class=K>UTF8String </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>1</span><span class=D>..</span><span class=N>256</span><span class=D>))                   </span><span class=C>--- расшифровка пучка</span><p
+><span class=D>}</span><p
+> <p
+><span class=K>END</span></section><div class=footer>HTML generated by OSS Nokalva's ASN1Doc utility</div>
+</body>
+</html>

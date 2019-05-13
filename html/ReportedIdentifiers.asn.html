@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+<meta charset='utf-8'>
+<title>ReportedIdentifiers.asn</title>
+<link rel=stylesheet href='Asn1doc.css' type='text/css'>
+</head>
+<body onload='Init()'><span id=I859>Schema File <b class=SF>ReportedIdentifiers.asn</b></span><section class='asn1 notinteractive'><p
+><a class=MN id=I860 href='./summary.html#I861'><b>ReportedIdentifiers</b></a> <span class=K>DEFINITIONS IMPLICIT TAGS </span><span class=D>::=</span><p
+><span class=K>BEGIN</span><p
+> <p
+><span class=K>EXPORTS</span><p
+>     <a class=EN href=#I862>ReportedIdentifier</a><span class=D>;</span><p
+> <p
+><span class=K>IMPORTS</span><p
+>     <a class=EN id=I863 href='./Classification.asn.html#I47'><b>TAGGED</b></a><span class=D>, </span><a class=EN href='./Classification.asn.html#I61'><b>sorm-report-identifier-pager</b></a><span class=D>, </span><a class=EN href='./Classification.asn.html#I62'><b>sorm-report-identifier-pstn</b></a><span class=D>, </span><a class=EN href='./Classification.asn.html#I63'><b>sorm-report-identifier-gsm</b></a><span class=D>,</span><p
+>     <a class=EN href='./Classification.asn.html#I64'><b>sorm-report-identifier-cdma</b></a><span class=D>, </span><a class=EN href='./Classification.asn.html#I65'><b>sorm-report-identifier-data-network</b></a><span class=D>, </span><a class=EN href='./Classification.asn.html#I66'><b>sorm-report-identifier-voip</b></a><p
+>          <span class=K>FROM </span><a class=MN href='./Classification.asn.html#I45'>Classification</a><p
+>     <a class=EN id=I864 href='./NetworkIdentifiers.asn.html#I271'><b>IPAddress</b></a><span class=D>, </span><a class=EN href='./NetworkIdentifiers.asn.html#I270'><b>DataNetworkEquipment</b></a><span class=D>, </span><a class=EN href='./NetworkIdentifiers.asn.html#I273'><b>IPMask</b></a><p
+>          <span class=K>FROM </span><a class=MN href='./NetworkIdentifiers.asn.html#I276'>NetworkIdentifiers</a><span class=D>;</span><p
+> <p
+><span class=E3 title='Error: Invalid type assignment for type &quot;ReportedIdentifier&quot;: Invalid assignment.'><a class=EN id=I862 href='./summary.html#I865'><b>ReportedIdentifier</b></a></span> <span class=D>::=                  </span><span class=K>SEQUENCE </span><span class=D>{</span><p
+>   <b class=CI id=I866>id</b>                                      <a class=EN href='./Classification.asn.html#I47'>TAGGED</a><span class=D>.</span><a class=FN href='./Classification.asn.html#I146'>&amp;id</a> <span class=D>({</span><a class=EN href=#I867>ReportedIdentifierVariants</a><span class=D>}),</span><p
+>   <b class=CI id=I868>data</b>                                    <a class=EN href='./Classification.asn.html#I47'>TAGGED</a><span class=D>.</span><a class=FN href='./Classification.asn.html#I147'>&amp;Data</a> <span class=D>({</span><a class=EN href=#I867>ReportedIdentifierVariants</a><span class=D>} {@</span><a class=CI href=#I866>id</a><span class=D>})</span><p
+><span class=D>}</span><p
+> <p
+><span class=C>--- варианты идентификаторов отчета</span><p
+><span class=E3 title='Error: Invalid object set assignment for object set &quot;ReportedIdentifierVariants&quot;: Invalid assignment.'><a class=EN id=I867 href='./summary.html#I869'><b>ReportedIdentifierVariants</b></a></span>              <a class=EN href='./Classification.asn.html#I47'>TAGGED</a> <span class=D>::= {</span><p
+>   <a class=EN href=#I870>reportedPagerIdentifier</a> <span class=C>--- идентификатор сети персонального радиовызова</span><p
+>   <span class=D>|</span><p
+>   <a class=EN href=#I871>reportedPstnIdentifier</a> <span class=C>--- идентификатор ТФОП</span><p
+>   <span class=D>|</span><p
+>   <a class=EN href=#I872>reportedGsmIdentifier</a> <span class=C>--- идентификатор GSM</span><p
+>   <span class=D>|</span><p
+>   <a class=EN href=#I873>reportedCdmaIdentifier</a> <span class=C>--- идентификатор CDMA</span><p
+>   <span class=D>|</span><p
+>   <a class=EN href=#I874>reportedDataNetworkIdentifier</a> <span class=C>--- идентификатор сети передачи данных</span><p
+>   <span class=D>|</span><p
+>   <a class=EN href=#I875>reportedVoipIdentifier</a><p
+><span class=D>}</span><p
+> <p
+><span class=C>--- идентификатор сети персонального радиовызова</span><p
+><span class=E3 title='Error: Invalid object assignment for object &quot;reportedPagerIdentifier&quot;: Invalid assignment.'><a class=EN id=I870 href='./summary.html#I876'><b>reportedPagerIdentifier</b></a></span>                 <a class=EN href='./Classification.asn.html#I47'>TAGGED</a> <span class=D>::= {</span><span class=W>OID </span><span class=E3 title='Error: Invalid value: The type of the value is incompatible with its context.'><span class=D id=I877>{</span></span><span class=E>sorm-report-identifier-pager</span><span class=D>} </span><span class=W>DATA </span><a class=EN href=#I878>ReportedPagerIdentifier</a><span class=D>}</span><p
+> <p
+><a class=EN id=I878 href='./summary.html#I879'><b>ReportedPagerIdentifier</b></a> <span class=D>::=             </span><span class=K>NumericString </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>2</span><span class=D>..</span><span class=N>18</span><span class=D>))</span><p
+> <p
+><span class=C>--- идентификатор телефонной сети общего пользования</span><p
+><span class=E3 title='Error: Invalid object assignment for object &quot;reportedPstnIdentifier&quot;: Invalid assignment.'><a class=EN id=I871 href='./summary.html#I880'><b>reportedPstnIdentifier</b></a></span>                  <a class=EN href='./Classification.asn.html#I47'>TAGGED</a> <span class=D>::= {</span><span class=W>OID </span><span class=E3 title='Error: Invalid value: The type of the value is incompatible with its context.'><span class=D id=I881>{</span></span><span class=E>sorm-report-identifier-pstn</span><span class=D>} </span><span class=W>DATA </span><a class=EN href=#I882>ReportedPstnIdentifier</a><span class=D>}</span><p
+> <p
+><a class=EN id=I882 href='./summary.html#I883'><b>ReportedPstnIdentifier</b></a> <span class=D>::=              </span><span class=K>SEQUENCE </span><span class=D>{</span><p
+>   <b class=CI id=I884>directory-number</b>                        <span class=K>UTF8String </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>2</span><span class=D>..</span><span class=N>32</span><span class=D>)),       </span><span class=C>--- телефонный номер в международном формате</span><p
+>   <b class=CI id=I885>internal-number</b>                         <span class=K>NumericString </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>1</span><span class=D>..</span><span class=N>32</span><span class=D>))            </span><span class=K>OPTIONAL</span><p
+>                                                                          <span class=C>--- дополнительный внутренний номер, если есть</span><p
+><span class=D>}</span><p
+> <p
+><span class=C>-- идентификатор абонента GSM</span><p
+><span class=E3 title='Error: Invalid object assignment for object &quot;reportedGsmIdentifier&quot;: Invalid assignment.'><a class=EN id=I872 href='./summary.html#I886'><b>reportedGsmIdentifier</b></a></span>                   <a class=EN href='./Classification.asn.html#I47'>TAGGED</a> <span class=D>::= {</span><span class=W>OID </span><span class=E3 title='Error: Invalid value: The type of the value is incompatible with its context.'><span class=D id=I887>{</span></span><span class=E>sorm-report-identifier-gsm</span><span class=D>} </span><span class=W>DATA </span><a class=EN href=#I888>ReportedGsmIdentifier</a><span class=D>}</span><p
+> <p
+><a class=EN id=I888 href='./summary.html#I889'><b>ReportedGsmIdentifier</b></a> <span class=D>::=               </span><span class=K>SEQUENCE </span><span class=D>{</span><p
+>   <b class=CI id=I890>directory-number</b>                        <span class=K>UTF8String </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>2</span><span class=D>..</span><span class=N>32</span><span class=D>)),       </span><span class=C>--- телефонный номер в международном формате</span><p
+>   <b class=CI id=I891>imsi</b>                                    <span class=K>NumericString </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>2</span><span class=D>..</span><span class=N>18</span><span class=D>)),           </span><span class=C>--- идентификатор мобильного абонента</span><p
+>   <b class=CI id=I892>imei</b>                                    <span class=D>[</span><span class=N>0</span><span class=D>] </span><span class=K>NumericString </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>2</span><span class=D>..</span><span class=N>18</span><span class=D>))        </span><span class=K>OPTIONAL</span><span class=D>,</span><p
+>                                                                                     <span class=C>--- идентификатор мобильной станции</span><p
+>   <b class=CI id=I893>icc</b>                                     <span class=D>[</span><span class=N>1</span><span class=D>] </span><span class=K>NumericString </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>10</span><span class=D>..</span><span class=N>20</span><span class=D>))       </span><span class=K>OPTIONAL</span><p
+>                                                                                    <span class=C>--- идентификатор SIM-карты абонента</span><p
+><span class=D>}</span><p
+> <p
+><span class=C>-- идентификатор абонента CDMA</span><p
+><span class=E3 title='Error: Invalid object assignment for object &quot;reportedCdmaIdentifier&quot;: Invalid assignment.'><a class=EN id=I873 href='./summary.html#I894'><b>reportedCdmaIdentifier</b></a></span>                  <a class=EN href='./Classification.asn.html#I47'>TAGGED</a> <span class=D>::= {</span><span class=W>OID </span><span class=E3 title='Error: Invalid value: The type of the value is incompatible with its context.'><span class=D id=I895>{</span></span><span class=E>sorm-report-identifier-cdma</span><span class=D>} </span><span class=W>DATA </span><a class=EN href=#I896>ReportedCdmaIdentifier</a><span class=D>}</span><p
+> <p
+><a class=EN id=I896 href='./summary.html#I897'><b>ReportedCdmaIdentifier</b></a> <span class=D>::=              </span><span class=K>SEQUENCE </span><span class=D>{</span><p
+>   <b class=CI id=I898>directory-number</b>                        <span class=K>UTF8String </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>2</span><span class=D>..</span><span class=N>32</span><span class=D>)),       </span><span class=C>--- телефонный номер в международном формате</span><p
+>   <b class=CI id=I899>imsi</b>                                    <span class=K>NumericString </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>2</span><span class=D>..</span><span class=N>18</span><span class=D>)),           </span><span class=C>--- идентификатор мобильного абонента</span><p
+>   <b class=CI id=I900>esn</b>                                     <span class=D>[</span><span class=N>0</span><span class=D>] </span><span class=K>NumericString </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>2</span><span class=D>..</span><span class=N>18</span><span class=D>))        </span><span class=K>OPTIONAL</span><span class=D>,</span><p
+>                                                                                     <span class=C>--- идентификатор мобильной станции</span><p
+>   <b class=CI id=I901>min</b>                                     <span class=D>[</span><span class=N>1</span><span class=D>] </span><span class=K>NumericString </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>2</span><span class=D>..</span><span class=N>18</span><span class=D>))        </span><span class=K>OPTIONAL</span><span class=D>,</span><p
+>                                                                            <span class=C>--- идентификатор мобильного абонента (CDMA)</span><p
+>   <b class=CI id=I902>icc</b>                                     <span class=D>[</span><span class=N>2</span><span class=D>] </span><span class=K>NumericString </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>10</span><span class=D>..</span><span class=N>20</span><span class=D>))       </span><span class=K>OPTIONAL</span><p
+>                                                                                    <span class=C>--- идентификатор SIM-карты абонента</span><p
+><span class=D>}</span><p
+> <p
+><span class=E3 title='Error: Invalid object assignment for object &quot;reportedDataNetworkIdentifier&quot;: Invalid assignment.'><a class=EN id=I874 href='./summary.html#I903'><b>reportedDataNetworkIdentifier</b></a></span>           <a class=EN href='./Classification.asn.html#I47'>TAGGED</a> <span class=D>::= {</span><span class=W>OID </span><span class=E3 title='Error: Invalid value: The type of the value is incompatible with its context.'><span class=D id=I904>{</span></span><span class=E>sorm-report-identifier-data-network</span><span class=D>} </span><span class=W>DATA</span><p
+>                                             <a class=EN href=#I905>ReportedDataNetworkIdentifier</a><span class=D>}</span><p
+> <p
+><a class=EN id=I905 href='./summary.html#I906'><b>ReportedDataNetworkIdentifier</b></a> <span class=D>::=       </span><span class=K>SEQUENCE </span><span class=D>{</span><p
+>   <b class=CI id=I907>user-equipment</b>                          <span class=D>[</span><span class=N>0</span><span class=D>] </span><a class=EN href='./NetworkIdentifiers.asn.html#I270'>DataNetworkEquipment</a>                <span class=K>OPTIONAL</span><span class=D>,</span><p
+>                                                                        <span class=C>--- идентификатор пользовательского оборудования</span><p
+>   <b class=CI id=I908>login</b>                                   <span class=D>[</span><span class=N>1</span><span class=D>] </span><span class=K>UTF8String </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>1</span><span class=D>..</span><span class=N>128</span><span class=D>))          </span><span class=K>OPTIONAL</span><span class=D>,</span><p
+>                                                                                            <span class=C>--- имя пользователя - login</span><p
+>   <b class=CI id=I909>ip-address</b>                              <span class=D>[</span><span class=N>2</span><span class=D>] </span><a class=EN href='./NetworkIdentifiers.asn.html#I271'>IPAddress</a>                           <span class=K>OPTIONAL</span><span class=D>, </span><span class=C>--- IP адрес</span><p
+>   <b class=CI id=I910>e-mail</b>                                  <span class=D>[</span><span class=N>3</span><span class=D>] </span><span class=K>UTF8String </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>1</span><span class=D>..</span><span class=N>256</span><span class=D>))          </span><span class=K>OPTIONAL</span><span class=D>, </span><span class=C>--- адрес электронной почты</span><p
+>   <b class=CI id=I911>pin</b>                                     <span class=D>[</span><span class=N>4</span><span class=D>] </span><span class=K>NumericString </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>2</span><span class=D>..</span><span class=N>20</span><span class=D>))        </span><span class=K>OPTIONAL</span><span class=D>, </span><span class=C>--- PIN</span><p
+>   <b class=CI id=I912>phone-number</b>                            <span class=D>[</span><span class=N>5</span><span class=D>] </span><span class=K>UTF8String </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>2</span><span class=D>..</span><span class=N>32</span><span class=D>))           </span><span class=K>OPTIONAL</span><span class=D>, </span><span class=C>--- номер телефона</span><p
+>   <b class=CI id=I913>user-domain</b>                             <span class=D>[</span><span class=N>6</span><span class=D>] </span><span class=K>UTF8String </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>2</span><span class=D>..</span><span class=N>256</span><span class=D>))          </span><span class=K>OPTIONAL</span><span class=D>, </span><span class=C>--- пользовательский домен</span><p
+>   <b class=CI id=I914>reserved</b>                                <span class=D>[</span><span class=N>7</span><span class=D>] </span><span class=K>UTF8String </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>1</span><span class=D>..</span><span class=N>256</span><span class=D>))          </span><span class=K>OPTIONAL</span><span class=D>, </span><span class=C>--- резерв</span><p
+>   <b class=CI id=I915>ip-mask</b>                                 <span class=D>[</span><span class=N>8</span><span class=D>] </span><a class=EN href='./NetworkIdentifiers.asn.html#I273'>IPMask</a>                              <span class=K>OPTIONAL</span><p
+><span class=D>}</span><p
+> <p
+><span class=E3 title='Error: Invalid object assignment for object &quot;reportedVoipIdentifier&quot;: Invalid assignment.'><a class=EN id=I875 href='./summary.html#I916'><b>reportedVoipIdentifier</b></a></span>                  <a class=EN href='./Classification.asn.html#I47'>TAGGED</a> <span class=D>::= {</span><span class=W>OID </span><span class=E3 title='Error: Invalid value: The type of the value is incompatible with its context.'><span class=D id=I917>{</span></span><span class=E>sorm-report-identifier-voip</span><span class=D>} </span><span class=W>DATA </span><a class=EN href=#I918>ReportedVoipIdentifier</a><span class=D>}</span><p
+> <p
+><a class=EN id=I918 href='./summary.html#I919'><b>ReportedVoipIdentifier</b></a> <span class=D>::=              </span><span class=K>SEQUENCE </span><span class=D>{</span><p
+>   <b class=CI id=I920>ip-address</b>                              <span class=D>[</span><span class=N>0</span><span class=D>] </span><a class=EN href='./NetworkIdentifiers.asn.html#I271'>IPAddress</a>                           <span class=K>OPTIONAL</span><span class=D>, </span><span class=C>--- IP-адрес абонента</span><p
+>   <b class=CI id=I921>originator-name</b>                         <span class=D>[</span><span class=N>1</span><span class=D>] </span><span class=K>UTF8String </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>1</span><span class=D>..</span><span class=N>512</span><span class=D>))          </span><span class=K>OPTIONAL</span><span class=D>,</span><p
+>                                                                                  <span class=C>--- общедоступное имя инициатора связи</span><p
+>   <b class=CI id=I922>calling-number</b>                          <span class=D>[</span><span class=N>2</span><span class=D>] </span><span class=K>UTF8String </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>1</span><span class=D>..</span><span class=N>32</span><span class=D>))           </span><span class=K>OPTIONAL</span><p
+>                                                                                          <span class=C>--- номер вызывающего абонента</span><p
+><span class=D>}</span><p
+> <p
+><span class=K>END</span></section><div class=footer>HTML generated by OSS Nokalva's ASN1Doc utility</div>
+</body>
+</html>

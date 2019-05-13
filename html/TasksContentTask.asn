@@ -1,0 +1,8 @@
+TasksContentTask DEFINITIONS IMPLICIT TAGS ::=
+BEGIN
+EXPORTS DataContentTask;
+IMPORTS
+  DataContentID FROM Tasks;
+DataContentTask ::= DataContentID
+
+END

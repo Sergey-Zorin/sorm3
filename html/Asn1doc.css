@@ -1,0 +1,307 @@
+
+.linenumber {
+    font-family: monospace;
+    font-size: smaller;
+    color: gray;
+    padding: 0;
+    margin: 0 4px 0 0;
+}
+
+.EC {
+    font-family: monospace;
+    font-size: 15px;
+    color: silver;
+    padding: 0;
+    margin: 0 4px 0 4px;
+    cursor: pointer
+}
+
+section.asn1 {
+    white-space: pre-wrap;
+    border: 1px solid silver;
+    margin: 8px 8px;
+    padding: 4px;
+}
+
+section.asn1.notinteractive {
+    border: none;
+}
+
+.synthetic {
+    background-color: lightcyan;
+}
+
+.fulltext {
+    display: none
+}
+
+.details[data-open] > .fulltext {
+    display: initial
+}
+
+.details[data-open] > .summary {
+    display: none
+}
+
+.listitem {
+    margin: 8px 0 8px 0;
+}
+
+section.asn1 p {
+    margin: 0 0 1px 0;
+    padding: 0;
+    font-family: monospace;
+}
+
+section.asn1 a {
+    text-decoration: none
+}
+
+nav.buttons {
+    float: right
+}
+
+button {
+    margin-left: 4px;
+}
+
+.K /* Keyword */ {
+    color: blue;
+    font-family: monospace
+}
+
+.D /* Delimiter */ {
+    color: black;
+    font-family: monospace
+}
+
+.N /* Number */ {
+    color: orange;
+    font-family: monospace
+}
+
+.S /* String */ {
+    color: olive;
+    font-family: monospace
+}
+
+.XE /* XmlCharEscape */ {
+	color: orange;
+	font-family: monospace
+}
+
+.C /* Comment */ {
+    color: #00A800;
+    font-weight: 200;
+    font-family: monospace
+}
+
+.W /* Word */ {
+    color: gray;
+    font-style: italic;
+    font-family: monospace
+}
+
+.MN /* ModuleName */ {
+    color: maroon;
+    font-weight: 700;
+    font-family: monospace
+}
+
+.EN /* EntityName */ {
+    color: #000070;
+    font-family: monospace
+}
+
+.FN /* FieldName */ {
+    color: teal;
+    font-family: monospace
+}
+
+.CI /* ComponentIdentifier */ {
+    color: #a060a0;
+    font-family: monospace
+}
+
+.II /* ItemIdentifier */ {
+    color: gray;
+    font-family: monospace
+}
+
+.AI /* ArcIdentifier */ {
+    color: gray;
+    font-family: monospace
+}
+
+.SF /* SchemaFile */ {
+    color: olive;
+    font-family: monospace
+}
+
+.E {
+    color: red;
+    font-weight: bold;
+    font-family: monospace
+}
+
+.L1 /* Line overflow */ {
+    background-color: hsl(30, 25%, 85%);
+    border-bottom: 1px dotted
+}
+
+.L2 /* Line overflow */ {
+    background-color: hsl(30, 25%, 85%);
+    border-bottom: 1px dotted
+}
+
+.L3 /* Line overflow */ {
+    background-color: hsl(30, 99%, 85%);
+    border-bottom: 1px dotted
+}
+
+.E1 /* Error informational */ {
+    background-color: hsl(210, 99%, 85%);
+    border-bottom: 1px dotted
+}
+
+.E2 /* Error warning */ {
+    background-color: hsl(60, 99%, 85%);
+    border-bottom: 1px dotted
+}
+
+.E3 /* Error severe */ {
+    background-color: hsl(0, 99%, 85%);
+    border-bottom: 1px dotted
+}
+
+td .L1 /* Line overflow */ {
+    border-bottom: none
+}
+
+td .L2 /* Line overflow */ {
+    border-bottom: none
+}
+
+td .E1 /* Error informational */ {
+    border-bottom: none
+}
+
+td .E2 /* Error warning */ {
+    border-bottom: none
+}
+
+td .E3 /* Error severe */ {
+    border-bottom: none
+}
+
+nav a {
+    color: black
+}
+
+.textintable {
+    font-size: smaller;
+    color: black
+}
+
+.numberintable {
+    font-size: smaller;
+    text-align: right;
+    color: black
+}
+
+a.numberintable {
+    text-align: right;
+    float: right;
+    color: black
+}
+
+h4 {
+	margin-top: 4px;
+	margin-bottom: 4px
+}
+
+.documentation {
+	white-space: initial;
+	font-size: smaller;
+	color: green;
+}
+
+div.footer {
+    font-size: 0.9em;
+    color: grey;
+    margin-top: 20px
+}
+
+table {
+    table-layout: auto;
+    border-collapse: collapse;
+    empty-cells: show;
+    border-style: solid;
+    border-color: #202020;
+    margin-bottom: 4ex;
+    margin-top: 0
+}
+
+table.documentation {
+    table-layout: auto;
+	margin-left: 4ex;
+	width: 100ex;
+    border-collapse: collapse;
+    empty-cells: show;
+    border-style: initial;
+	border-width: thin;
+    border-color: #404040;
+	background-color:  #f4f4f4;
+    margin-bottom: 1ex;
+    margin-top: 1ex	
+}
+
+table.asn1 {
+	white-space: pre-wrap;
+}
+
+caption {
+    font-size: 1.25em;
+    font-weight: bold;
+    margin-bottom: 1.5ex
+}
+
+thead {
+    border-style: solid;
+    padding: 4px;
+    border-color: #202020
+}
+
+tmain {
+    border-style: solid;
+    padding: 4px;
+    border-color: #202020
+}
+
+tfoot {
+    border-style: solid;
+    padding: 4px;
+    border-color: #202020
+}
+
+tr {
+    padding: 4px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #202020
+}
+
+th {
+    padding: 4px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #202020
+}
+
+td {
+    padding: 4px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #202020;
+    vertical-align: top;
+}

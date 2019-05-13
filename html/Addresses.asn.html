@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+<meta charset='utf-8'>
+<title>Addresses.asn</title>
+<link rel=stylesheet href='Asn1doc.css' type='text/css'>
+</head>
+<body onload='Init()'><span id=I1>Schema File <b class=SF>Addresses.asn</b></span><section class='asn1 notinteractive'><p
+><a class=MN id=I2 href='./summary.html#I3'><b>Addresses</b></a> <span class=K>DEFINITIONS IMPLICIT TAGS </span><span class=D>::=</span><p
+><span class=K>BEGIN</span><p
+> <p
+><span class=K>EXPORTS</span><p
+>     <a class=EN href=#I4>AddressType</a><span class=D>, </span><a class=EN href=#I5>ReportedAddresses</a><span class=D>, </span><a class=EN href=#I6>ReportedAddress</a><span class=D>, </span><a class=EN href=#I7>RequestedAddress</a><span class=D>;</span><p
+> <p
+><a class=EN id=I4 href='./summary.html#I8'><b>AddressType</b></a> <span class=D>::=                         </span><span class=K>ENUMERATED </span><span class=D>{</span><p
+>                                           <b class=II id=I9>registered</b> <span class=D>(</span><span class=N>0</span><span class=D>),</span><p
+>                                           <span class=C>---  Адрес  регистрации (обязателен для юридических и физических лиц)</span><p
+>                                           <b class=II id=I10>postal</b> <span class=D>(</span><span class=N>1</span><span class=D>), </span><span class=C>---  Почтовый адрес (дополнительный адрес для юридических лиц)</span><p
+>                                           <b class=II id=I11>invoice</b> <span class=D>(</span><span class=N>2</span><span class=D>),</span><p
+>                                           <span class=C>---  Адрес  доставки  счета  (дополнительный  адрес  для юридических лиц)</span><p
+>                                           <b class=II id=I12>device-location</b> <span class=D>(</span><span class=N>3</span><span class=D>),</span><p
+>                                           <span class=C>---  Адрес  установки пользовательского устройства (телефонного аппарата)</span><p
+>                                           <b class=II id=I13>reserved</b> <span class=D>(</span><span class=N>4</span><span class=D>) </span><span class=C>---  Резерв</span><p
+>                                        <span class=D>}</span><p
+> <p
+><a class=EN id=I5 href='./summary.html#I14'><b>ReportedAddresses</b></a> <span class=D>::=                   </span><span class=K>SEQUENCE OF </span><a class=EN id=I15 href=#I6>ReportedAddress</a><p
+> <p
+><a class=EN id=I6 href='./summary.html#I16'><b>ReportedAddress</b></a> <span class=D>::=                     </span><span class=K>SEQUENCE </span><span class=D>{</span><p
+>   <b class=CI id=I17>title</b>                                   <a class=EN href=#I4>AddressType</a><span class=D>,                                 </span><span class=C>--- тип адреса</span><p
+>   <b class=CI id=I18>address-info</b>                            <a class=EN href=#I19>AddressInfoReport</a>                            <span class=C>--- адрес</span><p
+><span class=D>}</span><p
+> <p
+><a class=EN id=I19 href='./summary.html#I20'><b>AddressInfoReport</b></a> <span class=D>::=                   </span><span class=K>CHOICE </span><span class=D>{</span><p
+>   <b class=CI id=I21>struct-info</b>                             <span class=D>[</span><span class=N>1</span><span class=D>] </span><a class=EN href=#I22>AddressStructInfoReport</a><span class=D>,            </span><span class=C>--- структурированный адрес</span><p
+>   <b class=CI id=I23>unstruct-info</b>                           <span class=D>[</span><span class=N>2</span><span class=D>] </span><span class=K>UTF8String </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>1</span><span class=D>..</span><span class=N>1024</span><span class=D>))         </span><span class=C>--- неструктурированный адрес</span><p
+><span class=D>}</span><p
+> <p
+><a class=EN id=I22 href='./summary.html#I24'><b>AddressStructInfoReport</b></a> <span class=D>::=             </span><span class=K>SEQUENCE </span><span class=D>{</span><p
+>   <b class=CI id=I25>zip</b>                                     <span class=D>[</span><span class=N>0</span><span class=D>] </span><span class=K>UTF8String </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>1</span><span class=D>..</span><span class=N>32</span><span class=D>))           </span><span class=K>OPTIONAL</span><span class=D>,</span><p
+>                                                                                            <span class=C>--- почтовый индекс, zip-код</span><p
+>   <b class=CI id=I26>country</b>                                 <span class=D>[</span><span class=N>1</span><span class=D>] </span><span class=K>UTF8String </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>1</span><span class=D>..</span><span class=N>128</span><span class=D>))          </span><span class=K>OPTIONAL</span><span class=D>, </span><span class=C>--- страна</span><p
+>   <b class=CI id=I27>region</b>                                  <span class=D>[</span><span class=N>2</span><span class=D>] </span><span class=K>UTF8String </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>1</span><span class=D>..</span><span class=N>128</span><span class=D>))          </span><span class=K>OPTIONAL</span><span class=D>, </span><span class=C>--- область</span><p
+>   <b class=CI id=I28>zone</b>                                    <span class=D>[</span><span class=N>3</span><span class=D>] </span><span class=K>UTF8String </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>1</span><span class=D>..</span><span class=N>128</span><span class=D>))          </span><span class=K>OPTIONAL</span><span class=D>,</span><p
+>                                                                                          <span class=C>--- район, муниципальный округ</span><p
+>   <b class=CI id=I29>city</b>                                    <span class=D>[</span><span class=N>4</span><span class=D>] </span><span class=K>UTF8String </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>1</span><span class=D>..</span><span class=N>128</span><span class=D>))          </span><span class=K>OPTIONAL</span><span class=D>, </span><span class=C>--- город, поселок, деревня</span><p
+>   <b class=CI id=I30>street</b>                                  <span class=D>[</span><span class=N>5</span><span class=D>] </span><span class=K>UTF8String </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>1</span><span class=D>..</span><span class=N>128</span><span class=D>))          </span><span class=K>OPTIONAL</span><span class=D>, </span><span class=C>--- улица</span><p
+>   <b class=CI id=I31>building</b>                                <span class=D>[</span><span class=N>6</span><span class=D>] </span><span class=K>UTF8String </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>1</span><span class=D>..</span><span class=N>128</span><span class=D>))          </span><span class=K>OPTIONAL</span><span class=D>, </span><span class=C>--- дом, строение</span><p
+>   <b class=CI id=I32>build-sect</b>                              <span class=D>[</span><span class=N>7</span><span class=D>] </span><span class=K>UTF8String </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>1</span><span class=D>..</span><span class=N>128</span><span class=D>))          </span><span class=K>OPTIONAL</span><span class=D>, </span><span class=C>--- корпус</span><p
+>   <b class=CI id=I33>apartment</b>                               <span class=D>[</span><span class=N>8</span><span class=D>] </span><span class=K>UTF8String </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>1</span><span class=D>..</span><span class=N>128</span><span class=D>))          </span><span class=K>OPTIONAL  </span><span class=C>--- квартира, офис</span><p
+><span class=D>}</span><p
+> <p
+><span class=C>-- поля адресных данных</span><p
+><a class=EN id=I7 href='./summary.html#I34'><b>RequestedAddress</b></a> <span class=D>::=                    </span><span class=K>SEQUENCE </span><span class=D>{</span><p
+>   <b class=CI id=I35>zip</b>                                     <span class=D>[</span><span class=N>0</span><span class=D>] </span><span class=K>UTF8String </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>1</span><span class=D>..</span><span class=N>32</span><span class=D>))           </span><span class=K>OPTIONAL</span><span class=D>,</span><p
+>                                                                                            <span class=C>--- почтовый индекс, zip-код</span><p
+>   <b class=CI id=I36>country</b>                                 <span class=D>[</span><span class=N>1</span><span class=D>] </span><span class=K>UTF8String </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>1</span><span class=D>..</span><span class=N>128</span><span class=D>))          </span><span class=K>OPTIONAL</span><span class=D>, </span><span class=C>--- страна</span><p
+>   <b class=CI id=I37>region</b>                                  <span class=D>[</span><span class=N>2</span><span class=D>] </span><span class=K>UTF8String </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>1</span><span class=D>..</span><span class=N>128</span><span class=D>))          </span><span class=K>OPTIONAL</span><span class=D>, </span><span class=C>--- область</span><p
+>   <b class=CI id=I38>zone</b>                                    <span class=D>[</span><span class=N>3</span><span class=D>] </span><span class=K>UTF8String </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>1</span><span class=D>..</span><span class=N>128</span><span class=D>))          </span><span class=K>OPTIONAL</span><span class=D>,</span><p
+>                                                                                          <span class=C>--- район, муниципальный округ</span><p
+>   <b class=CI id=I39>city</b>                                    <span class=D>[</span><span class=N>4</span><span class=D>] </span><span class=K>UTF8String </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>1</span><span class=D>..</span><span class=N>128</span><span class=D>))          </span><span class=K>OPTIONAL</span><span class=D>,</span><p
+>                                                                           <span class=C>--- город, поселок, деревня, населенный пункт</span><p
+>   <b class=CI id=I40>street</b>                                  <span class=D>[</span><span class=N>5</span><span class=D>] </span><span class=K>UTF8String </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>1</span><span class=D>..</span><span class=N>128</span><span class=D>))          </span><span class=K>OPTIONAL</span><span class=D>, </span><span class=C>--- улица</span><p
+>   <b class=CI id=I41>building</b>                                <span class=D>[</span><span class=N>6</span><span class=D>] </span><span class=K>UTF8String </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>1</span><span class=D>..</span><span class=N>128</span><span class=D>))          </span><span class=K>OPTIONAL</span><span class=D>, </span><span class=C>--- дом, строение</span><p
+>   <b class=CI id=I42>build-sect</b>                              <span class=D>[</span><span class=N>7</span><span class=D>] </span><span class=K>UTF8String </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>1</span><span class=D>..</span><span class=N>128</span><span class=D>))          </span><span class=K>OPTIONAL</span><span class=D>, </span><span class=C>--- корпус</span><p
+>   <b class=CI id=I43>apartment</b>                               <span class=D>[</span><span class=N>8</span><span class=D>] </span><span class=K>UTF8String </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>1</span><span class=D>..</span><span class=N>128</span><span class=D>))          </span><span class=K>OPTIONAL  </span><span class=C>--- квартира, офис</span><p
+><span class=D>}</span><p
+> <p
+><span class=K>END</span></section><div class=footer>HTML generated by OSS Nokalva's ASN1Doc utility</div>
+</body>
+</html>

@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+<meta charset='utf-8'>
+<title>Management.asn</title>
+<link rel=stylesheet href='Asn1doc.css' type='text/css'>
+</head>
+<body onload='Init()'><span id=I669>Schema File <b class=SF>Management.asn</b></span><section class='asn1 notinteractive'><p
+><a class=MN id=I670 href='./summary.html#I671'><b>Management</b></a> <span class=K>DEFINITIONS IMPLICIT TAGS </span><span class=D>::=</span><p
+><span class=K>BEGIN</span><p
+> <p
+><span class=K>EXPORTS</span><p
+>     <a class=EN href=#I672>managementMessage</a><span class=D>;</span><p
+> <p
+><span class=K>IMPORTS</span><p
+>     <a class=EN id=I673 href='./Classification.asn.html#I47'><b>TAGGED</b></a><span class=D>, </span><a class=EN href='./Classification.asn.html#I52'><b>sorm-message-management</b></a><p
+>          <span class=K>FROM </span><a class=MN href='./Classification.asn.html#I45'>Classification</a><span class=D>;</span><p
+> <p
+><span class=E3 title='Error: Invalid object assignment for object &quot;managementMessage&quot;: Invalid assignment.'><a class=EN id=I672 href='./summary.html#I674'><b>managementMessage</b></a></span>                       <a class=EN href='./Classification.asn.html#I47'>TAGGED</a> <span class=D>::= {</span><span class=W>OID </span><span class=E3 title='Error: Invalid value: The type of the value is incompatible with its context.'><span class=D id=I675>{</span></span><span class=E>sorm-message-management</span><span class=D>} </span><span class=W>DATA </span><span class=K>CHOICE </span><span class=D>{</span><p
+>   <b class=CI id=I676>request</b>                                 <span class=D>[</span><span class=N>0</span><span class=D>] </span><a class=EN href=#I677>ManagementRequest</a><span class=D>,</span><p
+>   <b class=CI id=I678>response</b>                                <span class=D>[</span><span class=N>1</span><span class=D>] </span><a class=EN href=#I679>ManagementResponse</a><p
+><span class=D>}}</span><p
+> <p
+><span class=C>--- тип сообщения "команда управления ИС СОРМ"</span><p
+><a class=EN id=I677 href='./summary.html#I680'><b>ManagementRequest</b></a> <span class=D>::=                   </span><span class=K>CHOICE </span><span class=D>{</span><p
+>   <b class=CI id=I681>get-structure</b>                           <span class=D>[</span><span class=N>0</span><span class=D>] </span><a class=EN href=#I682>GetStructureRequest</a><span class=D>,</span><p
+>                                                           <span class=C>--- запрос на получение структуры ИС СОРМ - КТС и модулей СПО</span><p
+>   <b class=CI id=I683>get-module-config</b>                       <span class=D>[</span><span class=N>1</span><span class=D>] </span><a class=EN href=#I684>GetModuleConfigRequest</a><span class=D>,</span><p
+>                                                                     <span class=C>--- запрос на получение конфигурации КТС/модуля СПО</span><p
+>   <b class=CI id=I685>set-module-config</b>                       <span class=D>[</span><span class=N>2</span><span class=D>] </span><a class=EN href=#I686>SetModuleConfigRequest</a><span class=D>,</span><p
+>                                                                     <span class=C>--- запрос на изменение конфигурации КТС/модуля СПО</span><p
+>   <b class=CI id=I687>check-module</b>                            <span class=D>[</span><span class=N>3</span><span class=D>] </span><a class=EN href=#I688>CheckModuleRequest</a><span class=D>,              </span><span class=C>--- запрос на получение состояния модуля</span><p
+>   <b class=CI id=I689>get-module-types</b>                        <span class=D>[</span><span class=N>4</span><span class=D>] </span><a class=EN href=#I690>GetModuleTypesRequest</a>     <span class=C>--- запрос на получение типов модулей КТС и СПО</span><p
+><span class=D>}</span><p
+> <p
+><span class=C>--- запрос на получение структуры ИС СОРМ - КТС и модулей СПО</span><p
+><a class=EN id=I682 href='./summary.html#I691'><b>GetStructureRequest</b></a> <span class=D>::=                 </span><span class=K>NULL</span><p
+> <p
+><span class=C>--- запрос на получение конфигурации КТС/модуля СПО</span><p
+><a class=EN id=I684 href='./summary.html#I692'><b>GetModuleConfigRequest</b></a> <span class=D>::=              </span><span class=K>CHOICE </span><span class=D>{</span><p
+>   <b class=CI id=I693>hw-modules-list</b>                         <span class=D>[</span><span class=N>0</span><span class=D>] </span><a class=EN href=#I694>RequestedHardwareModules</a><span class=D>,  </span><span class=C>--- перечень идентификаторов узлов КТС ИС СОРМ</span><p
+>   <b class=CI id=I695>sw-modules-list</b>                         <span class=D>[</span><span class=N>1</span><span class=D>] </span><a class=EN href=#I696>RequestedSoftwareModules</a> <span class=C>--- перечень идентификаторов модулей СПО ИС СОРМ</span><p
+><span class=D>}</span><p
+> <p
+><a class=EN id=I694 href='./summary.html#I697'><b>RequestedHardwareModules</b></a> <span class=D>::=            </span><span class=K>SEQUENCE OF </span><a class=EN id=I698 href=#I699>ModuleId</a>              <span class=C>--- перечень идентификаторов узлов КТС ИС СОРМ</span><p
+> <p
+><a class=EN id=I696 href='./summary.html#I700'><b>RequestedSoftwareModules</b></a> <span class=D>::=            </span><span class=K>SEQUENCE OF </span><a class=EN id=I701 href=#I699>ModuleId</a>            <span class=C>--- перечень идентификаторов модулей СПО ИС СОРМ</span><p
+> <p
+><span class=C>--- запрос на изменение конфигурации КТС/модуля СПО</span><p
+><a class=EN id=I686 href='./summary.html#I702'><b>SetModuleConfigRequest</b></a> <span class=D>::=              </span><span class=K>SEQUENCE </span><span class=D>{</span><p
+>   <b class=CI id=I703>module-id</b>                               <a class=EN href=#I699>ModuleId</a><span class=D>,                           </span><span class=C>--- идентификатор конфигурируемого модуля</span><p
+>   <b class=CI id=I704>module-config</b>                           <a class=EN href=#I705>ConfiguratedModule</a>                  <span class=C>--- устанавливаемая в модуль конфигурация</span><p
+><span class=D>}</span><p
+> <p
+><a class=EN id=I705 href='./summary.html#I706'><b>ConfiguratedModule</b></a> <span class=D>::=                  </span><span class=K>CHOICE </span><span class=D>{</span><p
+>   <b class=CI id=I707>sw-module</b>                               <span class=D>[</span><span class=N>0</span><span class=D>] </span><a class=EN href=#I708>SormSoftwareModule</a><span class=D>,                 </span><span class=C>--- для узла КТС</span><p
+>   <b class=CI id=I709>hw-module</b>                               <span class=D>[</span><span class=N>1</span><span class=D>] </span><a class=EN href=#I710>SormHardwareModule</a>                  <span class=C>--- для узла СПО</span><p
+><span class=D>}</span><p
+> <p
+><span class=C>--- запрос на получение состояния модуля</span><p
+><a class=EN id=I688 href='./summary.html#I711'><b>CheckModuleRequest</b></a> <span class=D>::=                  </span><a class=EN href=#I712>RequestedModulesList</a><p
+> <p
+><a class=EN id=I712 href='./summary.html#I713'><b>RequestedModulesList</b></a> <span class=D>::=                </span><span class=K>CHOICE </span><span class=D>{</span><p
+>   <b class=CI id=I714>hw-modules</b>                              <span class=D>[</span><span class=N>0</span><span class=D>] </span><a class=EN href=#I694>RequestedHardwareModules</a><span class=D>,</span><p
+>                                                       <span class=C>--- идентификаторы узлов КТС, для которых запрашивается состояние</span><p
+>   <b class=CI id=I715>sw-modules</b>                              <span class=D>[</span><span class=N>1</span><span class=D>] </span><a class=EN href=#I696>RequestedSoftwareModules</a><p
+>                                                 <span class=C>--- идентификаторы модулей ИС СОРМ, для которых запрашивается состояние</span><p
+><span class=D>}</span><p
+> <p
+><span class=C>--- запрос на получение типов модулей КТС и СПО</span><p
+><a class=EN id=I690 href='./summary.html#I716'><b>GetModuleTypesRequest</b></a> <span class=D>::=               </span><span class=K>NULL</span><p
+> <p
+><span class=C>--- уникальный идентификатор КТС/модуля СПО ИС СОРМ</span><p
+><a class=EN id=I699 href='./summary.html#I717'><b>ModuleId</b></a> <span class=D>::=                            </span><span class=K>OCTET STRING </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>8</span><span class=D>))</span><p
+> <p
+><span class=C>--- параметр модуля</span><p
+><a class=EN id=I718 href='./summary.html#I719'><b>ModuleParameter</b></a> <span class=D>::=                     </span><span class=K>SEQUENCE </span><span class=D>{</span><p
+>   <b class=CI id=I720>parameter-name</b>                          <span class=K>UTF8String </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>1</span><span class=D>..</span><span class=N>256</span><span class=D>)),                  </span><span class=C>--- наименование параметра</span><p
+>   <b class=CI id=I721>read-only</b>                               <span class=K>BOOLEAN</span><span class=D>,                           </span><span class=C>--- контролируемый или измеряемый параметр</span><p
+>   <b class=CI id=I722>parameter-value</b>                         <a class=EN href=#I723>ParameterValue</a>                               <span class=C>--- значение параметра</span><p
+><span class=D>}</span><p
+> <p
+><span class=C>--- варианты значений параметров</span><p
+><a class=EN id=I723 href='./summary.html#I724'><b>ParameterValue</b></a> <span class=D>::=                      </span><span class=K>CHOICE </span><span class=D>{</span><p
+>   <b class=CI id=I725>string</b>                                  <span class=D>[</span><span class=N>0</span><span class=D>] </span><span class=K>UTF8String </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>1</span><span class=D>..</span><span class=N>256</span><span class=D>)),</span><p
+>   <b class=CI id=I726>integer</b>                                 <span class=D>[</span><span class=N>1</span><span class=D>] </span><span class=K>INTEGER </span><span class=D>(</span><span class=N>0</span><span class=D>..</span><span class=N>999999999</span><span class=D>),</span><p
+>   <b class=CI id=I727>boolean</b>                                 <span class=D>[</span><span class=N>2</span><span class=D>] </span><span class=K>BOOLEAN</span><p
+><span class=D>}</span><p
+> <p
+><a class=EN id=I728 href='./summary.html#I729'><b>ModuleParameters</b></a> <span class=D>::=                    </span><span class=K>SEQUENCE OF </span><a class=EN id=I730 href=#I718>ModuleParameter</a><p
+> <p
+><a class=EN id=I708 href='./summary.html#I731'><b>SormSoftwareModule</b></a> <span class=D>::=                  </span><span class=K>SEQUENCE </span><span class=D>{</span><p
+>   <b class=CI id=I732>module-id</b>                               <a class=EN href=#I699>ModuleId</a><span class=D>,                         </span><span class=C>--- уникальный идентификатор данного модуля</span><p
+>   <b class=CI id=I733>hardware-module-id</b>                      <a class=EN href=#I699>ModuleId</a><span class=D>,   </span><span class=C>--- идентификатор КТС, на котором работает данный блок модуля СПО</span><p
+>   <b class=CI id=I734>block-name</b>                              <span class=K>INTEGER </span><span class=D>(</span><span class=N>0</span><span class=D>..</span><span class=N>1024</span><span class=D>),                           </span><span class=C>--- номер блока СПО модуля</span><p
+>   <b class=CI id=I735>module-name</b>                             <span class=K>UTF8String </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>1</span><span class=D>..</span><span class=N>512</span><span class=D>)),                  </span><span class=C>--- наименование модуля</span><p
+>   <b class=CI id=I736>module-type</b>                             <span class=K>INTEGER </span><span class=D>(</span><span class=N>1</span><span class=D>..</span><span class=N>512</span><span class=D>),                            </span><span class=C>--- идентификатор типа модуля</span><p
+>   <b class=CI id=I737>module-parameters</b>                       <a class=EN href=#I728>ModuleParameters</a><span class=D>,                            </span><span class=C>--- список параметров модуля</span><p
+>   <b class=CI id=I738>sub-modules-list</b>                        <a class=EN href=#I739>SubmodulesList</a>                          <span class=K>OPTIONAL  </span><span class=C>--- субмодули</span><p
+><span class=D>}</span><p
+> <p
+><a class=EN id=I739 href='./summary.html#I740'><b>SubmodulesList</b></a> <span class=D>::=                      </span><span class=K>SEQUENCE OF </span><a class=EN id=I741 href=#I708>SormSoftwareModule</a><p
+> <p
+><a class=EN id=I710 href='./summary.html#I742'><b>SormHardwareModule</b></a> <span class=D>::=                  </span><span class=K>SEQUENCE </span><span class=D>{</span><p
+>   <b class=CI id=I743>module-id</b>                               <a class=EN href=#I699>ModuleId</a><span class=D>,                         </span><span class=C>--- уникальный идентификатор данного модуля</span><p
+>   <b class=CI id=I744>block-name</b>                              <span class=K>INTEGER </span><span class=D>(</span><span class=N>0</span><span class=D>..</span><span class=N>1024</span><span class=D>),                           </span><span class=C>--- номер блока КТС</span><p
+>   <b class=CI id=I745>module-name</b>                             <span class=K>UTF8String </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>1</span><span class=D>..</span><span class=N>512</span><span class=D>)),                  </span><span class=C>--- наименование модуля</span><p
+>   <b class=CI id=I746>module-parameters</b>                       <a class=EN href=#I747>HwParameterGroups</a>                          <span class=C>--- значение группы параметров КТС</span><p
+><span class=D>}</span><p
+> <p
+><a class=EN id=I748 href='./summary.html#I749'><b>HwParameterGroup</b></a> <span class=D>::=                    </span><span class=K>SEQUENCE </span><span class=D>{</span><p
+>   <b class=CI id=I750>group-name</b>                              <span class=K>UTF8String </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>1</span><span class=D>..</span><span class=N>512</span><span class=D>)),        </span><span class=C>--- наименование группы параметров для КТС</span><p
+>   <b class=CI id=I751>module-parameters</b>                       <a class=EN href=#I728>ModuleParameters</a>                             <span class=C>--- перечень параметров для КТС</span><p
+><span class=D>}</span><p
+> <p
+><a class=EN id=I747 href='./summary.html#I752'><b>HwParameterGroups</b></a> <span class=D>::=                   </span><span class=K>SEQUENCE OF </span><a class=EN id=I753 href=#I748>HwParameterGroup</a><p
+> <p
+><a class=EN id=I754 href='./summary.html#I755'><b>SormSoftwareModules</b></a> <span class=D>::=                 </span><span class=K>SEQUENCE OF </span><a class=EN id=I756 href=#I708>SormSoftwareModule</a><p
+> <p
+><a class=EN id=I757 href='./summary.html#I758'><b>SormHardwareModules</b></a> <span class=D>::=                 </span><span class=K>SEQUENCE OF </span><a class=EN id=I759 href=#I710>SormHardwareModule</a><p
+> <p
+><span class=C>--- тип сообщения "ответ на команду управления ИС СОРМ"</span><p
+><a class=EN id=I679 href='./summary.html#I760'><b>ManagementResponse</b></a> <span class=D>::=                  </span><span class=K>CHOICE </span><span class=D>{</span><p
+>   <b class=CI id=I761>get-structure</b>                           <span class=D>[</span><span class=N>0</span><span class=D>] </span><a class=EN href=#I762>GetStructureResponse</a><span class=D>,</span><p
+>                                                     <span class=C>--- ответ на запрос получения структуры ИС СОРМ - КТС и модулей СПО</span><p
+>   <b class=CI id=I763>get-module-config</b>                       <span class=D>[</span><span class=N>1</span><span class=D>] </span><a class=EN href=#I764>GetModuleConfigResponse</a><span class=D>,</span><p
+>                                                               <span class=C>--- ответ на запрос получения конфигурации КТС/модуля СПО</span><p
+>   <b class=CI id=I765>set-module-config</b>                       <span class=D>[</span><span class=N>2</span><span class=D>] </span><a class=EN href=#I766>SetModuleConfigResponse</a><span class=D>,</span><p
+>                                                               <span class=C>--- ответ на запрос изменения конфигурации КТС/модуля СПО</span><p
+>   <b class=CI id=I767>check-module</b>                            <span class=D>[</span><span class=N>3</span><span class=D>] </span><a class=EN href=#I768>CheckModuleResponse</a><span class=D>,       </span><span class=C>--- ответ на запрос получения состояния модуля</span><p
+>   <b class=CI id=I769>get-module-types</b>                        <span class=D>[</span><span class=N>4</span><span class=D>] </span><a class=EN href=#I770>GetModuleTypesResponse</a><p
+>                                                                   <span class=C>--- ответ на запрос получения типов модулей КТС и СПО</span><p
+><span class=D>}</span><p
+> <p
+><span class=C>--- ответ на запрос получения структуры ИС СОРМ - КТС и модулей СПО</span><p
+><a class=EN id=I762 href='./summary.html#I771'><b>GetStructureResponse</b></a> <span class=D>::=                </span><span class=K>SEQUENCE </span><span class=D>{</span><p
+>   <b class=CI id=I772>sw-modules</b>                              <a class=EN href=#I757>SormHardwareModules</a><span class=D>,                         </span><span class=C>--- перечень всех узлов КТС</span><p
+>   <b class=CI id=I773>hw-modules</b>                              <a class=EN href=#I754>SormSoftwareModules</a>                     <span class=C>--- перечень всех модулей СПО ИС СОРМ</span><p
+><span class=D>}</span><p
+> <p
+><span class=C>--- ответ на запрос получения конфигурации КТС/модуля СПО</span><p
+><a class=EN id=I764 href='./summary.html#I774'><b>GetModuleConfigResponse</b></a> <span class=D>::=             </span><span class=K>SEQUENCE </span><span class=D>{</span><p
+>   <b class=CI id=I775>hw-modules</b>                              <a class=EN href=#I757>SormHardwareModules</a><span class=D>,                   </span><span class=C>--- конфигурации запрошенных узлов КТС</span><p
+>   <b class=CI id=I776>sw-modules</b>                              <a class=EN href=#I754>SormSoftwareModules</a>          <span class=C>--- конфигурации запрошенных модулей СПО ИС СОРМ</span><p
+><span class=D>}</span><p
+> <p
+><span class=C>--- отчет на запрос изменения конфигурации КТС/модуля СПО</span><p
+><a class=EN id=I766 href='./summary.html#I777'><b>SetModuleConfigResponse</b></a> <span class=D>::=             </span><a class=EN href=#I705>ConfiguratedModule</a>                      <span class=C>--- установленная в модуль конфигурация</span><p
+> <p
+><span class=C>--- ответ на запрос получения состояния модуля</span><p
+><a class=EN id=I768 href='./summary.html#I778'><b>CheckModuleResponse</b></a> <span class=D>::=                 </span><span class=K>CHOICE </span><span class=D>{</span><p
+>   <b class=CI id=I779>hw-modules</b>                              <span class=D>[</span><span class=N>0</span><span class=D>] </span><a class=EN href=#I757>SormHardwareModules</a><span class=D>,</span><p
+>                                                                   <span class=C>--- текущее состояние запрошенных модулей СПО ИС СОРМ</span><p
+>   <b class=CI id=I780>sw-modules</b>                              <span class=D>[</span><span class=N>1</span><span class=D>] </span><a class=EN href=#I754>SormSoftwareModules</a>           <span class=C>--- текущее состояние запрошенных узлов КТС</span><p
+><span class=D>}</span><p
+> <p
+><span class=C>--- ответ на запрос получения типов модулей КТС и СПО</span><p
+><a class=EN id=I770 href='./summary.html#I781'><b>GetModuleTypesResponse</b></a> <span class=D>::=              </span><span class=K>SEQUENCE OF </span><a class=EN id=I782 href=#I783>ModuleType</a><p
+> <p
+><a class=EN id=I783 href='./summary.html#I784'><b>ModuleType</b></a> <span class=D>::=                          </span><span class=K>SEQUENCE </span><span class=D>{</span><p
+>   <b class=CI id=I785>module-type</b>                             <span class=K>INTEGER </span><span class=D>(</span><span class=N>1</span><span class=D>..</span><span class=N>512</span><span class=D>),                            </span><span class=C>--- идентификатор типа модуля</span><p
+>   <b class=CI id=I786>type-description</b>                        <span class=K>UTF8String </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>1</span><span class=D>..</span><span class=N>128</span><span class=D>))                   </span><span class=C>--- расшифровка типа модуля</span><p
+><span class=D>}</span><p
+> <p
+><span class=K>END</span></section><div class=footer>HTML generated by OSS Nokalva's ASN1Doc utility</div>
+</body>
+</html>

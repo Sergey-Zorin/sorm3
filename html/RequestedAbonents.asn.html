@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+<meta charset='utf-8'>
+<title>RequestedAbonents.asn</title>
+<link rel=stylesheet href='Asn1doc.css' type='text/css'>
+</head>
+<body onload='Init()'><span id=I1727>Schema File <b class=SF>RequestedAbonents.asn</b></span><section class='asn1 notinteractive'><p
+><a class=MN id=I1728 href='./summary.html#I1729'><b>RequestedAbonents</b></a> <span class=K>DEFINITIONS IMPLICIT TAGS </span><span class=D>::=</span><p
+><span class=K>BEGIN</span><p
+> <p
+><span class=K>EXPORTS</span><p
+>     <a class=EN href=#I1730>RequestedAbonent</a><span class=D>;</span><p
+> <p
+><span class=K>IMPORTS</span><p
+>     <a class=EN id=I1731 href='./Classification.asn.html#I47'><b>TAGGED</b></a><span class=D>, </span><a class=EN href='./Classification.asn.html#I138'><b>sorm-request-abonent-person</b></a><span class=D>, </span><a class=EN href='./Classification.asn.html#I139'><b>sorm-request-abonent-organization</b></a><p
+>          <span class=K>FROM </span><a class=MN href='./Classification.asn.html#I45'>Classification</a><p
+>     <a class=EN id=I1732 href='./Addresses.asn.html#I7'><b>RequestedAddress</b></a><p
+>          <span class=K>FROM </span><a class=MN href='./Addresses.asn.html#I2'>Addresses</a><span class=D>;</span><p
+> <p
+><span class=E3 title='Error: Invalid type assignment for type &quot;RequestedAbonent&quot;: Invalid assignment.'><a class=EN id=I1730 href='./summary.html#I1733'><b>RequestedAbonent</b></a></span> <span class=D>::=                    </span><span class=K>SEQUENCE </span><span class=D>{</span><p
+>   <b class=CI id=I1734>id</b>                                      <a class=EN href='./Classification.asn.html#I47'>TAGGED</a><span class=D>.</span><a class=FN href='./Classification.asn.html#I146'>&amp;id</a> <span class=D>({</span><a class=EN href=#I1735>RequestedAbonentVariants</a><span class=D>}),</span><p
+>   <b class=CI id=I1736>data</b>                                    <a class=EN href='./Classification.asn.html#I47'>TAGGED</a><span class=D>.</span><a class=FN href='./Classification.asn.html#I147'>&amp;Data</a> <span class=D>({</span><a class=EN href=#I1735>RequestedAbonentVariants</a><span class=D>} {@</span><a class=CI href=#I1734>id</a><span class=D>})</span><p
+><span class=D>}</span><p
+> <p
+><span class=C>--- варианты запрашиваемых идентификаторов</span><p
+><span class=E3 title='Error: Invalid object set assignment for object set &quot;RequestedAbonentVariants&quot;: Invalid assignment.'><a class=EN id=I1735 href='./summary.html#I1737'><b>RequestedAbonentVariants</b></a></span>                <a class=EN href='./Classification.asn.html#I47'>TAGGED</a> <span class=D>::= {</span><p
+>   <a class=EN href=#I1738>requestedPerson</a> <span class=D>| </span><span class=C>--- физическое лицо</span><p
+>   <a class=EN href=#I1739>requestedOrganization</a> <span class=C>--- юридическое лицо - организация</span><p
+><span class=D>}</span><p
+> <p
+><span class=C>--- поля параметра запроса на физическое лицо</span><p
+><span class=E3 title='Error: Invalid object assignment for object &quot;requestedPerson&quot;: Invalid assignment.'><a class=EN id=I1738 href='./summary.html#I1740'><b>requestedPerson</b></a></span>                         <a class=EN href='./Classification.asn.html#I47'>TAGGED</a> <span class=D>::= {</span><span class=W>OID </span><span class=E3 title='Error: Invalid value: The type of the value is incompatible with its context.'><span class=D id=I1741>{</span></span><span class=E>sorm-request-abonent-person</span><span class=D>} </span><span class=W>DATA </span><a class=EN href=#I1742>RequestedPerson</a><span class=D>}</span><p
+> <p
+><a class=EN id=I1742 href='./summary.html#I1743'><b>RequestedPerson</b></a> <span class=D>::=                     </span><span class=K>SEQUENCE </span><span class=D>{</span><p
+>   <b class=CI id=I1744>given-name</b>                              <span class=D>[</span><span class=N>0</span><span class=D>] </span><span class=K>UTF8String </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>1</span><span class=D>..</span><span class=N>256</span><span class=D>))          </span><span class=K>OPTIONAL</span><span class=D>, </span><span class=C>--- имя</span><p
+>   <b class=CI id=I1745>initial</b>                                 <span class=D>[</span><span class=N>1</span><span class=D>] </span><span class=K>UTF8String </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>1</span><span class=D>..</span><span class=N>256</span><span class=D>))          </span><span class=K>OPTIONAL</span><span class=D>, </span><span class=C>--- отчество</span><p
+>   <b class=CI id=I1746>family-name</b>                             <span class=D>[</span><span class=N>2</span><span class=D>] </span><span class=K>UTF8String </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>1</span><span class=D>..</span><span class=N>256</span><span class=D>))          </span><span class=K>OPTIONAL</span><span class=D>, </span><span class=C>--- фамилия</span><p
+>   <b class=CI id=I1747>passport-info</b>                           <span class=D>[</span><span class=N>3</span><span class=D>] </span><a class=EN href=#I1748>RequestedPassport</a>                   <span class=K>OPTIONAL</span><span class=D>, </span><span class=C>--- паспортные данные</span><p
+>   <b class=CI id=I1749>address</b>                                 <span class=D>[</span><span class=N>4</span><span class=D>] </span><a class=EN href='./Addresses.asn.html#I7'>RequestedAddress</a>                    <span class=K>OPTIONAL</span><span class=D>, </span><span class=C>--- адресные данные</span><p
+>   <b class=CI id=I1750>icc</b>                                     <span class=D>[</span><span class=N>5</span><span class=D>] </span><span class=K>NumericString </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>10</span><span class=D>..</span><span class=N>20</span><span class=D>))       </span><span class=K>OPTIONAL</span><span class=D>,</span><p
+>                                                                                    <span class=C>--- идентификатор SIM-карты абонента</span><p
+>   <b class=CI id=I1751>contract</b>                                <span class=D>[</span><span class=N>6</span><span class=D>] </span><span class=K>UTF8String </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>1</span><span class=D>..</span><span class=N>64</span><span class=D>))           </span><span class=K>OPTIONAL  </span><span class=C>--- номер договора</span><p
+><span class=D>}</span><p
+> <p
+><span class=C>--- поля паспортных данных</span><p
+><a class=EN id=I1748 href='./summary.html#I1752'><b>RequestedPassport</b></a> <span class=D>::=                   </span><span class=K>SEQUENCE </span><span class=D>{</span><p
+>   <b class=CI id=I1753>doc-type-id</b>                             <span class=D>[</span><span class=N>0</span><span class=D>] </span><span class=K>INTEGER </span><span class=D>(</span><span class=N>0</span><span class=D>..</span><span class=N>65535</span><span class=D>)                  </span><span class=K>OPTIONAL</span><span class=D>,</span><p
+>                                                              <span class=C>--- идентификатор типа документа, удостоверяющего личность</span><p
+>   <b class=CI id=I1754>passport-serial</b>                         <span class=D>[</span><span class=N>1</span><span class=D>] </span><span class=K>UTF8String </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>1</span><span class=D>..</span><span class=N>16</span><span class=D>))           </span><span class=K>OPTIONAL</span><span class=D>, </span><span class=C>--- серия паспорта</span><p
+>   <b class=CI id=I1755>passport-number</b>                         <span class=D>[</span><span class=N>2</span><span class=D>] </span><span class=K>NumericString </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>1</span><span class=D>..</span><span class=N>16</span><span class=D>))        </span><span class=K>OPTIONAL  </span><span class=C>--- номер паспорта</span><p
+><span class=D>}</span><p
+> <p
+><span class=C>-- поля параметра запроса на юридическое лицо</span><p
+><span class=E3 title='Error: Invalid object assignment for object &quot;requestedOrganization&quot;: Invalid assignment.'><a class=EN id=I1739 href='./summary.html#I1756'><b>requestedOrganization</b></a></span>                   <a class=EN href='./Classification.asn.html#I47'>TAGGED</a> <span class=D>::= {</span><span class=W>OID </span><span class=E3 title='Error: Invalid value: The type of the value is incompatible with its context.'><span class=D id=I1757>{</span></span><span class=E>sorm-request-abonent-organization</span><span class=D>} </span><span class=W>DATA </span><a class=EN href=#I1758>RequestedOrganization</a><span class=D>}</span><p
+> <p
+><a class=EN id=I1758 href='./summary.html#I1759'><b>RequestedOrganization</b></a> <span class=D>::=               </span><span class=K>SEQUENCE </span><span class=D>{</span><p
+>   <b class=CI id=I1760>full-name</b>                               <span class=D>[</span><span class=N>0</span><span class=D>] </span><span class=K>UTF8String </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>1</span><span class=D>..</span><span class=N>256</span><span class=D>))          </span><span class=K>OPTIONAL</span><span class=D>,</span><p
+>                                                                                     <span class=C>--- полное наименование организации</span><p
+>   <b class=CI id=I1761>address</b>                                 <span class=D>[</span><span class=N>1</span><span class=D>] </span><a class=EN href='./Addresses.asn.html#I7'>RequestedAddress</a>                    <span class=K>OPTIONAL</span><span class=D>,</span><p
+>                                                                                       <span class=C>--- юридический адрес организации</span><p
+>   <b class=CI id=I1762>inn</b>                                     <span class=D>[</span><span class=N>2</span><span class=D>] </span><span class=K>NumericString </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>1</span><span class=D>..</span><span class=N>64</span><span class=D>))        </span><span class=K>OPTIONAL</span><span class=D>, </span><span class=C>--- ИНН</span><p
+>   <b class=CI id=I1763>internal-user</b>                           <span class=D>[</span><span class=N>3</span><span class=D>] </span><span class=K>UTF8String </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>1</span><span class=D>..</span><span class=N>64</span><span class=D>))           </span><span class=K>OPTIONAL</span><span class=D>, </span><span class=C>--- внутренний пользователь</span><p
+>   <b class=CI id=I1764>contract</b>                                <span class=D>[</span><span class=N>4</span><span class=D>] </span><span class=K>UTF8String </span><span class=D>(</span><span class=K>SIZE </span><span class=D>(</span><span class=N>1</span><span class=D>..</span><span class=N>64</span><span class=D>))           </span><span class=K>OPTIONAL  </span><span class=C>--- номер договора</span><p
+><span class=D>}</span><p
+> <p
+><span class=K>END</span></section><div class=footer>HTML generated by OSS Nokalva's ASN1Doc utility</div>
+</body>
+</html>
