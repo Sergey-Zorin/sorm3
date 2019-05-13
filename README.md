@@ -27,8 +27,9 @@
 
 ![](imgs/8-01.png)
 
-
 В целом, схема соответствует содержимому файла [Sorm.asn](html/Sorm.asn.html) Прямоугольники на схеме соответствуют нескольким типам сообщений. Более подробно каждый тип описан в отдельном файле. 
+
+:warning: тип filter не представлен на схеме и не описан ни в одном файле
 
 | тип | описание | файл |
 | ---- | ---- | ---- |
@@ -40,7 +41,29 @@
 |  unformattedMessage | сообщения канала передачи неформатированных данных (КПНФ) | [Unformatted.asn](html/Unformatted.asn.html) |
 |  filterMessage | сообщения установки/снятия фильтров записываемого содержимого соединений сети передачи данных | ??? |
 
+Например,  в [Sessions.asn](html/Sessions.asn.html) описаны возможные запросы/ответы, и состав их полей:
 
+```asn.1
+sessionMessage   TAGGED ::= {
+ OID {sorm-message-session} DATA CHOICE {
+   connect              [0] ConnectRequest,     --- запрос на открытие сессии
+   connect-response     [1] ConnectResponse,    --- ответ на запрос открытия сессии
+   adjustment           [2] AdjustmentRequest,  --- согласование поддерживаемых типов со стороны ПУ
+   adjustment-response  [3] AdjustmentResponse, --- ответ на запрос согласования данных
+   disconnect           [4] DisconnectRequest,  --- запрос на закрытие сессии
+   disconnect-response  [5] DisconnectResponse  --- ответ на запрос закрытия сессии
+   }
+}
+
+--- запрос создания сессии
+ConnectRequest ::=   SEQUENCE {
+   session-timeout           INTEGER (60..2592000),   --- максимальное время неактивности
+   max-data-length           INTEGER (10..100000),    --- максимальная длина блока отчета (в строках)
+   data-packet-window-size   INTEGER (4..256),        --- окно канала передачи данных
+...
+}
+...
+```
 
 
 
