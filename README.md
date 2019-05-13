@@ -16,7 +16,7 @@
 
 В каталоге html приведена документация по asn-файлам полученная с помощью  [ASN1Doc](https://asn1.io/ASN1Doc/)
 
-См. файл html/summary.html
+См. файл [html/summary.html](html/summary.html)
 
 ## Ресурсы
 
