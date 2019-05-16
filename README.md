@@ -177,6 +177,151 @@ sorm-request-presense OID ::= "260"
 
 В общем виде получение данных телефонного звонка происходит в два этапа
 
+1. Отправляется запрос на поиск соединений (звонков) по заданным критериям [ConnectionsTask](./html/TasksConnections.asn.html#I2111).
+   В ответе приходит список соединений, в котором для каждого соединения наряду с прочими параметрами указан уникальный идентификатор **data-content-id**
+2. Отправляется запрос "получения содержимого потоков" [DataContentTask](./html/TasksContentTask.asn.html#I2123) с указанием конкретного идентификатора **data-content-id**
+
+Критерии поиска, параметры соединений и голосовые данные для тфоп, сотовой связи и voip несколько различаются. В следующих трех пунктах каждый случай будет разобран отдельно.
+
+На схемах 2 и 3 элементы, относящиеся к телефонным звонкам, выделены желтым.
+
+### Звонки ТфОП
+
+В запросе [ConnectionsTask](./html/TasksConnections.asn.html#I2111) могут быть указаны один или несколько критериев [requestedConnectionPstn](./html/RequestedConnections.asn.html#I1785)
+
+```asn.1
+--- параметры соединений абонента ТФОП
+requestedConnectionPstn                 TAGGED ::= {
+  OID {sorm-request-connection-pstn} DATA CHOICE {
+    duration              [0] INTEGER (0..86399),                 --- время соединения
+    call-type-id          [1] INTEGER (0..4294967295),            --- тип соединения
+    in-abonent-type       [2] PhoneAbonentType,                   --- тип вызывающего абонента
+    out-abonent-type      [3] PhoneAbonentType,                   --- тип вызываемого абонента
+    switch-id             [4] UTF8String (SIZE (1..128)),         --- код коммутатора обслужившего вызов
+    inbound-bunch         [5] INTEGER (0..4294967295),            --- входящий пучок
+    outbound-bunch        [6] INTEGER (0..4294967295),            --- исходящий пучок
+    border-switch-id      [7] UTF8String (SIZE (1..128)),         --- код пограничного коммутатора
+    term-cause            [8] INTEGER (0..16384),                 --- причина завершения соединения
+    supplement-service-id [9] INTEGER (0..4294967295),            --- ДВО при соединении
+    phone-card-number     [10] NumericString (SIZE (1..20)),      --- номер телефонной карты
+    in-info               [11] RequestedConnectionPstnIdentifier, --- идентификаторы вызывающего абонента
+    out-info              [12] RequestedConnectionPstnIdentifier, --- идентификаторы вызываемого абонента
+    forwarding-identifier [13] UTF8String (SIZE (2..32)),         --- телефонный номер при переадресации
+    message               [20] UTF8String                         --- текстовое содержание сообщения абонента
+  }
+}
+```
+
+В отчете [ConnectionsReport](./html/ReportsConnections.asn.html#I937), приходит список соединений со следующими данными [pstnRecord](./html/ReportsConnections.asn.html#I1119):
+
+``` asn.1
+-- Детализированные записи звонков абонентов ТФОП, в т.ч. и неудавшиеся попытки соединений
+pstnRecord                              TAGGED ::= {OID {sorm-report-connection-pstn} DATA SEQUENCE OF
+                                             PstnRecordContent}
+
+ 
+
+PstnRecordContent ::=                   SEQUENCE {
+   telco-id                                TelcoID,     --- идентификатор оператора связи или структурного подразделения
+   begin-connection-time                   DateAndTime,                               --- дата и время начала соединения
+   duration                                INTEGER (0..86399),                          --- время соединения
+   call-type-id                            INTEGER (0..4294967295),                     --- тип соединения
+   supplement-service-id                   INTEGER (0..4294967295),                     --- ДВО при соединении
+   in-abonent-type                         PhoneAbonentType,                            --- тип вызывающего абонента
+   out-abonent-type                        PhoneAbonentType,                            --- тип вызываемого абонента
+   switch-id                               UTF8String (SIZE (1..128)),       --- код коммутатора обслужившего соединение
+   inbound-bunch                           INTEGER (0..4294967295),                     --- входящий пучок
+   outbound-bunch                          INTEGER (0..4294967295),                     --- исходящий пучок
+   term-cause                              INTEGER (0..16384),                         --- причина завершения соединения
+   phone-card-number                       [0] NumericString (SIZE (1..20))        OPTIONAL, --- номер телефонной карты
+   in-info                                 [1] ReportedIdentifier                  OPTIONAL,
+                                                                                 --- идентификаторы вызывающего абонента
+   dialed-digits                           [2] UTF8String (SIZE (1..128)),      --- набранный номер вызываемого абонента
+   out-info                                [3] ReportedIdentifier                  OPTIONAL,
+                                                                                 --- идентификаторы вызываемого абонента
+   forwarding-identifier                   [4] UTF8String (SIZE (2..32))           OPTIONAL,
+                                                                                  --- телефонный номер при переадресации
+   border-switch-id                        [5] UTF8String (SIZE (1..128))          OPTIONAL,
+                                                                                        --- код пограничного коммутатора
+   message                                 [10] UTF8String                         OPTIONAL,
+                                                                             --- текстовое содержание сообщения абонента
+   ss7-opc                                 [11] UTF8String (SIZE (1..32))          OPTIONAL,
+                                                                                           --- SS7 код точки отправления
+   ss7-dpc                                 [12] UTF8String (SIZE (1..32))          OPTIONAL,
+                                                                                            --- SS7 код точки назначения
+   data-content-id                         [13] DataContentID                      OPTIONAL  --- идентификатор потока
+}
+```
+
+
+
+### Сотовые звонки
+
+TODO
+
+### Звонки voip
+
+В запросе [ConnectionsTask](./html/TasksConnections.asn.html#I2111) могут быть указаны один или несколько критериев [requestedVoip](./html/RequestedConnections.asn.html#I1792)
+
+``` asn.1
+requestedVoip                           TAGGED ::= {
+   OID {sorm-request-connection-voip} DATA CHOICE {
+      point-id                                [0] INTEGER (0..1000),
+                                   --- идентификатор точки подключения к сети передачи данных, с которой получены записи
+      client-info                             [1] NetworkPeerInfo,       --- идентификатор абонента сети передачи данных
+      server-info                             [2] NetworkPeerInfo,        --- идентификатор сервера сети передачи данных
+      duration                                [3] INTEGER (0..864000),                --- длительность разговора, сек.
+      originator-name                         [4] UTF8String (SIZE (1..512)),     --- общедоступное имя инициатора связи
+      call-type-id                            [5] INTEGER (0..4294967295),            --- способ подключения
+      voip-calling-number                     [6] DataVoipNumber,                     --- номер вызывающего абонента
+      voip-called-number                      [7] DataVoipNumber,                     --- номер вызываемого абонента
+      inbound-bunch                           [8] Bunch,                              --- входящий пучок
+      outbound-bunch                          [9] Bunch,                              --- исходящий пучок
+      conference-id                           [10] UTF8String (SIZE (1..64)),         ---  идентификатор конференции
+      protocol                                [11] VoipProtocol,
+      term-cause                              [12] INTEGER (0..16384),                --- причина завершения соединения
+      abonent-id                              [13] UTF8String (SIZE (0..64)),
+      nat-info                                [20] NetworkPeerInfo,                   --- транслированные NAT IP/порт
+      location                                [21] Location                           --- местоположение абонента
+   }
+}
+```
+
+В отчете [ConnectionsReport](./html/ReportsConnections.asn.html#I937), приходит список соединений со следующими данными [dataVoipRecord](./html/ReportsConnections.asn.html#I1128):
+
+``` asn.1
+DataVoipRecordContent ::=               SEQUENCE {
+   voip-cdr-header                         DataNetworkCdrHeader,                        --- заголовок CDR-соединения
+   voip-session-id                         UTF8String (SIZE (0..64)),                   --- идентификатор сессии/call-id
+   voip-conference-id                      UTF8String (SIZE (1..64)),                   --- идентификатор конференции
+   voip-duration                           INTEGER (0..864000),                         --- длительность разговора, сек.
+   voip-originator-name                    UTF8String (SIZE (1..512)),            --- общедоступное имя инициатора связи
+   voip-call-type-id                       INTEGER (0..4294967295),                     --- способ подключения
+   voip-calling-number                     DataVoipNumber,                              --- номер вызывающего абонента
+   voip-called-number                      DataVoipNumber,                              --- номер вызываемого абонента
+   voip-in-bytes-count                     INTEGER (0..18446744073709551615),
+                            --- объем переданных данных (включает как соединения управления так и передачи данных), байт
+   voip-out-bytes-count                    INTEGER (0..18446744073709551615),
+                              --- объем принятых данных (включает как соединения управления так и передачи данных), байт
+   voip-fax                                BOOLEAN,                 --- была попытка передачи факсовой информации (T.38)
+   voip-term-cause                         INTEGER (0..16384),                         --- причина завершения соединения
+   inbound-bunch                           [0] Bunch                               OPTIONAL, --- входящий пучок
+   outbound-bunch                          [1] Bunch                               OPTIONAL, --- исходящий пучок
+   voip-gateways                           [2] SEQUENCE OF IPAddress               OPTIONAL,
+                                                                  --- идентификаторы медиашлюзов, обслуживших соединение
+   voip-protocol                           [3] VoipProtocol                        OPTIONAL,
+   supplement-service-id                   [4] INTEGER (0..4294967295)             OPTIONAL, --- ДВО при соединении
+   voip-abonent-id                         [5] UTF8String (SIZE (0..64))           OPTIONAL, --- идентификатор абонента
+   voip-nat-info                           [10] SEQUENCE OF NetworkPeerInfo        OPTIONAL,
+                                                                                         --- транслированные NAT IP/порт
+   voip-location                           [11] Location                           OPTIONAL, --- местоположение абонента
+   voip-event                              [12] VoIPEvent                          OPTIONAL, --- тип события
+   voip-data-content-id                    [13] DataContentID                      OPTIONAL  --- идентификатор потока
+}
+```
+
+
+
 ## Ресурсы
 
 - <https://asn1.io/>
