@@ -36,8 +36,8 @@
 |  sessionMessage  |  сообщения организации сессии | [Sessions.asn](html/Sessions.asn.html) |
 |  trapMessage    |  сообщения сигналов | [Traps.asn](html/Traps.asn.html) |
 |  taskMessage    |  сообщения работы с задачами | [Tasks.asn](html/Tasks.asn.html) |
-|  reportMessage  | сообщения работы с отчетами | [Reports.asn](html/Sorm.asn.html) |
-|  managementMessage | сообщения канала передачи мониторинга (КПМ) | [Reports.asn](html/Sorm.asn.html) |
+|  reportMessage  | сообщения работы с отчетами | [Reports.asn](html/Reports.asn.html) |
+|  managementMessage | сообщения канала передачи мониторинга (КПМ) | [Management.asn](html/Management.asn.html) |
 |  unformattedMessage | сообщения канала передачи неформатированных данных (КПНФ) | [Unformatted.asn](html/Unformatted.asn.html) |
 |  filterMessage | сообщения установки/снятия фильтров записываемого содержимого соединений сети передачи данных | ??? |
 
