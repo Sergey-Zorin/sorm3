@@ -175,11 +175,11 @@ sorm-request-presense OID ::= "260"
 
 ## Типичный сценарий получения данных телефонного звонка
 
-В общем виде получение данных телефонного звонка происходит в два этапа
+В общем виде получение данных телефонного звонка происходит в два этапа 
 
-1. Отправляется запрос на поиск соединений (звонков) по заданным критериям [ConnectionsTask](./html/TasksConnections.asn.html#I2111).
-   В ответе приходит список соединений, в котором для каждого соединения наряду с прочими параметрами указан уникальный идентификатор **data-content-id**
-2. Отправляется запрос "получения содержимого потоков" [DataContentTask](./html/TasksContentTask.asn.html#I2123) с указанием конкретного идентификатора **data-content-id**
+1. Формируется запрос (task) на поиск соединений (звонков) по заданным критериям [ConnectionsTask](./html/TasksConnections.asn.html#I2111).
+   В результате приходит список соединений, в котором для каждого соединения наряду с прочими параметрами указан уникальный идентификатор **data-content-id**
+2. Формируется запрос (task) "получения содержимого потоков" [DataContentTask](./html/TasksContentTask.asn.html#I2123) с указанием конкретного идентификатора **data-content-id**
 
 Критерии поиска, параметры соединений и голосовые данные для тфоп, сотовой связи и voip несколько различаются. В следующих трех пунктах каждый случай будет разобран отдельно.
 
@@ -212,7 +212,7 @@ requestedConnectionPstn                 TAGGED ::= {
 }
 ```
 
-В отчете [ConnectionsReport](./html/ReportsConnections.asn.html#I937), приходит список соединений со следующими данными [pstnRecord](./html/ReportsConnections.asn.html#I1119):
+В отчете [ConnectionsReport](./html/ReportsConnections.asn.html#I937), по кпд2 приходит список соединений со следующими данными [pstnRecord](./html/ReportsConnections.asn.html#I1119):
 
 ``` asn.1
 -- Детализированные записи звонков абонентов ТФОП, в т.ч. и неудавшиеся попытки соединений
@@ -253,11 +253,30 @@ PstnRecordContent ::=                   SEQUENCE {
 }
 ```
 
+Запись голоса приходит по кпд5 в отчете [DataContentReport](./html/ReportsDataContent.asn.html#I955)
+
+``` asn.1
+reportDataContentRaw                    TAGGED ::= {OID {sorm-report-data-content-raw} DATA SEQUENCE OF
+                                             RawRecordContent}
+ 
+
+RawRecordContent ::=                    SEQUENCE {
+   successful                              BOOLEAN,                      --- признак успешного формирования блока данных
+   data                                    [0] OCTET STRING (SIZE (1..1048576))    OPTIONAL,
+                                                           --- содержимое блока (в случае если блок успешно сформирован)
+   error                                   [1] UTF8String (SIZE (1..4096))         OPTIONAL,
+                                                        --- описание ошибки (в случае если не удалось сформировать блок)
+   codec-info                              [2] UTF8String (SIZE (1..4096))         OPTIONAL,
+                                                  --- описание способа кодирования в формате SDP в соответствии RFC 2327
+   direction                               [3] DataContentRawDirection             OPTIONAL, --- направление передачи
+   channel                                 [4] INTEGER                             OPTIONAL  --- канал
+}
 
 
-### Сотовые звонки
+DataContentRawDirection ::=             ENUMERATED {client-server (0), server-client (1)}
+```
 
-TODO
+
 
 ### Звонки voip
 
@@ -320,9 +339,92 @@ DataVoipRecordContent ::=               SEQUENCE {
 }
 ```
 
+Запись голоса приходит по кпд5 в отчете [DataContentReport](./html/ReportsDataContent.asn.html#I955) в том же виде как и для ТфОП
+
+### Сотовые звонки
+
+В запросе [ConnectionsTask](./html/TasksConnections.asn.html#I2111) могут быть указаны один или несколько критериев [requestedConnectionMobile](./html/RequestedConnections.asn.html#I1786)
+
+```asn.1
+requestedConnectionMobile               TAGGED ::= {
+   OID {sorm-request-connection-mobile} DATA CHOICE {
+      duration                                [0] INTEGER (0..86399),                 --- время соединения
+      call-type-id                            [1] INTEGER (0..4294967295),            --- тип соединения
+      supplement-service-id                   [2] INTEGER (0..4294967295),            --- ДВО при соединении
+      in-abonent-type                         [3] PhoneAbonentType,                   --- тип вызывающего абонента
+      out-abonent-type                        [4] PhoneAbonentType,                   --- тип вызываемого абонента
+      switch-id                               [5] UTF8String (SIZE (1..128)),
+                                                                             --- код коммутатора обслужившего соединения
+                                                                             --- или номер SMS центра если SMS
+      inbound-bunch                           [6] Bunch,                              --- входящий пучок
+      outbound-bunch                          [7] Bunch,                              --- исходящий пучок
+      border-switch-id                        [8] UTF8String (SIZE (1..128)),         --- код пограничного коммутатора
+      roaming-partner-id                      [9] INTEGER (0..4294967295),            --- код роумингового партнера
+      term-cause                              [10] INTEGER (0..16384),                --- причина завершения соединения
+      in-info                                 [11] RequestedConnectionMobileIdentifier,
+                                                                                 --- идентификаторы вызывающего абонента
+      in-end-location                         [12] Location,     --- местоположение вызывающего абонента на конец вызова
+      in-begin-location                       [13] Location,    --- местоположение вызывающего абонента на начало вызова
+      dialed-digits                           [14] UTF8String (SIZE (1..128)),  --- набранный номер вызываемого абонента
+      out-info                                [15] RequestedConnectionMobileIdentifier,
+                                                                                 --- идентификаторы вызываемого абонента
+      out-begin-location                      [16] Location,    --- местоположение вызываемого абонента на начало вызова
+      out-end-location                        [17] Location,     --- местоположение вызываемого абонента на конец вызова
+      forwarding-identifier                   [18] UTF8String (SIZE (2..32)),     --- телефонный номер при переадресации
+      message                                 [40] UTF8String                --- текстовое содержание сообщения абонента
+   }
+}
+```
+
+В отчете [ConnectionsReport](./html/ReportsConnections.asn.html#I937), приходит список соединений со следующими данными [mobileRecord](./html/ReportsConnections.asn.html#I1120):
+
+```asn.1
+-- Детализированные записи звонков мобильных абонентов, в т.ч. и неудавшиеся попытки соединений
+-- Должны содержать также записи об SMS, в т.ч. и неудавшиеся попытки отправки
+mobileRecord                            TAGGED ::= {OID {sorm-report-connection-mobile} DATA SEQUENCE OF
+                                             MobileRecordContent}
+ 
+MobileRecordContent ::=                 SEQUENCE {
+   telco-id                                TelcoID,     --- идентификатор оператора связи или структурного подразделения
+   begin-connection-time                   DateAndTime,                               --- дата и время начала соединения
+   duration                                INTEGER (0..86399),                          --- время соединения
+   call-type-id                            INTEGER (0..4294967295),                     --- тип соединения
+   supplement-service-id                   INTEGER (0..4294967295),                     --- ДВО при соединении
+   in-abonent-type                         PhoneAbonentType,                            --- тип вызывающего абонента
+   out-abonent-type                        PhoneAbonentType,                            --- тип вызываемого абонента
+   switch-id                               UTF8String (SIZE (1..128)),       --- код коммутатора обслужившего соединении
+   term-cause                              INTEGER (0..16384),                         --- причина завершения соединения
+   inbound-bunch                           [0] Bunch                               OPTIONAL, --- входящий пучок
+   outbound-bunch                          [1] Bunch                               OPTIONAL, --- исходящий пучок
+   in-info                                 [2] ReportedIdentifier                  OPTIONAL,
+                                                                                 --- идентификаторы вызывающего абонента
+   in-end-location                         [3] Location                            OPTIONAL,
+                                                                 --- местоположение вызывающего абонента на конец вызова
+   in-begin-location                       [4] Location                            OPTIONAL,
+                                                                --- местоположение вызывающего абонента на начало вызова
+   out-info                                [5] ReportedIdentifier                  OPTIONAL,
+                                                                                 --- идентификаторы вызываемого абонента
+   out-begin-location                      [6] Location                            OPTIONAL,
+                                                                --- местоположение вызываемого абонента на начало вызова
+   out-end-location                        [7] Location                            OPTIONAL,
+                                                                 --- местоположение вызываемого абонента на конец вызова
+   forwarding-identifier                   [8] UTF8String (SIZE (2..32))           OPTIONAL,
+                                                                                  --- телефонный номер при переадресации
+   roaming-partner-id                      [9] INTEGER (0..4294967295)             OPTIONAL,
+                                                                                           --- код роумингового партнера
+   border-switch-id                        [10] UTF8String (SIZE (1..128))         OPTIONAL,
+                                                                                        --- код пограничного коммутатора
+   message                                 [40] UTF8String                         OPTIONAL,
+                                                                             --- текстовое содержание сообщения абонента
+   data-content-id                         [41] DataContentID                      OPTIONAL  --- идентификатор потока
+}
+```
+
+Запись голоса приходит по кпд5 в отчете [DataContentReport](./html/ReportsDataContent.asn.html#I955) в том же виде как и для ТфОП
 
 
-## Ресурсы
+
+### Ресурсы
 
 - <https://asn1.io/>
   - [ASN1 Playground](https://asn1.io/asn1playground/)
