@@ -429,3 +429,5 @@ MobileRecordContent ::=                 SEQUENCE {
 - <https://asn1.io/>
   - [ASN1 Playground](https://asn1.io/asn1playground/)
   - [ASN1Doc](https://asn1.io/ASN1Doc/)
+  
+- [Typora](https://typora.io/#download) - средство для просмотра/редактирования MarkDown (.md) файлов
